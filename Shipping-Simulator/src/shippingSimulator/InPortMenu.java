@@ -19,11 +19,12 @@ public class InPortMenu {
     public void inPortDecisionParser(PlayerShip ps) {
         int menuDecision = Abstract.getUserInt();
         if (menuDecision == 1) {
-
+            Iteration it = new Iteration();
+            it.mainGameIteration(ps);
         }
         if (menuDecision == 2) {
-            ContainerLoadUnload clu = new ContainerLoadUnload(ps);
-            clu.containerMenu();
+            Iteration it = new Iteration();
+            it.containerLoaderIteration(ps);
         }
         if (menuDecision == 3) {
             System.out.println("Thank you for playing.");
@@ -32,7 +33,7 @@ public class InPortMenu {
     }
 
     public void inPortMenuBlock(PlayerShip ps) {
-       // inPortPrimaryMenu();
+        // inPortPrimaryMenu();
         Abstract.standardGameMenu(inPortMenu);
         inPortDecisionParser(ps);
     }

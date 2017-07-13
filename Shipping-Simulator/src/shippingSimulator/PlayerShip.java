@@ -10,42 +10,80 @@ package shippingSimulator;
  * @author benja
  */
 public class PlayerShip {
- 
+
     private int shipSpeed;
     private int shipMaximumContainers;
     private int shipCurrentContainers;
-    
-    public PlayerShip(){
+    private String currentPort;
+    private String destinationPort;
+
+    public PlayerShip() {
         this.shipSpeed = 12;
         this.shipCurrentContainers = 0;
         this.shipMaximumContainers = 100;
+        this.currentPort = "LA";
+        this.destinationPort = "";
     }
-    
-    public int getShipCurrentContainers(){
+
+    public int getShipCurrentContainers() {
         return this.shipCurrentContainers;
     }
-    
-    public int getShipSpeed(){
+
+    public int getShipSpeed() {
         return this.shipSpeed;
     }
-    
-    public int getShipMaximumContainers(){
+
+    public int getShipMaximumContainers() {
         return this.shipMaximumContainers;
     }
+
+    public String getCurrentShipPort() {
+        return this.currentPort;
+    }
     
-    public void setShipSpeed(int userInputSpeed){
+    public String getDestinationShipPort(){
+        return this.destinationPort;
+    }
+
+    public void setShipSpeed(int userInputSpeed) {
         this.shipSpeed = userInputSpeed;
     }
-    
-    public void setShipMaximumContainers(int userInputMaxContainers){
+
+    public void setShipMaximumContainers(int userInputMaxContainers) {
         this.shipMaximumContainers = userInputMaxContainers;
     }
-    
-    public void setShipCurrentContainers(int userInputCurrentContainers){
+
+    public void setShipCurrentContainers(int userInputCurrentContainers) {
         this.shipCurrentContainers = userInputCurrentContainers;
     }
+
+    public void setCurrentPort(String userInputShipPort) {
+        this.currentPort = userInputShipPort;
+    }
+
+    public void setDestinationPort(String portAssignment) {
+        this.destinationPort = portAssignment;
+    }
     
-    public void getShipStatistics(){
+    
+
+    public void portSanityCheck(String userDefinedPort) {
+        if (userDefinedPort.equals(this.destinationPort)) {
+            System.out.println("Sorry, you are already in " + this.currentPort + ". ");
+        } else {
+            this.destinationPort = userDefinedPort;
+        }
+    }
+
+    public String displayDestinationPortMessage() {
+        return "You are currently heading towards " + this.destinationPort + ". ";
+    }
+
+    public String displayCurrentPortMessage() {
+        return "You are currently docked in " + this.currentPort + ". ";
+    }
+
+    public void getShipStatistics() {
         System.out.println("Ship Speed: " + this.shipSpeed);
         System.out.println("Ship Max Containers: " + this.shipMaximumContainers);
         System.out.println("Ship Current Containers: " + this.shipCurrentContainers);

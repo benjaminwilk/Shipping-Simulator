@@ -22,8 +22,16 @@ public class PortDepartureOptions {
         return this.currentPort;
     }
     
+    public String portDecisionDisplay(){
+        Abstract.standardGameMenu(portLocations);
+        return portDecisionParse();
+        
+     //   int portDecisionInt = Abstract.getUserInt();
+      //  return portDe
+    }
+    
     public String portDecisionParse() {
-        int valueShift = Integer.parseInt(Abstract.getUserString());
+        int valueShift = Abstract.getUserInt();
         return (portLocations[valueShift - 1]);
     }
 

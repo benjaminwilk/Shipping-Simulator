@@ -34,5 +34,19 @@ public class Abstract {
             System.out.println((i + 1) + ". " + menuOptions[i]);
         }
     }
+    
+    public static void sanityCheck(){
+        
+    }
+    
+    public void choiceReaffirmation(){
+        System.out.print("Are you ready to depart? (Y/N): ");
+        String departureSelection = getUserString();
+        if(departureSelection.toLowerCase().contains("n")){
+            ;
+        }else{
+            
+        }
+    }
 
 }
