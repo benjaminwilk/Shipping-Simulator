@@ -33,7 +33,7 @@ public class Iteration {
         clu.getContainerSpaceUsedAndAvailable();
         Abstract.standardGameMenu(clu.getContainerMenu());
         int userSelection = Abstract.getUserInt();
-        clu.craneDecisionParser(userSelection);
+        clu.craneDecisionParser(userSelection, ps);
     }
 
 }

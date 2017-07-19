@@ -39,37 +39,55 @@ public class ContainerLoadUnload {
         System.out.println(getContainerSpaceAvailableOnShip());
     }
     
-    public void loadContainersOnShip(){
-        System.out.println("How many containers would you like to load: ");
+    public int requestedLoadContainersOnShip(){
+        System.out.print("How many containers would you like to load: ");
         int userDefinedLoadAddition = Abstract.getUserInt();
+        return userDefinedLoadAddition;
     }
     
-    public void unloadContainersOnShip(){
-        System.out.println("How many containers would you like to unload: ");
+    public int requestedUnloadContainersOnShip(){
+        System.out.print("How many containers would you like to unload: ");
         int userDefinedloadSubtraction = Abstract.getUserInt();
+        return userDefinedloadSubtraction;
         
     }
     
-    public void additionSanityCheck(){
-        
+    public void additionSanityCheck(int requestedIncreaseInContainers){
+        if((requestedIncreaseInContainers + this.containersOnShip) > (this.containersOnShip + this.spaceAvailableOnShip)){
+            System.out.println("Sorry, you already have " + this.containersOnShip + " containers loaded." );
+            requestedLoadContainersOnShip();
+        }
     }
     
+    public void subtractionSanityCheck(int requestedDecreaseInContainers){
+        if((requestedDecreaseInContainers - this.containersOnShip) < 0){
+            System.out.println("Sorry, you only have " + this.containersOnShip + " containers loaded.");
+            requestedUnloadContainersOnShip();
+        }
+    }
 
     public void containerIntroduction() {
         System.out.println("Welcome to the container crane system.");
     }
 
-    public void craneDecisionParser(int userInput) {
+    public void craneDecisionParser(int userInput, PlayerShip ps) {
+         Iteration itr = new Iteration();
         if (userInput == 1) {
-            loadContainersOnShip();
-
+            int loadValue = requestedLoadContainersOnShip();
+            additionSanityCheck(loadValue);
+            //this.containersOnShip = (this.containersOnShip + loadValue);
+            ps.setShipCurrentContainers(this.containersOnShip + loadValue);
+            itr.inPortIteration(ps);
         }
         if (userInput == 2) {
-            unloadContainersOnShip();
-            
+            int loadValue = requestedUnloadContainersOnShip();
+            subtractionSanityCheck(loadValue);
+          //  this.containersOnShip = (loadValue - this.containersOnShip);
+            ps.setShipCurrentContainers(loadValue - this.containersOnShip);
+            itr.inPortIteration(ps);            
         }
         if (userInput == 3) {
-
+            itr.inPortIteration(ps);
         } else {
 
         }
