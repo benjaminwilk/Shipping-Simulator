@@ -11,7 +11,7 @@ package shippingSimulator;
  */
 public class InPortMenu {
 
-    private final String[] inPortMenu = {"Depart for the next port", "Load Containers", "Retire"};
+    private final String[] inPortMenu = {"Depart for the next port", "Load Containers", "Speak with Harbormaster", "Retire"};
 
     public InPortMenu() {
     }
@@ -27,6 +27,10 @@ public class InPortMenu {
             it.containerLoaderIteration(ps);
         }
         if (menuDecision == 3) {
+            Iteration it = new Iteration();
+            it.harborMasterItration(ps);
+        }
+        if (menuDecision == 4) {
             System.out.println("Thank you for playing.");
             System.exit(0);
         }

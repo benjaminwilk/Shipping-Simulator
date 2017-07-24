@@ -36,4 +36,9 @@ public class Iteration {
         clu.craneDecisionParser(userSelection, ps);
     }
 
+    public void harborMasterItration(PlayerShip ps){
+        HarborMaster hm = new HarborMaster();
+        hm.harborMasterIntroduction();
+    }
+    
 }
