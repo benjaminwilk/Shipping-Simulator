@@ -46,6 +46,7 @@ public class SeaMovement {
     // HK to SY -- 4539nm
     public void seaMovement(PlayerShip ps) {
         Scanner scanner = new Scanner(System.in);
+        randomOccurrence oc = new randomOccurrence();
         int speed = ps.getShipSpeed();
         int destinationDistance = nauticalMileDistance();
         int traveledDistance = 0;
@@ -53,6 +54,7 @@ public class SeaMovement {
         
         while (traveledDistance < destinationDistance) {
             System.out.println("Day " + (dayCounter + 1) + ". You have traveled " + traveledDistance + " miles of " + destinationDistance + " miles.");
+            oc.randomContainer(ps);
             traveledDistance = traveledDistance + (speed * 24);
             dayCounter++;
 //            scanner.nextLine();

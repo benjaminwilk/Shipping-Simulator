@@ -16,6 +16,7 @@ public class PlayerShip {
     private int shipCurrentContainers;
     private String currentPort;
     private String destinationPort;
+    private int playerMoney;
 
     public PlayerShip() {
         this.shipSpeed = 12;
@@ -23,6 +24,7 @@ public class PlayerShip {
         this.shipMaximumContainers = 100;
         this.currentPort = "LA";
         this.destinationPort = "";
+        this.playerMoney = 5000;
     }
 
     public int getShipCurrentContainers() {
@@ -31,6 +33,10 @@ public class PlayerShip {
 
     public int getShipSpeed() {
         return this.shipSpeed;
+    }
+    
+    public int getPlayerMoney(){
+        return this.playerMoney;
     }
 
     public int getShipMaximumContainers() {
@@ -47,6 +53,18 @@ public class PlayerShip {
 
     public void setShipSpeed(int userInputSpeed) {
         this.shipSpeed = userInputSpeed;
+    }
+    
+    public void setPlayerMoney(int userInputMoney){
+        this.playerMoney = userInputMoney;
+    }
+    
+    public void increasePlayerMoney(int userInputIncreaseAmount){
+        this.playerMoney = (this.playerMoney + userInputIncreaseAmount);
+    }
+    
+    public void decreasePlayerMoney(int userInputDecreaseAmount){
+        this.playerMoney = (this.playerMoney - userInputDecreaseAmount);
     }
 
     public void setShipMaximumContainers(int userInputMaxContainers) {

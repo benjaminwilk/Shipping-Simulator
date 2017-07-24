@@ -10,6 +10,7 @@ package shippingSimulator;
  * @author benja
  */
 import java.util.Scanner;
+import java.util.Random;
 
 public class ContainerLoadUnload {
 
@@ -37,6 +38,15 @@ public class ContainerLoadUnload {
     public void getContainerSpaceUsedAndAvailable(){
         System.out.println(getContainerAmountOnShip());
         System.out.println(getContainerSpaceAvailableOnShip());
+    }
+    
+    public int randomizedContainerValue(){
+        Random random = new Random();
+        return random.nextInt(100);
+    }
+    
+    public String containerPrice(PlayerShip ps){
+        return "Containers in " + ps.getCurrentShipPort() + " are currently valued at $" + ". ";
     }
     
     public int requestedLoadContainersOnShip(){
