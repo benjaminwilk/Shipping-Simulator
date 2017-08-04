@@ -48,5 +48,9 @@ public class Abstract {
             
         }
     }
+    
+    public static int negativeNumberCreator(int valueToNegative){
+        return valueToNegative *= -1;
+    }
 
 }
