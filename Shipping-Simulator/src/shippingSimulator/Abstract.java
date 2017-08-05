@@ -24,6 +24,11 @@ public class Abstract {
         return Integer.parseInt(userString);
     }
 
+    public static char userStringToChar() {
+        String userString = getUserString();
+        return userString.charAt(0);
+    }
+
     public static void standardGameMenu(String[] menuOptions) {
         System.out.println("Available decisions: ");
         iterateThroughMenu(menuOptions);
@@ -47,16 +52,16 @@ public class Abstract {
     }
 
     public void choiceReaffirmation() {
-        System.out.print("Are you ready to depart? (Y/N): ");
-        String departureSelection = getUserString();
-        if (departureSelection.toLowerCase().contains("n")) {
+        System.out.print("Are you ready? (Y/N): ");
+        char departureSelection = userStringToChar();
+        if (Character.toLowerCase(departureSelection) == 'n') {
             ;
         } else {
 
         }
     }
 
-    public static int negativeNumberCreator(int valueToNegative) {
+    public static int IntToNegativeNumber(int valueToNegative) {
         return valueToNegative *= -1;
     }
 

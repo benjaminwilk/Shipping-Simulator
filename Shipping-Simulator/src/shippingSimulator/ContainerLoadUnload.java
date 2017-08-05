@@ -9,7 +9,6 @@ package shippingSimulator;
  *
  * @author benja
  */
-
 public class ContainerLoadUnload {
 
     private int containersOnShip;
@@ -40,13 +39,15 @@ public class ContainerLoadUnload {
     }
 
     public String containerPrice(PlayerShip ps) {
+        //Not complete yet, I'll be adding in a monetary system soon.
         return "Containers in " + ps.getCurrentShipPort() + " are currently valued at $" + ". ";
     }
 
     public int requestedContainersOnShip(int value) {
         System.out.print("How many containers would you like to " + loadUnload[value] + ": ");
-        int userDefinedLoadAddition = Abstract.userStringToInt();
-        return userDefinedLoadAddition;
+        //      int userDefinedLoadAddition = Abstract.userStringToInt();
+        //      return userDefinedLoadAddition;
+        return Abstract.userStringToInt();
     }
 
     // public int requestedLoadContainersOnShip() {
@@ -77,20 +78,22 @@ public class ContainerLoadUnload {
             if (containerAmount > this.spaceAvailableOnShip) {
                 System.out.println("Sorry, you already have " + this.containersOnShip + " containers loaded.");
                 Iteration itr = new Iteration();
-                itr.containerLoaderIteration(ps);
+                //     itr.containerLoaderIteration(ps);
+                itr.mainGameIteration(ps);
             }
 
         } else {
             if (containerAmount > this.containersOnShip) {
                 System.out.println("Sorry, you only have " + this.containersOnShip + " containers loaded.");
                 Iteration itr = new Iteration();
-                itr.containerLoaderIteration(ps);
+                itr.mainGameIteration(ps);
+                //itr.containerLoaderIteration(ps);
             }
         }
     }
 
     public void containerIntroduction() {
-        System.out.println("Welcome to the container crane system.");
+        System.out.println("Welcome to the container crane load / unload system.");
     }
 
     public void craneDecisionParser(int userInput, PlayerShip ps) {
@@ -103,7 +106,7 @@ public class ContainerLoadUnload {
                 itr.inPortIteration(ps);
             case 2:
                 int loaderValue = requestedContainersOnShip(userInput);
-                loaderValue = Abstract.negativeNumberCreator(loaderValue);
+                loaderValue = Abstract.IntToNegativeNumber(loaderValue);
                 loaderSanityCheck(loaderValue, ps);
                 ps.setShipCurrentContainers(loaderValue - this.containersOnShip);
                 itr.inPortIteration(ps);
