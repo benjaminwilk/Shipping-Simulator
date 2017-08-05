@@ -18,11 +18,16 @@ public class Abstract {
         return scanner.nextLine();
     }
 
-    public static int getUserInt() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
-    }
+//    public static int getUserInt() {
+//        Scanner scanner = new Scanner(System.in);
+//        return scanner.nextInt();
+//    }
 
+    public static int userStringToInt(){
+        String userString = getUserString();
+        return Integer.parseInt(userString);
+    }
+    
     public static void standardGameMenu(String[] menuOptions) {
         System.out.println("Available decisions: ");
         iterateThroughMenu(menuOptions);

@@ -52,7 +52,7 @@ public class ContainerLoadUnload {
 
     public int requestedContainersOnShip(int value) {
         System.out.print("How many containers would you like to " + loadUnload[value] + ": ");
-        int userDefinedLoadAddition = Abstract.getUserInt();
+        int userDefinedLoadAddition = Abstract.userStringToInt();
         return userDefinedLoadAddition;
     }
 

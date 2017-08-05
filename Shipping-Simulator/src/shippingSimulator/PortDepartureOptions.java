@@ -31,7 +31,7 @@ public class PortDepartureOptions {
     }
     
     public String portDecisionParse() {
-        int valueShift = Abstract.getUserInt();
+        int valueShift = Abstract.userStringToInt();
         return (portLocations[valueShift - 1]);
     }
 

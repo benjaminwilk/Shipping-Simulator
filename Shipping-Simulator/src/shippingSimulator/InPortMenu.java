@@ -17,7 +17,7 @@ public class InPortMenu {
     }
 
     public void inPortDecisionParser(PlayerShip ps) {
-        int menuDecision = Abstract.getUserInt();
+        int menuDecision = Abstract.userStringToInt();
         if (menuDecision == 1) {
             Iteration it = new Iteration();
             it.mainGameIteration(ps);
