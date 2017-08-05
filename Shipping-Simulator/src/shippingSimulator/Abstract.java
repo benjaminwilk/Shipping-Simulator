@@ -9,6 +9,7 @@ package shippingSimulator;
  *
  * @author benja
  */
+import java.util.Random;
 import java.util.Scanner;
 
 public class Abstract {
@@ -18,16 +19,11 @@ public class Abstract {
         return scanner.nextLine();
     }
 
-//    public static int getUserInt() {
-//        Scanner scanner = new Scanner(System.in);
-//        return scanner.nextInt();
-//    }
-
-    public static int userStringToInt(){
+    public static int userStringToInt() {
         String userString = getUserString();
         return Integer.parseInt(userString);
     }
-    
+
     public static void standardGameMenu(String[] menuOptions) {
         System.out.println("Available decisions: ");
         iterateThroughMenu(menuOptions);
@@ -39,22 +35,28 @@ public class Abstract {
             System.out.println((i + 1) + ". " + menuOptions[i]);
         }
     }
-    
-    public static void sanityCheck(){
-        
+
+    public static void sanityCheck() {
+
     }
-    
-    public void choiceReaffirmation(){
+
+    public int randomizedContainerValue() {
+        // This will be modified to provide random values for everything.  Just moving it here.
+        Random random = new Random();
+        return random.nextInt(100);
+    }
+
+    public void choiceReaffirmation() {
         System.out.print("Are you ready to depart? (Y/N): ");
         String departureSelection = getUserString();
-        if(departureSelection.toLowerCase().contains("n")){
+        if (departureSelection.toLowerCase().contains("n")) {
             ;
-        }else{
-            
+        } else {
+
         }
     }
-    
-    public static int negativeNumberCreator(int valueToNegative){
+
+    public static int negativeNumberCreator(int valueToNegative) {
         return valueToNegative *= -1;
     }
 

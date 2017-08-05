@@ -25,9 +25,6 @@ public class PortDepartureOptions {
     public String portDecisionDisplay(){
         Abstract.standardGameMenu(portLocations);
         return portDecisionParse();
-        
-     //   int portDecisionInt = Abstract.getUserInt();
-      //  return portDe
     }
     
     public String portDecisionParse() {

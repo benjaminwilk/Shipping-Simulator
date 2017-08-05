@@ -18,21 +18,22 @@ public class InPortMenu {
 
     public void inPortDecisionParser(PlayerShip ps) {
         int menuDecision = Abstract.userStringToInt();
-        if (menuDecision == 1) {
-            Iteration it = new Iteration();
-            it.mainGameIteration(ps);
-        }
-        if (menuDecision == 2) {
-            Iteration it = new Iteration();
-            it.containerLoaderIteration(ps);
-        }
-        if (menuDecision == 3) {
-            Iteration it = new Iteration();
-            it.harborMasterItration(ps);
-        }
-        if (menuDecision == 4) {
-            System.out.println("Thank you for playing.");
-            System.exit(0);
+        switch (menuDecision) {
+            case 1:
+                Iteration it = new Iteration();
+                it.mainGameIteration(ps);
+            case 2:
+                Iteration it2 = new Iteration();
+                it2.containerLoaderIteration(ps);
+
+            case 3:
+                Iteration it3 = new Iteration();
+                it3.harborMasterItration(ps);
+            case 4:
+                System.out.println("Thank you for playing.");
+                System.exit(0);
+            default:
+                ;
         }
     }
 
