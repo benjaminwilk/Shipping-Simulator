@@ -33,7 +33,8 @@ public class InPortMenu {
                 System.out.println("Thank you for playing.");
                 System.exit(0);
             default:
-                ;
+                System.out.println("Sorry, that's not an appropriate response.");
+                inPortDecisionParser(ps);
         }
     }
 
