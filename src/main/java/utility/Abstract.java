@@ -11,7 +11,7 @@ import src.main.java.inport.DestinationAndCurrentPort;
 import src.main.java.inport.HarborMaster;
 import src.main.java.inport.InPortMenu;
 import src.main.java.inport.PortDepartureOptions;
-import src.main.java.intro.Main;
+//import src.main.java.intro.Main;
 import src.main.java.player.PlayerShip;
 import src.main.java.player.PlayerShipMoney;
 import src.main.java.player.PlayerShipPorts;
@@ -31,18 +31,24 @@ public class Abstract {
 
     public static String getUserString() {
         Scanner scanner = new Scanner(System.in);
-        String userInputString = scanner.next();
+        String userInputString = scanner.nextLine();
         return userInputString;
     }
 
     public static int userStringToInt() {
-        String userString = getUserString();
-        return Integer.parseInt(userString);
+        Scanner scanner = new Scanner(System.in);
+        int userInteger = scanner.nextInt();
+        return userInteger;
+        //String userString = getUserString();
+        //return Integer.parseInt(userString);
     }
 
     public static char userStringToChar() {
-        String userString = getUserString();
-        return userString.charAt(0);
+        Scanner scanner = new Scanner(System.in);
+        String userChar = scanner.nextLine();
+        return userChar.charAt(0);
+        //String userString = getUserString();
+        //return userString.charAt(0);
     }
 
     public static void standardGameMenu(String[] menuOptions) {

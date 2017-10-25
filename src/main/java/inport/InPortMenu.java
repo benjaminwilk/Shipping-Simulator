@@ -20,6 +20,8 @@ import src.main.java.utility.Gui;
 import src.main.java.utility.Iteration;
 import src.main.java.utility.randomOccurrence;
 
+import java.util.Scanner;
+
 /**
  *
  * @author benja
@@ -31,8 +33,17 @@ public class InPortMenu {
     public InPortMenu() {
     }
 
+    public String userInt() {
+      String userInteger;
+        Scanner scanner = new Scanner(System.in);
+        userInteger = scanner.nextLine();
+        //scanner.close();
+        return userInteger;
+    }
+
     public void inPortDecisionParser(PlayerShip ps) {
-        int menuDecision = Abstract.userStringToInt();
+        //int menuDecision = Abstract.userStringToInt();
+        int menuDecision = Integer.parseInt(userInt());
         switch (menuDecision) {
             case 1:
                 Iteration it = new Iteration();
@@ -54,6 +65,7 @@ public class InPortMenu {
     }
 
     public void inPortMenuBlock(PlayerShip ps) {
+      userInt();
         // inPortPrimaryMenu();
         Abstract.standardGameMenu(inPortMenu);
         inPortDecisionParser(ps);
