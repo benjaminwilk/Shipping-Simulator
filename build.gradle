@@ -28,10 +28,14 @@ dependencies {
 }
 
 // Define the main class for the application
-mainClassName = 'src.main.java.intro.Main'
+mainClassName = 'src.main.java.main'
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'src.main.java.intro.Main.main'
-    }
+//jar {
+//    manifest {
+//        attributes 'Main-Class': 'src.test.java.Main.main'
+//    }
+//}
+
+run{
+  standardInput = System.in
 }
