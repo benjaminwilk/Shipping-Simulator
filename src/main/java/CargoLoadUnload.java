@@ -19,20 +19,20 @@ public class CargoLoadUnload{
     loadYNMenuParse(userDefinedCargoDecision);
   }
 
-  public void inPortMessage(){
+  private void inPortMessage(){
     System.out.println("Welcome.  You are currently docked and the crane is ready.");
   }
 
-  public void loadMenu(){
+  private void loadMenu(){
     ;
   }
 
-  public void getContainerReadout(){
+  private void getContainerReadout(){
     System.out.println("You currently have " + this.currentContainers + " containers aboard.");
     System.out.println("You can load a maximum of " + this.maximumContainers + " aboard.");
   }
 
-  public void getLoadYN(){
+  private void getLoadYN(){
     System.out.println("Would you like to add or remove containers?");
   }
 

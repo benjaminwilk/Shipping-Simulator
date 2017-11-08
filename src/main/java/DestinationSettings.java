@@ -38,7 +38,7 @@ public class DestinationSettings {
     nauticalMileDistance();
   }
 
-  public void destinationIterationMenu(){
+  private void destinationIterationMenu(){
     portOptionDisplay();
     Abstract.standardGameMenu(availablePortLocations);
     int portChoice = Abstract.userStringToInt() - 1;

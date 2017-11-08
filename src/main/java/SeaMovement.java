@@ -27,7 +27,7 @@ public class SeaMovement{
   //  resetDestinations(ps, ds);
 }*/
 
-  public void seaMovement() {
+  private void seaMovement() {
   //  Scanner scanner = new Scanner(System.in);
   //  randomOccurrence oc = new randomOccurrence();
     //int speed = ps.getShipSpeed();
