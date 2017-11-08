@@ -14,9 +14,18 @@ public class SeaMovement{
     this.shipSpeed = ps.getShipSpeed();
 
     seaMovement();
-    //System.out.println("BleepBloop");
     resetDestinations(ps, ds);
   }
+
+/*  public void seaMovementIteration(PlayerShip ps, DestinationSettings ds){
+    this.destinationPort = ds.getDestinationPort();
+    this.currentPort = ps.getCurrentPort();
+    this.destinationDistance = ds.getDestinationDistance();
+    this.shipSpeed = ps.getShipSpeed();
+
+    seaMovement();
+  //  resetDestinations(ps, ds);
+}*/
 
   public void seaMovement() {
   //  Scanner scanner = new Scanner(System.in);
@@ -38,9 +47,9 @@ public class SeaMovement{
   }
 
   private void resetDestinations(PlayerShip ps, DestinationSettings ds){
-    ds.setDestinationPort(null);
     ds.setCurrentPort(ds.getDestinationPort());
     ps.setCurrentPort(ds.getDestinationPort());
+    ds.setDestinationPort(null);
   }
 
 

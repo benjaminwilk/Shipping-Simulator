@@ -11,12 +11,13 @@ package src.main.java;
 public class main {
   public static void main(String[] args) {
     PlayerShip ps = new PlayerShip();
+    CargoLoadUnload clu = new CargoLoadUnload(ps);
+    DestinationSettings ds = new DestinationSettings(ps);
 
     while (true) {
-      CargoLoadUnload clu = new CargoLoadUnload(ps);
       clu.CargoLoadIteration(ps);
-      DestinationSettings ds = new DestinationSettings(ps);
       ds.destinationIterationMenu(ps);
+      //sm.seaMovementIteration(ps, ds);
       SeaMovement sm = new SeaMovement(ps, ds);
     }
   }
