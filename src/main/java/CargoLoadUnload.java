@@ -19,12 +19,31 @@ public class CargoLoadUnload{
     loadYNMenuParse(userDefinedCargoDecision);
   }
 
+  private void cargoMainMenu(){
+    inPortMessage();
+    getContainerReadout();
+    Abstract.standardGameMenu(cargoPortOptions);
+    int userDefinedCargoDecision = Abstract.userStringToInt();
+    loadYNMenuParse(userDefinedCargoDecision);
+  }
+
   private void inPortMessage(){
     System.out.println("Welcome.  You are currently docked and the crane is ready.");
   }
 
   private void loadMenu(){
-    ;
+    String loadUnloadOptions[] = {"Load Containers", "Unload Containers", "Back"};
+    Abstract.standardGameMenu(cargoPortOptions);
+    int userDefinedLoadMenu = Abstract.userStringToInt();
+    loadUnloadMenuParse(userDefinedLoadMenu);
+  }
+
+  private void loadContainers(){
+
+  }
+
+  private void unloadContainers(){
+
   }
 
   private void getContainerReadout(){
@@ -36,9 +55,20 @@ public class CargoLoadUnload{
     System.out.println("Would you like to add or remove containers?");
   }
 
-  private void loadYNMenuParse(char userDefinedPortDecision){
+  private void loadUnloadMenuParse(int userDefinedLoadMenu){
+    switch(userDefinedLoadMenu){
+      case 1:
+        loadContainers();
+      case 2:
+        unloadContainers();
+      case 3:
+        cargoMainMenu();
+    }
+  }
+
+  private void loadYNMenuParse(int userDefinedPortDecision){
     switch (userDefinedPortDecision) {
-      case 'Y':
+      case 1:
         loadMenu();
     }
   }
