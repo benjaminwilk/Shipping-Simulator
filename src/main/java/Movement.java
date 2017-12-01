@@ -88,7 +88,7 @@ public class Movement{
 		int dayCount = 0;
 		while(this.PortDistance >= DistanceTraveled){
 			DistanceTraveled += getRandomizedDistancePerDay();
-			System.out.print("Day " + dayCount + ". You have traveled " + DistanceTraveled + ".\n");
+			System.out.print("Day " + dayCount + ". You have traveled " + DistanceTraveled + " miles.\n");
 			dayCount++;
 		}
 		System.out.println("\n\n\n");

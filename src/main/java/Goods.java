@@ -28,7 +28,7 @@ public class Goods{
 		//playerObject.setCurrentContainers(50);
 	//	loadedContainers(Abstract.scannerInt(), playerObject);
 	//	containerOutput();
-		System.out.println(playerObject.getCurrentContainers());
+		//System.out.println(playerObject.getCurrentContainers());
 	}
 
 	private void goodsMenu(){
@@ -39,7 +39,7 @@ public class Goods{
 		switch(userInputGoodsMenuDecision){
 			case 1: 
 				//loadedContainers(Abstract.scannerInt(), playerObject);
-				containerMenu();
+				containerMenu(playerObject);
 				break;
 			case 2:
 				System.out.println("Ship upgrade here");
@@ -115,31 +115,35 @@ public class Goods{
 		}
 	}
 
-	private void containerMenu(){
-		System.out.print("Load or Unload");
+	private void containerMenu(User playerObject){
+		System.out.println("Load or Unload");
 		Abstract.rotatePorts(MenuDisplays.getContainerMenu());
-		containerParser(Abstract.scannerInt());
+		containerParser(Abstract.scannerInt(), playerObject);
 	}
 	
-	private void containerParser(int userDecision){
+	private void containerParser(int userDecision, User playerObject){
 		switch(userDecision){
 			case 1:
-				loadContainers();
+				loadContainers(playerObject);
 				break;
 			case 2:
-				unloadContainers();
+				unloadContainers(playerObject);
 				break;
 			case 3:
 				break;
 		}
 	}
 	
-	private void loadContainers(){
-		System.out.println("Load Containers");
+	private void loadContainers(User playerObject){
+		if(!playerObject.isFullShip()){
+			System.out.println("Your ship already has a full load!");
+		}
 	}
 	
-	private void unloadContainers(){
-		System.out.println("Unload Containers");
+	private void unloadContainers(User playerObject){
+		if(playerObject.isEmptyShip()){
+			System.out.println("Your ship is already empty!");	
+		}
 	}
 	
 	/*private void loadedContainers(int userGeneratedContainersPickedup, User playerObject){

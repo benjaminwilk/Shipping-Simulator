@@ -10,7 +10,7 @@ public class ShoreSide{
 	private void parseShoreMenu(int userDecision){
 		switch(userDecision){
 			case 1:
-				System.out.println("Case 1");
+				new GlobalContainerPrices();
 				break;
 			case 2:
 				System.out.println("Case 2");

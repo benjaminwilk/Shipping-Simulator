@@ -78,6 +78,22 @@ public class User{
 		return this.currentContainers;
 	}
 
+	public boolean isEmptyShip(){
+		if(this.currentContainers == 0){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isFullShip(){
+		if(this.currentContainers == this.maximumContainers){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public void upgradeUserShip(){
 	}
 	
