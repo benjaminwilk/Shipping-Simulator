@@ -1,70 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package src.main.java;
 
-
-/**
- *
- * @author benja
- */
 import java.util.Random;
 import java.util.Scanner;
 
-public class Abstract {
+public class Abstract{
 
-    public static String getUserString() {
-      Scanner scanner = new Scanner(System.in);
-      String userInputString = scanner.nextLine();
-      return userInputString;
+  private static Scanner initializeScanner(){
+    Scanner read = new Scanner(System.in);
+    return read;
+  }
+
+  public static int scannerInt(){
+    int userInputInt = initializeScanner().nextInt();
+    return userInputInt;
+  }
+
+  public static String scannerString(){
+    String userInputString = initializeScanner().nextLine();
+    return userInputString;
+  }
+
+  public static void rotatePorts(String[] displayList){
+    for(int i = 0; i < displayList.length; i++){
+      System.out.println( (i + 1) +  ". " + displayList[i]);
     }
+  }
 
-    public static int userStringToInt() {
-      String userString = getUserString();
-      return Integer.parseInt(userString);
-    }
+  private static Random generateRandomValue(){
+    Random randomValue = new Random();
+    return randomValue;
+  }
 
-    public static char userStringToChar() {
-      String userString = getUserString();
-      return Character.toUpperCase(userString.charAt(0));
-    }
+  public static int getRandomValue(int maxValue){
+    return generateRandomValue().nextInt(maxValue);
+  }
 
-    public static void standardGameMenu(String[] menuOptions) {
-        System.out.println("Available decisions: ");
-        iterateThroughMenu(menuOptions);
-        System.out.print("Make your selection: ");
-    }
+  public static int getRandomValue(){
+    return generateRandomValue().nextInt();
+  }
 
-    private static void iterateThroughMenu(String[] menuOptions) {
-        for (int i = 0; i < menuOptions.length; i++) {
-            System.out.println((i + 1) + ". " + menuOptions[i]);
-        }
-    }
-
-    /*public static void sanityCheck() {
-
-    }
-
-    public int randomizedContainerValue() {
-        // This will be modified to provide random values for everything.  Just moving it here.
-        Random random = new Random();
-        return random.nextInt(100);
-    }
-
-    public void choiceReaffirmation() {
-        System.out.print("Are you ready? (Y/N): ");
-        char departureSelection = userStringToChar();
-        if (Character.toLowerCase(departureSelection) == 'n') {
-            ;
-        } else {
-
-        }
-    }
-
-    public static int IntToNegativeNumber(int valueToNegative) {
-        return valueToNegative *= -1;
-    }*/
+  public static int getRandomValue(int maxValue, int minValue){
+    return generateRandomValue().nextInt(maxValue - minValue) + minValue;
+  }
 
 }
