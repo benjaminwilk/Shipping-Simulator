@@ -10,10 +10,13 @@ public class PortChoice{
 	}
 
 	public void iteration(User playerObject){
-		System.out.println("Current Port: " + getCurrentPort());
-		Abstract.rotatePorts(MenuDisplays.getAvailablePorts());
-		System.out.print(": ");
-		setDestinationPort(Abstract.scannerInt());
+		int portChoice = 0;
+//		do{
+			System.out.println("Current Port: " + getCurrentPort());
+			Abstract.rotatePorts(MenuDisplays.getAvailablePorts());
+			System.out.print(": ");
+			portChoice = setDestinationPort(Abstract.scannerInt());
+	//	}while(portChoice <= 3);
 	//	changeCurrentAndDestination();
 	}
 
@@ -42,16 +45,19 @@ public class PortChoice{
 		this.destinationPort = null;
 	}
 
-	private void setDestinationPort(int userValueChosenPort){
+	private int setDestinationPort(int userValueChosenPort){
 		this.destinationPort = MenuDisplays.getAvailablePorts(userValueChosenPort);
+		return userValueChosenPort;
 	}
 
-	private void setDestinationPort(String userPortText){
+	private int setDestinationPort(String userPortText){
 		for(int i = 0; i < MenuDisplays.getAvailablePortsSize(); i++){
 			if(userPortText.contains(MenuDisplays.getAvailablePorts(i))){
 				this.destinationPort = MenuDisplays.getAvailablePorts(i);
+				return i;
 			}
 		}
+		return 0;
 	}
 
 }

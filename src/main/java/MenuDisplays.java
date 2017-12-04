@@ -13,6 +13,8 @@ public class MenuDisplays{
 	
 	private static final String[] shoreOptionMenu = {"Check Weather Report", "Check Ship Status", "Check Port Prices", "Go Back"};
 	
+	private static final String[] weatherOptions = {"Sunny", "Partly Cloudy", "Partly Sunny", "Cloudy", "Light Rain", "Rain", "Heavy Rain", "Light Snow", "Snow", "Heavy Snow"};
+	
 	public static String[] getGoodsMenu(){
 		return goodsDisplayMenu;
 	}
@@ -35,6 +37,18 @@ public class MenuDisplays{
 	
 	public static String[] getShoreOptionMenu(){
 		return shoreOptionMenu;
+	}
+	
+	public static int getWeatherOptionLength(){
+		return weatherOptions.length;
+	}
+	
+	public static String[] getWeatherOptions(){
+		return weatherOptions;
+	}
+	
+	public static String getWeatherOptions(int arrayChoice){
+		return weatherOptions[arrayChoice - 1];
 	}
 	
 	public static int getAvailablePortsSize(){

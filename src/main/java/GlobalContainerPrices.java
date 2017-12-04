@@ -12,9 +12,10 @@ public class GlobalContainerPrices{
 	}
 	
 	public void displayPrices(){
-		for(int i = 0 ; i < MenuDisplays.getAvailablePortsSize(); i++){
-			System.out.println(MenuDisplays.getAvailablePorts(i) + " -- $" + Abstract.getRandomValue(200, 50));
+		for(int i = 1 ; i < MenuDisplays.getAvailablePortsSize() + 1; i++){
+			System.out.println(MenuDisplays.getAvailablePorts(i) + " -- $" + Abstract.getRandomValue(500, 20) + " per container");
 		}
+		Abstract.pressAnyKey();
 	}
 	
 }

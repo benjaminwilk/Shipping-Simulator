@@ -5,6 +5,8 @@ public class User{
 	private int speed;
 	private int maximumContainers;
 	private int currentContainers;
+	
+	private double shipPurse;
 
 	public User(String userDefinedName){
 		this.userName = userDefinedName;
@@ -97,11 +99,23 @@ public class User{
 	public void upgradeUserShip(){
 	}
 	
-	public void getUserReadout(){
-		System.out.println("Name: " + this.userName);
-		System.out.println("Speed: " + this.speed + " knots");
+	public void getContainerReadout(){
 		System.out.println("Maximum Containers: " + this.maximumContainers);
 		System.out.println("Current Containers: " + this.currentContainers + "\n\n");
+	}
+	
+	public void getShipName(){
+		System.out.println("Name: " + this.userName);
+	}
+	
+	public void getShipSpeed(){
+		System.out.println("Speed: " + this.speed + " knots");
+	}
+	
+	public void getUserReadout(){
+		getShipName();
+		getShipSpeed();
+		getContainerReadout();
 	}
 
 }

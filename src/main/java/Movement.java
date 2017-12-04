@@ -26,8 +26,8 @@ public class Movement{
 	public void iteration(User playerObject, PortChoice pc){
 		this.DeparturePort = pc.getCurrentPort();
 		this.ArrivalPort = pc.getDestinationPort();
-		System.out.println(this.DeparturePort);
-		System.out.println(pc.getDestinationPort());
+		//System.out.println(this.DeparturePort);
+		//System.out.println(pc.getDestinationPort());
 		convertPortNameToCoordinates();
 		this.PortDistance = DistanceCalculation(this.DeparturePortCoordinates[1], this.DeparturePortCoordinates[0], this.ArrivalPortCoordinates[1], this.ArrivalPortCoordinates[0] );
 		this.UserSpeed = playerObject.getSpeed();
