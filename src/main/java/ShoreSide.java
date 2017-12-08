@@ -3,28 +3,36 @@ package src.main.java;
 public class ShoreSide{
 
 	public ShoreSide(){
-		Abstract.rotatePorts(MenuDisplays.getShoreOptionMenu());
-		System.out.print(": ");
-		parseShoreMenu(Abstract.scannerInt());
+		int shoreSideChoice = 0;
+		do{
+			Abstract.rotatePorts(MenuDisplays.getShoreOptionMenu());
+			System.out.print(": ");
+			shoreSideChoice = parseShoreMenu(Abstract.scannerInt());
+		}while(shoreSideChoice != 4);
 	}
 
-	private void parseShoreMenu(int userDecision){
+	private int parseShoreMenu(int userDecision){
 		switch(userDecision){
 			case 1:
-			//Weather Report
+				//Weather Report
 				new SeaWeather().formattedWeatherAndTemperature(30);
-				break;
+				return 1;
+				//break;
 			case 2:
-			//Ship Status
+				//Ship Status
 				System.out.println("Case 2");
-				break;
+				return 2;
+				//break;
 			case 3:
-			//Container Prices at ports
+				//Container Prices at ports
 				new GlobalContainerPrices();
-				break;
+				return 3;
+				//break;
 			case 4:
-			//Exit
-				break;
+				//Exit
+				return 4;
+				//break;
 		}
+		return 0;
 	}
 }

@@ -4,13 +4,15 @@ public class SeaWeather{
 	
 	private int temperature;
 	private int maximumChangeInTemp = 4;
+	private int maximumTemperature = 70;
+	private int minimumTemperature = 40;
 	
 	public SeaWeather(){
 		setRandomTemperature();
 	}
 	
 	private void setRandomTemperature(){
-		this.temperature = Abstract.getRandomValue(70, 40);
+		this.temperature = Abstract.getRandomValue(this.maximumTemperature, this.minimumTemperature);
 	}
 	
 	private void setTemperature(int userDefinedTemperature){
@@ -35,7 +37,7 @@ public class SeaWeather{
 	}
 	
 	public void formattedWeatherAndTemperature(){
-		System.out.println(this.temperature + " -- " + MenuDisplays.getWeatherOptions());
+		System.out.println(this.temperature + "F -- " + MenuDisplays.getWeatherOptions());
 	}
 
 	public void formattedWeatherAndTemperature(int dayCount){

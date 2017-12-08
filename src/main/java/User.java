@@ -6,12 +6,15 @@ public class User{
 	private int maximumContainers;
 	private int currentContainers;
 	
-	private double shipPurse;
+	private int shipPurse;
+	// Bunker fuel price per ton $343
+	private int dateValue;
 
 	public User(String userDefinedName){
 		this.userName = userDefinedName;
 		this.maximumContainers = 100;
 		this.currentContainers = 0;
+		this.shipPurse = 5000;
 	}
 
 	public User(int[] getDefaultUserShip){
@@ -20,6 +23,7 @@ public class User{
 		this.speed = getDefaultUserShip[2];
 		//this.userName = setUserNameFormatted();
 		this.userName = "Blerp";
+		this.shipPurse = 5000;
 	}
 	
 	public User(String userDefinedName, int[] getDefaultUserShip){
@@ -27,18 +31,21 @@ public class User{
 		this.maximumContainers = getDefaultUserShip[0];
 		this.currentContainers = getDefaultUserShip[1];
 		this.speed = getDefaultUserShip[2];
+		this.shipPurse = 5000;
 	}
 	
 	public User(String userDefinedName, int userDefinedMaxContainers, int userDefinedCurrentContainers){
 		this.userName = userDefinedName;
 		this.maximumContainers = userDefinedMaxContainers;
 		this.currentContainers = userDefinedCurrentContainers;
+		this.shipPurse = 5000;
 	}
 
 	public User(String userDefinedName, int userDefinedMaxContainers){
 		this.userName = userDefinedName;
 		this.maximumContainers = userDefinedMaxContainers;
 		this.currentContainers = 0;
+		this.shipPurse = 5000;
 	}
 
 	public void setUserName(String userDefinedName){
@@ -64,6 +71,14 @@ public class User{
 		return this.speed;
 	}
 
+	public int getMoney(){
+		return this.shipPurse;
+	}
+	
+	public void setMoney(int userPassedValue){
+		this.shipPurse = userPassedValue;
+	}
+	
 	public void setMaximumContainers(int userDefinedMaxContainers){
 		this.maximumContainers = userDefinedMaxContainers;
 	}

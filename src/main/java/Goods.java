@@ -2,10 +2,12 @@ package src.main.java;
 
 public class Goods{
 	private int[] availableContainers = new int[2];
-
+	/*** Amount of containers --> price per container ***/
+	
 	private int maximumAmountOfContainersInOut = 200;
 	private int maximumValueOfContainersInOut = 50;
-	/*** Amount of containers --> price per container ***/
+	
+	private int maximumContainerPrice = 500;
 	
 	/*  private int[] buildingMaterialContainers = new int[2];
 	private int[] consumerGoodsContainers = new int[2];
@@ -13,21 +15,21 @@ public class Goods{
 
 	public Goods(){
 		this.availableContainers[0] = Abstract.getRandomValue(1000);
-		this.availableContainers[1] = Abstract.getRandomValue(500, 20);
+		this.availableContainers[1] = Abstract.getRandomValue(maximumContainerPrice, 20);
 	}
 
 	public void iteration(User playerObject){
-		//int goodsMenu = 0;
-	//	do{
-			containerPriceAndAmountSanityCheck();
+		int goodsChoice = 0;
+		do{
+			containerPriceAndAmountSanityCheck(playerObject);
 			increaseDecreaseContainerPrice();
 			increaseDecreaseContainerAmount();
 			containerOutput();
 			containerPrice();
 			goodsMenu();
 			System.out.print(": ");
-			parseGoodsMenu(Abstract.scannerInt(), playerObject);
-	//	}while(goodsMenu != 3);
+			goodsChoice = parseGoodsMenu(Abstract.scannerInt(), playerObject);
+		}while(goodsChoice != 3);
 		//playerObject.setCurrentContainers(50);
 	//	loadedContainers(Abstract.scannerInt(), playerObject);
 	//	containerOutput();
@@ -38,30 +40,27 @@ public class Goods{
 		Abstract.rotatePorts(MenuDisplays.getGoodsMenu());
 	}
 	
-	private void parseGoodsMenu(int userInputGoodsMenuDecision, User playerObject){
+	private int parseGoodsMenu(int userInputGoodsMenuDecision, User playerObject){
 		switch(userInputGoodsMenuDecision){
 			case 1: 
 			//Load unload containers
 				//loadedContainers(Abstract.scannerInt(), playerObject);
 				containerMenu(playerObject);
-				//return 0;
-				break;
+				return 1;
 			case 2:
 			//Ship upgrade
 				System.out.println("Ship upgrade here");
 				new ShoreSide();
-				//return 0;
-				break;
+				return 2;
 			case 3:
 			//Leave port
-				//return 3;
-				break;
+				return 3;
 			default: 
 				System.out.println("That is not an acceptable answer");
 				iteration(playerObject);
-				//return 0;
-				break;
+				return 0;
 		}
+
 	}
   
 	private void containerOutput(){
@@ -72,12 +71,12 @@ public class Goods{
 		System.out.println("Current container price: $" + this.availableContainers[1] + ".00");
 	}
   
-	private void containerPriceAndAmountSanityCheck(){
+	private void containerPriceAndAmountSanityCheck(User playerObject){
 		if(this.availableContainers[0] < 30){
-			this.availableContainers[0] = 150;
+			this.availableContainers[0] = playerObject.getMaximumContainers();
 		}
 		if(this.availableContainers[1] < 20){
-			this.availableContainers[1] = 100;
+			this.availableContainers[1] = maximumContainerPrice;
 		}
 	}
 
@@ -126,28 +125,35 @@ public class Goods{
 	}
 
 	private void containerMenu(User playerObject){
-		System.out.println("Maximum Containers allowed on Ship: " + playerObject.getMaximumContainers());
-		System.out.println("Current containers on ship: " + playerObject.getCurrentContainers());
-		System.out.println("Load or Unload");
-		Abstract.rotatePorts(MenuDisplays.getContainerMenu());
-		containerParser(Abstract.scannerInt(), playerObject);
+		int containerChoice = 0;
+		do{
+			System.out.println("Maximum Containers allowed on Ship: " + playerObject.getMaximumContainers());
+			System.out.println("Current containers on ship: " + playerObject.getCurrentContainers());
+			System.out.println("Load or Unload");
+			Abstract.rotatePorts(MenuDisplays.getContainerMenu());
+			containerChoice = containerParser(Abstract.scannerInt(), playerObject);
+		}while(containerChoice != 3);
 	}
 	
-	private void containerParser(int userDecision, User playerObject){
+	private int containerParser(int userDecision, User playerObject){
 		switch(userDecision){
 			case 1:
-			//Load Containers
+				//Load Containers
 				loadContainers(playerObject);
-				break;
+				return 1;
+				//break;
 			case 2:
-			//Unload Containers
+				//Unload Containers
 				unloadContainers(playerObject);
-				break;
+				return 2;
+				//break;
 			case 3:
-			//Exit
-				break;
+				//Exit
+				return 3;
+				//break;
 		}
 		playerObject.getContainerReadout();
+		return 0;
 	}
 	
 	private void loadContainers(User playerObject){
