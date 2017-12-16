@@ -23,15 +23,15 @@ public class Movement{
 		return portLongitude[userDefinedLocation];
 	}
 	
-	public void iteration(UserShip playerObject, PortChoice pc){
+	public void iteration(User playerObject, PortChoice pc){
 		this.DeparturePort = pc.getCurrentPort();
 		this.ArrivalPort = pc.getDestinationPort();
 		//System.out.println(this.DeparturePort);
 		//System.out.println(pc.getDestinationPort());
 		convertPortNameToCoordinates();
 		this.PortDistance = DistanceCalculation(this.DeparturePortCoordinates[1], this.DeparturePortCoordinates[0], this.ArrivalPortCoordinates[1], this.ArrivalPortCoordinates[0] );
-		this.UserSpeed = playerObject.getShipSpeed();
-		seaTravel(playerObject);
+		this.UserSpeed = playerObject.getSpeed();
+		seaTravel();
 		pc.changeCurrentAndDestination();
 	}
 	
@@ -83,12 +83,12 @@ public class Movement{
 	
 	
 	
-	private void seaTravel(UserShip playerObject){
+	private void seaTravel(){
 		int DistanceTraveled = 0;
 		int dayCount = 0;
 		while(this.PortDistance >= DistanceTraveled){
 			DistanceTraveled += getRandomizedDistancePerDay();
-			System.out.print(/*"Day " + dayCount + */ DateDisplay.increaseDate(playerObject) + ". You have traveled " + DistanceTraveled + " miles.\n");
+			System.out.print("Day " + dayCount + ". You have traveled " + DistanceTraveled + " miles.\n");
 			dayCount++;
 		}
 		System.out.println("\n\n\n");

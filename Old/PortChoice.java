@@ -9,7 +9,7 @@ public class PortChoice{
 		this.currentPort = MenuDisplays.getAvailablePorts(1);
 	}
 
-	public void iteration(UserShip playerObject){
+	public void iteration(User playerObject){
 		int portChoice = 0;
 //		do{
 			System.out.println("Current Port: " + getCurrentPort());

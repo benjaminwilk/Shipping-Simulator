@@ -19,11 +19,11 @@ public class SeaWeather{
 		this.temperature = userDefinedTemperature;
 	}
 	
-	private int getTemperature(){
+	public int getTemperature(){
 		return this.temperature;
 	}
 
-	private String getWeather(){
+	public String getWeather(){
 		return MenuDisplays.getWeatherOptions(Abstract.getRandomValue(MenuDisplays.getWeatherOptionLength(), 1));
 	}
 	
@@ -37,12 +37,12 @@ public class SeaWeather{
 	}
 	
 	public void formattedWeatherAndTemperature(){
-		System.out.println(this.temperature + "F -- " + getWeather());
+		System.out.println(this.temperature + "F -- " + MenuDisplays.getWeatherOptions());
 	}
 
-	public void formattedWeatherAndTemperature(UserShip playerObject, int dayCount){
+	public void formattedWeatherAndTemperature(int dayCount){
 		for(int i = 0; i < dayCount; i++){
-			System.out.println((DateDisplay.increaseDate(playerObject)) + " -- " + getTemperature() + "F -- " + getWeather());
+			System.out.println((i + 1) + " -- " + getTemperature() + "F -- " + getWeather());
 			increaseDecreaseTemperature();
 		}
 	}

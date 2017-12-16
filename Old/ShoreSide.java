@@ -2,25 +2,24 @@ package src.main.java;
 
 public class ShoreSide{
 
-	public ShoreSide(UserShip playerObject){
+	public ShoreSide(){
 		int shoreSideChoice = 0;
 		do{
 			Abstract.rotatePorts(MenuDisplays.getShoreOptionMenu());
 			System.out.print(": ");
-			shoreSideChoice = parseShoreMenu(playerObject, Abstract.scannerInt());
+			shoreSideChoice = parseShoreMenu(Abstract.scannerInt());
 		}while(shoreSideChoice != 4);
 	}
 
-	private int parseShoreMenu(UserShip playerObject, int userDecision){
+	private int parseShoreMenu(int userDecision){
 		switch(userDecision){
 			case 1:
 				//Weather Report
-				new SeaWeather().formattedWeatherAndTemperature(playerObject, 30);
+				new SeaWeather().formattedWeatherAndTemperature(30);
 				return 1;
 				//break;
 			case 2:
 				//Ship Status
-				new ShipStatus(playerObject);
 				System.out.println("Case 2");
 				return 2;
 				//break;

@@ -4,8 +4,8 @@ import java.awt.event.KeyEvent;
 
 public class Main{
 	public static void main(String[] args){
-		DateDisplay.displayDate();
-		UserShip playerObject = new User("USS Enterprise", UpgradePath.getDefaultUserShip());
+		dateDisplay.displayDate();
+		User playerObject = new User("USS Enterprise", UpgradePath.getDefaultUserShip());
 		playerObject.setSpeed(12);
 		playerObject.getUserReadout();
 		PortChoice portDecision = new PortChoice();
@@ -16,9 +16,9 @@ public class Main{
 			goods.iteration(playerObject);
 			portDecision.iteration(playerObject);
 			move.iteration(playerObject, portDecision);
-		}
+		}		
 	}
-
+	
 	public void keyPressed(KeyEvent e){
 		int key = e.getKeyCode();
 		if(key == KeyEvent.VK_Q){

@@ -18,11 +18,10 @@ public class Goods{
 		this.availableContainers[1] = Abstract.getRandomValue(maximumContainerPrice, 20);
 	}
 
-	public void iteration(UserShip playerObject){
+	public void iteration(User playerObject){
 		int goodsChoice = 0;
 		do{
 			containerPriceAndAmountSanityCheck(playerObject);
-			System.out.println("Date: " + playerObject.getDate());
 			increaseDecreaseContainerPrice();
 			increaseDecreaseContainerAmount();
 			containerOutput();
@@ -30,7 +29,6 @@ public class Goods{
 			goodsMenu();
 			System.out.print(": ");
 			goodsChoice = parseGoodsMenu(Abstract.scannerInt(), playerObject);
-			playerObject.setDateValue();
 		}while(goodsChoice != 3);
 		//playerObject.setCurrentContainers(50);
 	//	loadedContainers(Abstract.scannerInt(), playerObject);
@@ -42,7 +40,7 @@ public class Goods{
 		Abstract.rotatePorts(MenuDisplays.getGoodsMenu());
 	}
 	
-	private int parseGoodsMenu(int userInputGoodsMenuDecision, UserShip playerObject){
+	private int parseGoodsMenu(int userInputGoodsMenuDecision, User playerObject){
 		switch(userInputGoodsMenuDecision){
 			case 1: 
 			//Load unload containers
@@ -52,7 +50,7 @@ public class Goods{
 			case 2:
 			//Ship upgrade
 				System.out.println("Ship upgrade here");
-				new ShoreSide(playerObject);
+				new ShoreSide();
 				return 2;
 			case 3:
 			//Leave port
@@ -66,7 +64,6 @@ public class Goods{
 	}
   
 	private void containerOutput(){
-		
 		System.out.println("Containers in Port: " + this.availableContainers[0]);
 	}
 
@@ -74,7 +71,7 @@ public class Goods{
 		System.out.println("Current container price: $" + this.availableContainers[1] + ".00");
 	}
   
-	private void containerPriceAndAmountSanityCheck(UserShip playerObject){
+	private void containerPriceAndAmountSanityCheck(User playerObject){
 		if(this.availableContainers[0] < 30){
 			this.availableContainers[0] = playerObject.getMaximumContainers();
 		}
@@ -127,7 +124,7 @@ public class Goods{
 		}
 	}
 
-	private void containerMenu(UserShip playerObject){
+	private void containerMenu(User playerObject){
 		int containerChoice = 0;
 		do{
 			System.out.println("Maximum Containers allowed on Ship: " + playerObject.getMaximumContainers());
@@ -138,7 +135,7 @@ public class Goods{
 		}while(containerChoice != 3);
 	}
 	
-	private int containerParser(int userDecision, UserShip playerObject){
+	private int containerParser(int userDecision, User playerObject){
 		switch(userDecision){
 			case 1:
 				//Load Containers
@@ -159,7 +156,7 @@ public class Goods{
 		return 0;
 	}
 	
-	private void loadContainers(UserShip playerObject){
+	private void loadContainers(User playerObject){
 		if(playerObject.isFullShip() == true){
 			System.out.println("Your ship already has a full load!");
 		} else {
@@ -169,10 +166,9 @@ public class Goods{
 				playerObject.setCurrentContainers((loadRequest + playerObject.getCurrentContainers()));
 			}
 		}
-		playerObject.setDateValue();
 	}
 	
-	private void unloadContainers(UserShip playerObject){
+	private void unloadContainers(User playerObject){
 		if(playerObject.isEmptyShip() == true){
 			System.out.println("Your ship is already empty!");	
 		} else{
@@ -183,7 +179,6 @@ public class Goods{
 			}
 			containerPayout(unloadRequest);
 		}
-		playerObject.setDateValue();
 	}
 	
 	private void containerPayout(int userDefinedUnloadedContainers){
