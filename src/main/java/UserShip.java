@@ -1,21 +1,19 @@
 package src.main.java;
 
-public interface UserShip{
+public interface UserShip extends UserContainers, UserMoney{
 	public void setUserName(String userDefinedName);
 	public String getUserName();
 	public void setSpeed(int userDefinedSpeed);
-//	public int getMoney();
 	public int getDateValue();
 	public void setDateValue();
 	public void setDateValue(int increaseValue);
-//	public void setMoney(int userPassedValue);
 	public String getDate();
 	public void getShipName();
 	public void getFormattedShipSpeed();
 	public int getShipSpeed();
 	public void getUserReadout();
 
-	public void setMaximumContainers(int userDefinedMaxContainers);
+	/*public void setMaximumContainers(int userDefinedMaxContainers);
 	public int getMaximumContainers();
 	public void setCurrentContainers(int userDefinedCurrentContainers);
 	public int getCurrentContainers();
@@ -24,14 +22,13 @@ public interface UserShip{
 	public void getContainerReadout();
 
 	public int getMoney();
-	public void setMoney(int userPassedValue);
+	public void setMoney(int userPassedValue);*/
 
 }
 
 class User implements UserShip{
 	String userName;
 	int speed;
-
 
 	// Bunker fuel price per ton $343
 	private int dateValue;
@@ -40,36 +37,28 @@ class User implements UserShip{
 		this.userName = userDefinedName;
 	}
 
-	public User(int[] getDefaultUserShip){
+/*	public User(int[] getDefaultUserShip){
 		this.speed = getDefaultUserShip[2];
 		//this.userName = setUserNameFormatted();
 		this.userName = "N/A";
-	}
+
+	}*/
 
 	public User(String userDefinedName, int[] getDefaultUserShip){
 		this.userName = userDefinedName;
 		this.speed = getDefaultUserShip[2];
 	}
 
-	public User(String userDefinedName, int userDefinedMaxContainers, int userDefinedCurrentContainers){
+	/*public User(String userDefinedName, int userDefinedMaxContainers, int userDefinedCurrentContainers){
 		this.userName = userDefinedName;
 	}
 
 	public User(String userDefinedName, int userDefinedMaxContainers){
 		this.userName = userDefinedName;
-	}
+	}*/
 
 	public void setUserName(String userDefinedName){
 		this.userName = userDefinedName;
-	}
-
-	public ShipMoney(){
-		this.shipPurse = 5000;
-	}
-
-	public ShipContainers(){
-		this.maximumContainers = 100;
-		this.currentContainers = 0;
 	}
 
 	/*** This function is broken for some reason. ***/

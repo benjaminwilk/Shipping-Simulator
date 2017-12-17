@@ -1,6 +1,6 @@
 package src.main.java;
 
-/*public interface UserContainers extends UserShip{
+public interface UserContainers{
 	public void setMaximumContainers(int userDefinedMaxContainers);
 	public int getMaximumContainers();
 	public void setCurrentContainers(int userDefinedCurrentContainers);
@@ -9,12 +9,22 @@ package src.main.java;
 	public boolean isFullShip();
 	public void getContainerReadout();
 
-}*/
-public class ShipContainers extends User{
+}
+class ShipContainers extends User{
 	int maximumContainers;
 	int currentContainers;
 
+	public ShipContainers(String userDefinedName){
+			super(userDefinedName);
+			this.maximumContainers = 100;
+			this.currentContainers = 0;
+	}
 
+	public ShipContainers(String userDefinedName, int[] getDefaultUserShip){
+			super(userDefinedName, getDefaultUserShip);
+			this.maximumContainers = 100;
+			this.currentContainers = 0;
+	}
 
 	public void setMaximumContainers(int userDefinedMaxContainers){
 		this.maximumContainers = userDefinedMaxContainers;
