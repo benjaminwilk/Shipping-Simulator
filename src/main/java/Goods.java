@@ -1,196 +1,183 @@
 package src.main.java;
 
+import src.main.java.Player.*;
+
+import java.util.HashMap;
+import java.util.*;
+
 public class Goods{
-	private int[] availableContainers = new int[2];
-	/*** Amount of containers --> price per container ***/
-	
-	private int maximumAmountOfContainersInOut = 200;
-	private int maximumValueOfContainersInOut = 50;
-	
-	private int maximumContainerPrice = 500;
+	private int containerPaymentPercentage = 10;
+	private QuantityAndPrice ShoreSideQuantityAndPrice;
+	private static final int maximumCountContainersInOut = 200;
+	private static final int maximumPriceContainersInOut = 50;
+	private static final int maximumContainerPrice = 500;
+
+	private boolean loadContainerPort;
 	
 	/*  private int[] buildingMaterialContainers = new int[2];
 	private int[] consumerGoodsContainers = new int[2];
 	private int[] durableGoodsContainers = new int[2];*/
 
 	public Goods(){
-		this.availableContainers[0] = Abstract.getRandomValue(1000);
-		this.availableContainers[1] = Abstract.getRandomValue(maximumContainerPrice, 20);
+		this.ShoreSideQuantityAndPrice = new QuantityAndPrice();
+		this.ShoreSideQuantityAndPrice.SetQuantity(Abstract.getRandomValue(1000, 0));
+		this.ShoreSideQuantityAndPrice.SetPrice(Abstract.getRandomValue(maximumContainerPrice, 20));
 	}
 
-	public void iteration(UserShip playerObject){
+	public void Iteration(Boat playerObject){
+		this.loadContainerPort = false;
 		int goodsChoice = 0;
 		do{
-			containerPriceAndAmountSanityCheck(playerObject);
-			System.out.println("Date: " + playerObject.getDate());
-			increaseDecreaseContainerPrice();
-			increaseDecreaseContainerAmount();
-			containerOutput();
-			containerPrice();
-			goodsMenu();
-			System.out.print(": ");
-			goodsChoice = parseGoodsMenu(Abstract.scannerInt(), playerObject);
-			playerObject.setDateValue();
+			ContainerPriceAndAmountSanityCheck(playerObject);
+			ModifyContainerPriceAndCount();
+			playerObject.GetShortUserReadout();
+			DisplayAvailableContainersAndPrice();
+			GoodsMenu();
+			goodsChoice = ParseGoodsMenu(Abstract.scannerInt(), playerObject);
+			playerObject.IncreaseDate();
 		}while(goodsChoice != 3);
-		//playerObject.setCurrentContainers(50);
-	//	loadedContainers(Abstract.scannerInt(), playerObject);
-	//	containerOutput();
-		//System.out.println(playerObject.getCurrentContainers());
+		goodsChoice = 1;
 	}
 
-	private void goodsMenu(){
-		Abstract.rotatePorts(MenuDisplays.getGoodsMenu());
+	private void GoodsMenu(){
+		Abstract.rotateOptions(MenuDisplays.getGoodsMenu()); // "Load / Unload Containers", "Step Ashore" ,"Depart Port"
+		System.out.print(": ");
 	}
-	
-	private int parseGoodsMenu(int userInputGoodsMenuDecision, UserShip playerObject){
-		switch(userInputGoodsMenuDecision){
-			case 1: 
-			//Load unload containers
-				//loadedContainers(Abstract.scannerInt(), playerObject);
-				containerMenu(playerObject);
-				return 1;
-			case 2:
-			//Ship upgrade
-				System.out.println("Ship upgrade here");
-				new ShoreSide(playerObject);
-				return 2;
-			case 3:
-			//Leave port
-				return 3;
-			default: 
-				System.out.println("That is not an acceptable answer");
-				iteration(playerObject);
-				return 0;
+
+	private int ParseGoodsMenu(int userInputGoodsMenuDecision, Boat playerObject){
+		Map<Integer, Runnable> goodsMenu = new HashMap<>();
+		goodsMenu.put(1, () -> ContainerMenu(playerObject));
+		goodsMenu.put(2, () -> new ShoreSide(playerObject));
+		//goodsMenu.put(3, () -> return 3);
+		if(userInputGoodsMenuDecision == 2 || userInputGoodsMenuDecision == 1){
+			goodsMenu.get(userInputGoodsMenuDecision).run();
 		}
-
-	}
-  
-	private void containerOutput(){
-		
-		System.out.println("Containers in Port: " + this.availableContainers[0]);
+		return userInputGoodsMenuDecision;
 	}
 
-	private void containerPrice(){
-		System.out.println("Current container price: $" + this.availableContainers[1] + ".00");
+	private void DisplayAvailableContainersAndPrice(){
+		DisplayAvailableContainers();
+		DisplayContainerPrice();
 	}
-  
-	private void containerPriceAndAmountSanityCheck(UserShip playerObject){
-		if(this.availableContainers[0] < 30){
-			this.availableContainers[0] = playerObject.getMaximumContainers();
+
+	private void DisplayAvailableContainers(){
+		System.out.println("Containers in Port: " + this.ShoreSideQuantityAndPrice.GetQuantity());
+	}
+
+	private void DisplayContainerPrice(){
+		System.out.println("Current container price: $" + this.ShoreSideQuantityAndPrice.GetPrice());
+	}
+
+	private void ContainerPriceAndAmountSanityCheck(Boat playerObject){
+		if(this.ShoreSideQuantityAndPrice.GetQuantity() < 30){
+			this.ShoreSideQuantityAndPrice.SetQuantity(playerObject.GetMaximumContainers());
 		}
-		if(this.availableContainers[1] < 20){
-			this.availableContainers[1] = maximumContainerPrice;
+		if(this.ShoreSideQuantityAndPrice.GetPrice() < 20){
+			this.ShoreSideQuantityAndPrice.SetPrice(maximumContainerPrice);
 		}
 	}
 
-	private void increaseDecreaseContainerAmount(int daysPassed){
+	private void IncreaseDecreaseContainerAmount(int daysPassed){
 		int dayCount = 0;
 		while(daysPassed < dayCount){
-			int dailyUpDown = Abstract.getRandomValue(100);
-			if(dailyUpDown >= 51){
-				this.availableContainers[0] += Abstract.getRandomValue(maximumValueOfContainersInOut);
-			} else{
-				this.availableContainers[0] -= Abstract.getRandomValue(maximumValueOfContainersInOut);
-			}
-		dayCount++;
+			IncreaseDecreaseContainerAmount();
+			dayCount++;
 		}
 	}
-	
-	private void increaseDecreaseContainerAmount(){
+
+	private void ModifyContainerPriceAndCount(){
+		IncreaseDecreaseContainerAmount();
+		IncreaseDecreaseContainerPrice();
+	}
+
+	private void IncreaseDecreaseContainerAmount(){
 		int dailyUpDown = Abstract.getRandomValue(100);
 		if(dailyUpDown >= 51){
-			this.availableContainers[0] += Abstract.getRandomValue(maximumAmountOfContainersInOut);
+			this.ShoreSideQuantityAndPrice.IncreaseQuantity(Abstract.getRandomValue(maximumCountContainersInOut));
 		} else{
-			this.availableContainers[0] -= Abstract.getRandomValue(maximumAmountOfContainersInOut);
+			this.ShoreSideQuantityAndPrice.DecreaseQuantity(Abstract.getRandomValue(maximumCountContainersInOut));
 		}
 	}
 	
-	private void increaseDecreaseContainerPrice(int daysPassed){
+	private void IncreaseDecreaseContainerPrice(){
+		int dailyUpDown = Abstract.getRandomValue(100);
+		if(dailyUpDown >= 51){
+			this.ShoreSideQuantityAndPrice.IncreasePrice(Abstract.getRandomValue(maximumPriceContainersInOut));
+		} else{
+			this.ShoreSideQuantityAndPrice.DecreasePrice(Abstract.getRandomValue(maximumPriceContainersInOut));
+		}
+	}
+	
+	private void IncreaseDecreaseContainerPrice(int daysPassed){
 		int dayCount = 0;
 		while(daysPassed < dayCount){
-			int dailyUpDown = Abstract.getRandomValue(100);
-			if(dailyUpDown >= 51){
-				this.availableContainers[1] += Abstract.getRandomValue(maximumValueOfContainersInOut);
-			} else{
-				this.availableContainers[1] -= Abstract.getRandomValue(maximumValueOfContainersInOut);
-			}
+			IncreaseDecreaseContainerPrice();
 		dayCount++;
 		}
 	}
   
-	private void increaseDecreaseContainerPrice(){
-		int dailyUpDown = Abstract.getRandomValue(100);
-		if(dailyUpDown >= 51){
-			this.availableContainers[1] += Abstract.getRandomValue(maximumValueOfContainersInOut);
-		} else{
-			this.availableContainers[1] -= Abstract.getRandomValue(maximumValueOfContainersInOut);
-		}
-	}
-
-	private void containerMenu(UserShip playerObject){
+	private void ContainerMenu(Boat playerObject){
 		int containerChoice = 0;
 		do{
-			System.out.println("Maximum Containers allowed on Ship: " + playerObject.getMaximumContainers());
-			System.out.println("Current containers on ship: " + playerObject.getCurrentContainers());
+			playerObject.DisplayMaxAndCurrentContainers();
 			System.out.println("Load or Unload");
-			Abstract.rotatePorts(MenuDisplays.getContainerMenu());
-			containerChoice = containerParser(Abstract.scannerInt(), playerObject);
+			Abstract.rotateOptions(MenuDisplays.getContainerMenu());
+			System.out.print(": ");
+			containerChoice = ContainerParser(Abstract.scannerInt(), playerObject);
 		}while(containerChoice != 3);
 	}
 	
-	private int containerParser(int userDecision, UserShip playerObject){
-		switch(userDecision){
-			case 1:
-				//Load Containers
-				loadContainers(playerObject);
-				return 1;
-				//break;
-			case 2:
-				//Unload Containers
-				unloadContainers(playerObject);
-				return 2;
-				//break;
-			case 3:
-				//Exit
-				return 3;
-				//break;
+	private int ContainerParser(int userDecision, Boat playerObject){
+		Map<Integer, Runnable> loadUnloadMenu = new HashMap<>();
+		loadUnloadMenu.put(1, () -> LoadContainers(playerObject));
+		loadUnloadMenu.put(2, () -> UnloadContainers(playerObject));
+		
+		if(userDecision == 1 || userDecision == 2){
+			loadUnloadMenu.get(userDecision).run();
 		}
-		playerObject.getContainerReadout();
-		return 0;
+		playerObject.DisplayMaxAndCurrentContainers();
+		return userDecision;
 	}
 	
-	private void loadContainers(UserShip playerObject){
-		if(playerObject.isFullShip() == true){
+	private void LoadContainers(Boat playerObject){
+		if(playerObject.IsFullShip() == true){
 			System.out.println("Your ship already has a full load!");
 		} else {
 			System.out.print("How many containers would you like to load: ");
 			int loadRequest = Abstract.scannerInt();
-			if((loadRequest - playerObject.getCurrentContainers()) >= 0){
-				playerObject.setCurrentContainers((loadRequest + playerObject.getCurrentContainers()));
+			if((loadRequest - playerObject.GetCurrentContainers()) >= 0){
+				playerObject.SetCurrentContainers((loadRequest + playerObject.GetCurrentContainers()));
 			}
+			this.loadContainerPort = true;
 		}
-		playerObject.setDateValue();
+		playerObject.IncreaseDate();
 	}
 	
-	private void unloadContainers(UserShip playerObject){
-		if(playerObject.isEmptyShip() == true){
-			System.out.println("Your ship is already empty!");	
+	private void UnloadContainers(Boat playerObject){
+	//	System.out.println(this.loadContainerPort);
+		if(playerObject.IsEmptyShip() == true){
+			System.out.println("Your ship is empty. ");	
+		} 
+		else if(this.loadContainerPort == true){
+			System.out.println("You loaded your ship in this port.  You can't unload the containers.");
 		} else{
 			System.out.print("How many containers would you like to unload: ");
 			int unloadRequest = Abstract.scannerInt();
-			if((unloadRequest + playerObject.getCurrentContainers()) < playerObject.getMaximumContainers()){
-				playerObject.setCurrentContainers((unloadRequest - playerObject.getCurrentContainers()));
+			if(unloadRequest > 0 && unloadRequest <= playerObject.GetMaximumContainers()){
+				playerObject.SetCurrentContainers((playerObject.GetCurrentContainers() - unloadRequest));
+				DisplayUnloadedContainerPayout(playerObject, unloadRequest);
 			}
-			containerPayout(unloadRequest);
+
 		}
-		playerObject.setDateValue();
+		playerObject.IncreaseDate();
 	}
-	
-	private void containerPayout(int userDefinedUnloadedContainers){
-		System.out.println("Containers are currently being unloaded at $" + availableContainers[1] + " per container");
-		System.out.println("You made $" + (userDefinedUnloadedContainers * availableContainers[1]) );
+
+	private void DisplayUnloadedContainerPayout(Boat playerObject, int userDefinedUnloadedContainers){
+		System.out.println("Containers are currently being unloaded at $" + this.ShoreSideQuantityAndPrice.GetPrice() + " per container");
+		System.out.println("You are making "+ this.containerPaymentPercentage +"% of the container price.");
+		System.out.println("You have been paid $" + Abstract.GetDoubleDecimal(userDefinedUnloadedContainers * this.ShoreSideQuantityAndPrice.GetPrice() / this.containerPaymentPercentage)); /// containerPaymentPercentage );
 	}
-	
+
 	/*private void loadedContainers(int userGeneratedContainersPickedup, User playerObject){
 		if(this.availableContainers[0] - userGeneratedContainersPickedup > 0){
 			this.availableContainers[0] = (this.availableContainers[0] - userGeneratedContainersPickedup);

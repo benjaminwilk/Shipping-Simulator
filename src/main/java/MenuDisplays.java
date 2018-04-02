@@ -1,5 +1,7 @@
 package src.main.java;
 
+import src.main.java.Player.*;
+
 public class MenuDisplays{
 
 	final static private String[] goodsDisplayMenu = {"Load / Unload Containers", "Step Ashore" ,"Depart Port"};
@@ -11,7 +13,7 @@ public class MenuDisplays{
 
 	private static final String[] containerMenu = {"Load Containers", "Unload Containers", "Go Back"};
 	
-	private static final String[] shoreOptionMenu = {"Check Weather Report", "Check Ship Status", "Check Port Prices", "Go Back"};
+	private static final String[] shoreOptionMenu = {"Check Weather Report", "Check Ship Status", "Refuel Ship", "Check Port Prices", "Go Back"};
 	
 	private static final String[] weatherOptions = {"Sunny", "Partly Cloudy", "Partly Sunny", "Cloudy", "Light Rain", "Rain", "Heavy Rain", "Light Snow", "Snow", "Heavy Snow"};
 	

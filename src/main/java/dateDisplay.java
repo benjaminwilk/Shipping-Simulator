@@ -1,44 +1,30 @@
 package src.main.java;
 
+import src.main.java.Player.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class DateDisplay{
-		// Year -- Month -- Day
-	final static String datePattern = "MM/dd/yyyy";
-	final static String startDate = "1992-11-20";
+	private final static String dateDisplayPattern = "MM/dd/yyyy"; // Initially starts as: Year -- Month -- Day  Changed to MM/DD/YYYY
+	private final static String startDate = "1992-11-20";
+	private LocalDate outputDate;
+	private int totalDays;
+	private int defaultStartDate = 0;	 // When DateDisplay is initialized, 0 is the value it starts with.  
 	
-	private static LocalDate initializeDate(){
-		LocalDate outputDate = LocalDate.parse(startDate);
-		return outputDate;
-	}
-	
-	public static String increaseDate(int valuePassed){
-		LocalDate rawDate = initializeDate();
-		rawDate = rawDate.plusDays(valuePassed);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-		return (rawDate.format(formatter));	
+	public DateDisplay(){
+		this.totalDays = defaultStartDate;
+		this.outputDate = LocalDate.parse(startDate);
 	}
 
-	public static String increaseDate(UserShip playerObject, int valuePassed){
-		LocalDate rawDate = initializeDate();
-		rawDate = rawDate.plusDays( (valuePassed + playerObject.getDateValue()) );
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-		playerObject.setDateValue();
-		return (rawDate.format(formatter));	
+	public void IncreaseDate(){
+		this.totalDays++;
+		this.outputDate.plusDays(this.totalDays);
 	}
 	
-	public static String increaseDate(UserShip playerObject){
-		LocalDate rawDate = initializeDate();
-		rawDate = rawDate.plusDays(playerObject.getDateValue());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-		playerObject.setDateValue();
-		return (rawDate.format(formatter));	
+	public String GetDate(){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(this.dateDisplayPattern);
+		return "" + (this.outputDate.plusDays(this.totalDays).format(formatter));
 	}
-	
-	public static void displayDate(){
-		LocalDate rawDate = initializeDate();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-		System.out.println(rawDate.format(formatter));	
-	}
+
 }

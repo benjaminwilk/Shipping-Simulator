@@ -1,5 +1,7 @@
 package src.main.java;
 
+import src.main.java.Player.*;
+
 public class SeaWeather{
 	
 	private int temperature;
@@ -10,24 +12,24 @@ public class SeaWeather{
 	public SeaWeather(){
 		setRandomTemperature();
 	}
-	
+
 	private void setRandomTemperature(){
 		this.temperature = Abstract.getRandomValue(this.maximumTemperature, this.minimumTemperature);
 	}
-	
+
 	private void setTemperature(int userDefinedTemperature){
 		this.temperature = userDefinedTemperature;
 	}
-	
-	private int getTemperature(){
+
+	private int GetTemperature(){
 		return this.temperature;
 	}
 
-	private String getWeather(){
+	private String GetWeather(){
 		return MenuDisplays.getWeatherOptions(Abstract.getRandomValue(MenuDisplays.getWeatherOptionLength(), 1));
 	}
-	
-	private void increaseDecreaseTemperature(){
+
+	private void IncreaseDecreaseTemperature(){
 		int dailyUpDown = Abstract.getRandomValue(100);
 		if(dailyUpDown >= 51){
 			this.temperature += Abstract.getRandomValue(maximumChangeInTemp);
@@ -35,16 +37,16 @@ public class SeaWeather{
 			this.temperature -= Abstract.getRandomValue(maximumChangeInTemp);
 		}
 	}
-	
-	public void formattedWeatherAndTemperature(){
-		System.out.println(this.temperature + "F -- " + getWeather());
+
+	public void FormattedWeatherAndTemperature(){
+		System.out.println(this.temperature + "F -- " + GetWeather());
 	}
 
-	public void formattedWeatherAndTemperature(UserShip playerObject, int dayCount){
+	public void FormattedWeatherAndTemperature(Boat playerObject, int dayCount){
 		for(int i = 0; i < dayCount; i++){
-			System.out.println((DateDisplay.increaseDate(playerObject)) + " -- " + getTemperature() + "F -- " + getWeather());
-			increaseDecreaseTemperature();
+			System.out.println(playerObject.GetAndIncreaseDate() + " -- " + GetTemperature() + "F -- " + GetWeather());
+			IncreaseDecreaseTemperature();
 		}
 	}
-	
+
 }

@@ -1,5 +1,7 @@
 package src.main.java;
 
+import src.main.java.Player.*;
+
 public class PortChoice{
 	private String currentPort;
 	private String destinationPort;
@@ -9,11 +11,11 @@ public class PortChoice{
 		this.currentPort = MenuDisplays.getAvailablePorts(1);
 	}
 
-	public void iteration(UserShip playerObject){
+	public void iteration(Boat playerObject){
 		int portChoice = 0;
 //		do{
 			System.out.println("Current Port: " + getCurrentPort());
-			Abstract.rotatePorts(MenuDisplays.getAvailablePorts());
+			Abstract.rotateOptionsWithEscapement(MenuDisplays.getAvailablePorts());
 			System.out.print(": ");
 			portChoice = setDestinationPort(Abstract.scannerInt());
 	//	}while(portChoice <= 3);
