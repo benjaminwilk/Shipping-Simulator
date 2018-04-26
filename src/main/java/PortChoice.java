@@ -8,20 +8,20 @@ public class PortChoice{
 	private int portDistance;
 
 	public PortChoice(){
-		this.currentPort = MenuDisplays.getAvailablePorts(1);
+		this.currentPort = MenuDisplays.GetAvailablePorts(1);
 	}
 
 	public void iteration(Boat playerObject){
 		int portChoice = 0;
 //		do{
 			System.out.println("Current Port: " + getCurrentPort());
-			Abstract.rotateOptionsWithEscapement(MenuDisplays.getAvailablePorts());
+			Abstract.RotateOptionsWithEscapement(MenuDisplays.GetAvailablePorts());
 			System.out.print(": ");
-			portChoice = setDestinationPort(Abstract.scannerInt());
+			portChoice = setDestinationPort(Abstract.ScannerInt());
 	//	}while(portChoice <= 3);
 	//	changeCurrentAndDestination();
 	}
-
+	
 	public String getCurrentPort(){
 		return this.currentPort;
 	}
@@ -31,13 +31,13 @@ public class PortChoice{
 	}
 
 	private void setCurrentPort(int userValueChosenPort){
-		this.currentPort = MenuDisplays.getAvailablePorts(userValueChosenPort);
+		this.currentPort = MenuDisplays.GetAvailablePorts(userValueChosenPort);
 	}
 
 	private void setCurrentPort(String userPortText){
-		for(int i = 0; i < MenuDisplays.getAvailablePortsSize(); i++){
-			if(userPortText.contains(MenuDisplays.getAvailablePorts(i))){
-				this.currentPort = MenuDisplays.getAvailablePorts(i);
+		for(int i = 0; i < MenuDisplays.GetAvailablePortsSize(); i++){
+			if(userPortText.contains(MenuDisplays.GetAvailablePorts(i))){
+				this.currentPort = MenuDisplays.GetAvailablePorts(i);
 			}
 		}
 	}
@@ -48,14 +48,14 @@ public class PortChoice{
 	}
 
 	private int setDestinationPort(int userValueChosenPort){
-		this.destinationPort = MenuDisplays.getAvailablePorts(userValueChosenPort);
+		this.destinationPort = MenuDisplays.GetAvailablePorts(userValueChosenPort);
 		return userValueChosenPort;
 	}
 
 	private int setDestinationPort(String userPortText){
-		for(int i = 0; i < MenuDisplays.getAvailablePortsSize(); i++){
-			if(userPortText.contains(MenuDisplays.getAvailablePorts(i))){
-				this.destinationPort = MenuDisplays.getAvailablePorts(i);
+		for(int i = 0; i < MenuDisplays.GetAvailablePortsSize(); i++){
+			if(userPortText.contains(MenuDisplays.GetAvailablePorts(i))){
+				this.destinationPort = MenuDisplays.GetAvailablePorts(i);
 				return i;
 			}
 		}

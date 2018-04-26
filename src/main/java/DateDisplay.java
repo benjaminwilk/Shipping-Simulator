@@ -12,17 +12,22 @@ public class DateDisplay{
 	private int totalDays;
 	private int defaultStartDate = 0;	 // When DateDisplay is initialized, 0 is the value it starts with.  
 	
-	public DateDisplay(){
+	public DateDisplay(){ // Constructor; sets the total days to the default value and sets the output date to the default.  
 		this.totalDays = defaultStartDate;
 		this.outputDate = LocalDate.parse(startDate);
 	}
 
-	public void IncreaseDate(){
+	public void IncreaseDateRandom(){ // If something bad occurs, this will increase the date by a max of 30 days.
+		this.totalDays = this.totalDays + Abstract.GetRandomValue(30);
+		this.outputDate.plusDays(this.totalDays);
+	}
+	
+	public void IncreaseDate(){ // Increase the date by one day.
 		this.totalDays++;
 		this.outputDate.plusDays(this.totalDays);
 	}
 	
-	public String GetDate(){
+	public String GetDate(){ //Displays the date in the MM/dd/yyyy format.
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(this.dateDisplayPattern);
 		return "" + (this.outputDate.plusDays(this.totalDays).format(formatter));
 	}

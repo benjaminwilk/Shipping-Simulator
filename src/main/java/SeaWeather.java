@@ -1,40 +1,57 @@
 package src.main.java;
 
+import java.util.ArrayList;
 import src.main.java.Player.*;
 
 public class SeaWeather{
 	
 	private int temperature;
+	ArrayList dailyTemperature = new ArrayList();
+	String[] dailyConditions;
+		
 	private int maximumChangeInTemp = 4;
 	private int maximumTemperature = 70;
 	private int minimumTemperature = 40;
 	
 	public SeaWeather(){
-		setRandomTemperature();
+	/*	this.dailyTemperature.add(initializeTemperature());
+		//initializeWeather();
+		for(int i = 1; i < 100; i++){
+			this.dailyTemperature.add(IncreaseDecreaseTemperature());
+			
+		for(int p = 1; p < 100; p++){
+		}
+			System.out.println(this.dailyTemperature.get(p));
+		}*/
 	}
 
 	private void setRandomTemperature(){
-		this.temperature = Abstract.getRandomValue(this.maximumTemperature, this.minimumTemperature);
+		this.temperature = Abstract.GetRandomValue(this.maximumTemperature, this.minimumTemperature);
+	}
+	
+	private int initializeTemperature(){
+		return Abstract.GetRandomValue(this.maximumTemperature, this.minimumTemperature);
 	}
 
 	private void setTemperature(int userDefinedTemperature){
 		this.temperature = userDefinedTemperature;
 	}
 
-	private int GetTemperature(){
-		return this.temperature;
+	private int getTemperature(int passedValue){
+		//return this.dailyTemperature.get(passedValue);
+		return passedValue;
 	}
 
 	private String GetWeather(){
-		return MenuDisplays.getWeatherOptions(Abstract.getRandomValue(MenuDisplays.getWeatherOptionLength(), 1));
+		return MenuDisplays.GetWeatherOptions(Abstract.GetRandomValue(MenuDisplays.GetWeatherOptionLength(), 1));
 	}
 
-	private void IncreaseDecreaseTemperature(){
-		int dailyUpDown = Abstract.getRandomValue(100);
+	private int IncreaseDecreaseTemperature(){
+		int dailyUpDown = Abstract.GetRandomValue(100);
 		if(dailyUpDown >= 51){
-			this.temperature += Abstract.getRandomValue(maximumChangeInTemp);
+			return /*this.temperature += */Abstract.GetRandomValue(maximumChangeInTemp, 0);
 		} else{
-			this.temperature -= Abstract.getRandomValue(maximumChangeInTemp);
+			return /*this.temperature -= */ (-1 * Abstract.GetRandomValue(maximumChangeInTemp, 0));
 		}
 	}
 
@@ -44,7 +61,7 @@ public class SeaWeather{
 
 	public void FormattedWeatherAndTemperature(Boat playerObject, int dayCount){
 		for(int i = 0; i < dayCount; i++){
-			System.out.println(playerObject.GetAndIncreaseDate() + " -- " + GetTemperature() + "F -- " + GetWeather());
+			System.out.println(playerObject.GetAndIncreaseDate() + " -- " + getTemperature(dayCount) + "F -- " + GetWeather());
 			IncreaseDecreaseTemperature();
 		}
 	}

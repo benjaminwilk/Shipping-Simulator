@@ -41,14 +41,14 @@ public class Movement{
 	}
 	
 	private void ConvertPortNameToCoordinates(){
-		for(int i = 0; i < MenuDisplays.getAvailablePortsSize(); i++){
-			if(this.DeparturePortLongitudeLatitude.GetTitle().contains(MenuDisplays.getAvailablePortsNoOffset(i))){
+		for(int i = 0; i < MenuDisplays.GetAvailablePortsSize(); i++){
+			if(this.DeparturePortLongitudeLatitude.GetTitle().contains(MenuDisplays.GetAvailablePortsNoOffset(i))){
 				this.DeparturePortLongitudeLatitude.SetLongitude(this.getPortLongitude(i));
 				this.DeparturePortLongitudeLatitude.SetLatitude(this.getPortLatitude(i));
 			}
 		}
-		for(int i = 0; i < MenuDisplays.getAvailablePortsSize(); i++){
-			if(this.ArrivalPortLongitudeLatitude.GetTitle().contains(MenuDisplays.getAvailablePortsNoOffset(i))){
+		for(int i = 0; i < MenuDisplays.GetAvailablePortsSize(); i++){
+			if(this.ArrivalPortLongitudeLatitude.GetTitle().contains(MenuDisplays.GetAvailablePortsNoOffset(i))){
 				this.ArrivalPortLongitudeLatitude.SetLongitude(this.getPortLongitude(i));
 				this.ArrivalPortLongitudeLatitude.SetLatitude(this.getPortLatitude(i));
 			}
@@ -74,7 +74,7 @@ public class Movement{
 		int dayCount = 0;
 		while(this.PortDistance >= DistanceTraveled){
 			new RandomBreakdown().RandomOccurrence(playerObject);
-			DistanceTraveled += Abstract.getRandomizedDistancePerDay(this.UserSpeed);
+			DistanceTraveled += Abstract.GetRandomizedDistancePerDay(this.UserSpeed); // I want to change this to be affected by temperature and weather.
 			DisplayDayAtSeaAndDate(playerObject, dayCount, DistanceTraveled);
 			playerObject.FuelMeasureAndConsumption(playerObject);
 			new MovementGraphics(DistanceTraveled, this.PortDistance);

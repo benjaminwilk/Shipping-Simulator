@@ -54,23 +54,23 @@ public class DistanceCalculation{
 		this.destinationLocation.SetLatitude(passedDestinationCoordinates.GetLatitude());
 	}
 	
-	public double GetOriginLongitude(){
+	public double GetOriginLongitude(){ // Returns the origin longitude
 		return this.originLocation.GetLongitude();
 	}
 	
-	public double GetOriginLatitude(){
+	public double GetOriginLatitude(){ // Returns the origin latitude
 		return this.originLocation.GetLatitude();
 	}
 	
-	public double GetDestinationLongitude(){
+	public double GetDestinationLongitude(){ // Returns the destination longitude
 		return this.destinationLocation.GetLongitude();
 	}
 	
-	public double GetDestinationLatitude(){
+	public double GetDestinationLatitude(){ // Returns the destination latitude.
 		return this.destinationLocation.GetLatitude();
 	}
 	
-	public int GetDistanceCalculation(){
+	public int GetDistanceCalculation(){ // Returns the distance calculation, bundled in a try-catch.  Will return an error if it doesn't work.
 		try{
 			return DistanceCalculation();
 		}catch(NullPointerException npe){
@@ -79,11 +79,11 @@ public class DistanceCalculation{
 		return 0;
 	}
 	
-	private double degreesToRadians(double degrees) {
+	private double degreesToRadians(double degrees) { // Converts degrees to radians
 		return degrees * Math.PI / 180;
 	}
 
-	private int DistanceCalculation(){
+	private int DistanceCalculation(){ //Returns the distance in maybe? miles?
 		final double earthRadiusKm = 6371;
 
 		/*double dLat = degreesToRadians(destLat - originLat);

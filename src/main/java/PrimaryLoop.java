@@ -10,9 +10,11 @@ public class PrimaryLoop{
 	PortChoice portDecision;
 	Goods goods;
 	Movement move;
+	SeaWeather UserWeather;
+	
 
 	public PrimaryLoop(){
-		
+		this.UserWeather = new SeaWeather();
 		InitializeObjects();
 		IterativeFunction();
 	}

@@ -12,7 +12,31 @@ public class MovementGraphics{
 
 		System.out.println();
 	}
+	
+	private void DisplayMovementMap(){
+		System.out.println( );
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+	}
 
+	public void DisplayShoreSide(){
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+	}
+	
 	private void DisplayShipIconAscii(int DistanceTraveled, int PortDistance){
 		final String PortIconCenter =   "|--|";
 		final String waterIcon = ".";
@@ -55,6 +79,58 @@ public class MovementGraphics{
 			System.out.println(PortIconBottom);
 		}
 	}
+	
+	public static void shipZincGraphics(){
+		System.out.println("  ___/=======|");
+		System.out.println(" /   |       |");
+		System.out.println("|    |  / \\  |");
+		System.out.println("|    |  | |__|");
+		System.out.println("|    | /     |");
+		System.out.println("|    | \\   __|");
+		System.out.println("|    |  | |  |");
+		System.out.println(" \\___|  \\ /   \\_________________");
+		System.out.println("                   V V     V V");
+		System.out.println("____________________V_______V__");
+	}
+	
+	
+	public static void portDepartureGraphics(){
+		System.out.println("_________          |_|_|/__ /__/  /  / ");
+		System.out.println("_____   /| ~     ~ | | | | | | | /  /  ");
+		System.out.println("----/  //|    ~   /|_|_|_|_|_|_|/  /   ");
+		System.out.println(" ~ /  //||  ~   ~ \\              _/    ");
+		System.out.println("~ /  // ||   ~    \\0M0     0M0_/       ");
+		System.out.println("_/  //| || ~    ~ |\\    ____/o      `~ ");
+		System.out.println(" _ //~| ||___      \\\\__/  o        `~ ");
+		System.out.println("| |/  | ||   /|  ~   \\|     /   / ~`~   ");
+		System.out.println("| ||  |_|/  /|        |  __/    /`~   ~  ");
+		System.out.println("| ||       /|     ~   |        /~`  ~    ");
+		System.out.println("| ||      /|  ~     `~/      ~`~`      ~ ");
+		System.out.println("| ||     /| ~      `~/  / ~`~`     ~     ");
+		System.out.println("|_|/    /|     ~ `~`|~`/`~`~     ~      ~");
+		System.out.println("       /| ~        `~`~`~`     ~    ~    ");
+		System.out.println("_____ /|     ~  ~   `~`~`   ~         ~  ");
+	}
+	
+	public static void ContainerGraphics(){
+		System.out.println("     ______ ");
+		System.out.println("    /     /|");
+		System.out.println("   /     /#|");
+		System.out.println("  /     /##|_____");
+		System.out.println(" /     /###/####/|");
+		System.out.println("/_____/ ##/####/#|");
+		System.out.println("|  |  | #/### /##|");
+		System.out.println("|  |  |#/##  / ##/");
+		System.out.println("|__|__|/____/ ##/");
+		System.out.println("|  |  |  |  | #/");
+		System.out.println("|  |  |  |  | /");
+		System.out.println("|__|__|__|__|/\n");
+	}
+	
+	public static void LoadUnloadGraphics(){
+		System.out.println("");
+	}
+	
 }
 
 enum DisplayTopBottom{

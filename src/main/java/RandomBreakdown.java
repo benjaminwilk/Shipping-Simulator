@@ -9,11 +9,15 @@ public class RandomBreakdown{
 	}
 	
 	public static void RandomOccurrence(Boat playerObject){
-		int OccurrenceValue = (Abstract.getRandomValue(100, 0));
+		int OccurrenceValue = (Abstract.GetRandomValue(100, 0));
 		if(OccurrenceValue > 95){
-			System.out.println("Meow meow -- Something bad!");
+			System.out.println("Either because of poor structural holds, or weather");
+			System.out.println("you have " + " containers go overboard.");
+			
+			Abstract.PressAnyKey();
 		}
 		//System.out.println(OccurrenceValue);
 	}
+		
 	
 }

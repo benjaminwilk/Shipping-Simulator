@@ -42,4 +42,17 @@ public class UserMoney{
 		this.shipPurse = userPassedValue;
 	}
 	
+	public void MoneyGraphics(){
+		System.out.println("      _________ ");
+		System.out.println("     /        /|");
+		System.out.println("    /        / |");
+		System.out.println("  _|--------|  |");
+		System.out.println(" //8 ------ |  |");
+		System.out.println("// ||&&&&&&||  |");
+		System.out.println("|| ||&&&&&&||  |");
+		System.out.println("|| 8|______|| /");
+		System.out.println("|| /|_______|/");
+		System.out.println("||/ ");
+	}
+	
 }

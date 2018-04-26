@@ -100,10 +100,10 @@ public class UserFuel extends UserLocation{
 	
 		
 	private double getVariedFuelConsumption(){
-		if(Abstract.getRandomValue(100, 0) > 51){
-			return GetFuelConsumption() + (Abstract.getRandomValue(20, 0) * .010);
+		if(Abstract.GetRandomValue(100, 0) > 51){
+			return GetFuelConsumption() + (Abstract.GetRandomValue(20, 0) * .010);
 		} else {
-			return GetFuelConsumption() - (Abstract.getRandomValue(20, 0) * .010);
+			return GetFuelConsumption() - (Abstract.GetRandomValue(20, 0) * .010);
 		}
 	}
 	
@@ -132,11 +132,11 @@ public class UserFuel extends UserLocation{
 	}
 	
 	private void IncreaseDecreaseFuelPrice(){
-		int dailyUpDown = Abstract.getRandomValue(100);
+		int dailyUpDown = Abstract.GetRandomValue(100);
 		if(dailyUpDown >= 51){
-			this.fuelPrice += Abstract.getRandomValue(fuelPriceChange);
+			this.fuelPrice += Abstract.GetRandomValue(fuelPriceChange);
 		} else{
-			this.fuelPrice -= Abstract.getRandomValue(fuelPriceChange);
+			this.fuelPrice -= Abstract.GetRandomValue(fuelPriceChange);
 		}
 	}
 

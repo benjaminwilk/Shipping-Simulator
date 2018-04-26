@@ -6,13 +6,17 @@ public class Boat extends UserContainers {
 	private int speed;
 	private DateDisplay userDate;
 	ShipState ss;
+//	haulerType shipType;
 
+//	enum haulerType{containers, oil, chemical, bulk, refrigeration, heavyLift}
+
+	
 	public Boat(String userDefinedName, int[] defaultShipInformation){
 		this.userDate = new DateDisplay();
 		ShipState sc = new ShipState();
 		SetShipName(userDefinedName);
 		SetMaximumContainers(UpgradePath.getDefaultUserShip(0));
-		SetCurrentContainers(UpgradePath.getDefaultUserShip(1));
+		SetContainers(UpgradePath.getDefaultUserShip(1), "standard");
 		SetShipSpeed(UpgradePath.getDefaultUserShip(2));
 	//	SetUserShipCharacteristics(UpgradePath.getDefaultUserShip());
 		SetFuelConsumption(1.5);//(UpgradePath.getDefaultUserShip(3));*/
@@ -21,51 +25,51 @@ public class Boat extends UserContainers {
 		GetUserReadout();
 	}
 	
-	public Boat(String userDefinedName){
+	/*public Boat(String userDefinedName){ // Constructor; If the application uses this constructor, something has broken.  Disabled because it may not have a use
 		this.userName = userDefinedName;
 		System.err.println("\n\n Uh oh, something broke. \n\n\n");
-	}
+	}*/
 	
-	public void SetShipName(String userDefinedName){
+	public void SetShipName(String userDefinedName){ // Takes user input for ship name.
 		this.userName = userDefinedName;
 	}
 
-	public void SetShipSpeed(int userDefinedSpeed){
+	public void SetShipSpeed(int userDefinedSpeed){ // Takes user input for ship speed.
 		this.speed = userDefinedSpeed;
 	}
 	
-	public void IncreaseDate(){
+	public void IncreaseDate(){ // A passthrough to increase the date.
 		this.userDate.IncreaseDate();
 	}
 	
-	public String GetDate(){
+	public String GetDate(){ // A passthrough that returns the date.
 		return this.userDate.GetDate();
 	}
 	
-	public void DisplayDate(){
+	public void DisplayDate(){ //Still a passthrough, but displays the date.
 		System.out.print(this.userDate.GetDate());
 	}
 	
-	public void DisplayFormattedDate(){
+	public void DisplayFormattedDate(){ // A passthrough that displays the date in a formatted manner.
 		System.out.println("Date: " + this.userDate.GetDate());
 	}
 	
-	public String GetAndIncreaseDate(){
+	public String GetAndIncreaseDate(){ // A passthrough that increases the date and returns the date.
 		this.userDate.IncreaseDate();
 		return this.userDate.GetDate();
 	}
 
-	public int GetShipSpeed(){
+	public int GetShipSpeed(){ // Returns the ship speed.
 		return this.speed;
 	}
 
-	public void SetUserShipCharacteristics(int[] passedData){
+	public void SetUserShipCharacteristics(int[] passedData){ // This doesn't completely work at this point, but eventually it will parse the array you pass it. 
 		System.out.println(passedData.length);
 		if(passedData.length >= 0){
-				SetCurrentContainers(passedData[0]);
+			SetContainers(passedData[0], "standard");
 		}
 		else if(passedData.length >= 1){
-		SetMaximumContainers(passedData[1]);
+			SetMaximumContainers(passedData[1]);
 		}
 		else if(passedData.length >= 2){
 			SetShipSpeed(passedData[2]);
@@ -79,33 +83,37 @@ public class Boat extends UserContainers {
 		this.userName = UserDefinedName;
 	}*/
 
-	public String GetShipName(){
+	public String GetShipName(){ // Returns the ship name
 		return this.userName;
 	}
 
-	public void DisplayShipName(){
+	public void DisplayShipName(){ // Displays the ship name.
 		System.out.println("Name: " + this.userName);
 	}
 
-	public void DisplayShipSpeed(){
+	public void DisplayShipSpeed(){ // Displays the ship speed.
 		System.out.println("Speed: " + this.speed + " knots");
 	}
 	
-	public void GetUpgradeReadout(){
+	public void GetUpgradeReadout(){ 
 		DisplayShipSpeed();
-		DisplayMaxAndCurrentContainers();
+		DisplayContainerQuantity();
 	}
 	
-	public void GetShortUserReadout(){
+	/*public boolean GetContainerHaulType(){
+		return 
+	}*/
+	
+	public void GetShortUserReadout(){ // Returns formatted date and current location.
 		DisplayFormattedDate();
 		DisplayCurrentLocation();
 	}
 
-	public void GetUserReadout(){
+	public void GetUserReadout(){ // Returns a myriad of ship statistics.
 		DisplayFormattedDate();
 		DisplayShipName();
 		DisplayShipSpeed();
-		DisplayMaxAndCurrentContainers();
+		DisplayContainerQuantity();
 		DisplayMoney();
 		System.out.println();
 	}
