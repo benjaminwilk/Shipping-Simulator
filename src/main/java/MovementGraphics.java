@@ -12,7 +12,7 @@ public class MovementGraphics{
 
 		System.out.println();
 	}
-	
+
 	private void DisplayMovementMap(){
 		System.out.println( );
 		System.out.println();
@@ -35,14 +35,15 @@ public class MovementGraphics{
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
+
 	}
-	
+
 	private void DisplayShipIconAscii(int DistanceTraveled, int PortDistance){
 		final String PortIconCenter =   "|--|";
 		final String waterIcon = ".";
 		final String boatIcon = "=";
-		
-		System.out.print(PortIconCenter);		
+
+		System.out.print(PortIconCenter);
 		for(int i = 0; i <= 10; i++){
 			double doubleValue = (((double)DistanceTraveled / (double)PortDistance) * 10);
 			int percentageTraveled = (int)(doubleValue);
@@ -61,7 +62,7 @@ public class MovementGraphics{
 		final String PortIconTop = "/--\\";
 		final String PortIconBottom= "\\--/";
 		final String waterIcon = "~";
-		
+
 		if(dc.DisplayStatus() == DisplayTopBottom.IconTop){
 			System.out.print(PortIconTop);
 		}
@@ -71,7 +72,7 @@ public class MovementGraphics{
 		for(int i = 0; i <= 10; i++){
 			System.out.print(waterIcon);
 		}
-		
+
 		if(dc.DisplayStatus() == DisplayTopBottom.IconTop){
 			System.out.println(PortIconTop);
 		}
@@ -79,21 +80,32 @@ public class MovementGraphics{
 			System.out.println(PortIconBottom);
 		}
 	}
-	
+
 	public static void shipZincGraphics(){
-		System.out.println("  ___/=======|");
-		System.out.println(" /   |       |");
-		System.out.println("|    |  / \\  |");
-		System.out.println("|    |  | |__|");
-		System.out.println("|    | /     |");
-		System.out.println("|    | \\   __|");
-		System.out.println("|    |  | |  |");
-		System.out.println(" \\___|  \\ /   \\_________________");
-		System.out.println("                   V V     V V");
-		System.out.println("____________________V_______V__");
+		System.out.println("       |\\ !  \\ ");
+		System.out.println("       |#ss   \\ ");
+		System.out.println("     __//__\\   \\ ");
+		System.out.println("		|\\ ||  |   /^^\\  ");
+		System.out.println("    |#\\||__|\\  |__|  ");
+		System.out.println("    | #\\|__|#\\ \\__/\\ ");
+		System.out.println("    |# #\\__ \\#\\ ____\\ ");
+		System.out.println("  |\\| # #|   \\#|####|________ ");
+		System.out.println("  | \\\\ # |# # \\|____| ");
+		System.out.println("  |  \\\\ #|        | ");
+		System.out.println("  |   \\\\ | #  #  #| ");
+		System.out.println("  |    \\\\|________| ");
+		System.out.println("   \\    \\|_________________ ");
+		System.out.println("	  \\    | ");
+		System.out.println("		 \\   | ");
+		System.out.println("		 |\\  | ");
+		System.out.println("		 | \\ | ");
+		System.out.println("		 | |\\/__________________ ");
+		System.out.println("     | | c=| ");
+		System.out.println("     \\__ S | ");
 	}
-	
-	
+
+
+
 	public static void portDepartureGraphics(){
 		System.out.println("_________          |_|_|/__ /__/  /  / ");
 		System.out.println("_____   /| ~     ~ | | | | | | | /  /  ");
@@ -111,7 +123,7 @@ public class MovementGraphics{
 		System.out.println("       /| ~        `~`~`~`     ~    ~    ");
 		System.out.println("_____ /|     ~  ~   `~`~`   ~         ~  ");
 	}
-	
+
 	public static void ContainerGraphics(){
 		System.out.println("     ______ ");
 		System.out.println("    /     /|");
@@ -126,11 +138,11 @@ public class MovementGraphics{
 		System.out.println("|  |  |  |  | /");
 		System.out.println("|__|__|__|__|/\n");
 	}
-	
+
 	public static void LoadUnloadGraphics(){
 		System.out.println("");
 	}
-	
+
 }
 
 enum DisplayTopBottom{
@@ -140,7 +152,7 @@ enum DisplayTopBottom{
 
 class DisplayCommands{
 	DisplayTopBottom dtb;
-		
+
 	public DisplayCommands(){
 		this.dtb = dtb.IconTop;
 	}

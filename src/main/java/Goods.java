@@ -49,7 +49,7 @@ public class Goods{
 	}
 
 	private boolean EnoughShipMembers(Boat playerObject){
-		if(playerObject.ShipmateCount() < 10){
+		if(playerObject.GetShipmates() < 10){
 			System.out.println("You have less than 10 shipmembers.");
 			return false;
 		} else{

@@ -7,7 +7,7 @@ import src.main.java.*;
 	public void setMoney(int userPassedValue);
 }*/
 
-public class UserMoney{
+public class UserMoney extends UserShipMates{
 	private double shipPurse;
 
 	public UserMoney(){
@@ -17,23 +17,23 @@ public class UserMoney{
 	public void DisplayMoney(){
 		System.out.println("Ship Purse: $" + Abstract.GetDoubleDecimal(this.shipPurse));
 	}
-	
+
 	public double GetMoney(){
 		return this.shipPurse;
 	}
-	
+
 	public void DeductMoney(int userPassedMoney){
 		this.shipPurse -= (double)userPassedMoney;
 	}
-	
+
 	public void DeductMoney(double userPassedMoney){
 		this.shipPurse -= userPassedMoney;
 	}
-	
+
 	public void AddMoney(int userPassedMoney){
 		this.shipPurse += (double)userPassedMoney;
 	}
-	
+
 	public void AddMoney(double userPassedMoney){
 		this.shipPurse += userPassedMoney;
 	}
@@ -41,7 +41,7 @@ public class UserMoney{
 	public void SetMoney(int userPassedValue){
 		this.shipPurse = userPassedValue;
 	}
-	
+
 	public void MoneyGraphics(){
 		System.out.println("      _________ ");
 		System.out.println("     /        /|");
@@ -54,5 +54,5 @@ public class UserMoney{
 		System.out.println("|| /|_______|/");
 		System.out.println("||/ ");
 	}
-	
+
 }
