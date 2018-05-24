@@ -1,6 +1,7 @@
 package src.main.java;
 
 import src.main.java.Player.*;
+import src.main.java.Abstract.*;
 
 public class MenuDisplays{
 
@@ -14,6 +15,10 @@ public class MenuDisplays{
 	private static final double[] portLatitude = {33.754185, -33.858333,  22.287753};
 	private static final double[] portLongitude = {-118.216458, 151.233333, 114.173619};
 
+	private static final String[] unlockablePorts = {"Singapore", "Los Angeles", "Portland", "Anchorage", "Shenzhen", "Ningbo", "Honolulu"};
+	private static final double[] unlockableLatitude = {1.264, 33.729186, 49.28795, 61.240278, 22.5, 29.866667, 21.306};
+	private static final double[] unlockableLongitude =    {103.84, -118.262015, -123.11267, -149.886111, 113.883333, 121.55, -157.869};
+	
 	private static final String[] containerMenu = {"Check Container Prices", "Display Loaded Containers", "Load Containers", "Unload Containers", "Go Back"};
 	
 	private static final String[] shoreOptionMenu = {"Check Weather Report", "Manage Crewmembers", "Check Ship Status", "Refuel Ship", "Check Port Prices", "Go Back"};
@@ -71,16 +76,16 @@ public class MenuDisplays{
 		return portLatitude;
 	}
 	
-	public static String GetPortLatitude(int passedValue){
-		return "" + portLatitude[passedValue];
+	public static double GetPortLatitude(int passedValue){
+		return portLatitude[passedValue];
 	}
 	
 	public static double[] GetPortLongitude(){
 		return portLongitude;
 	}
 	
-	public static String GetPortLongitude(int passedValue){
-		return "" + portLongitude[passedValue];
+	public static double GetPortLongitude(int passedValue){
+		return portLongitude[passedValue];
 	}
 	
 	public static int GetWeatherOptionLength(){
@@ -133,6 +138,26 @@ public class MenuDisplays{
 	
 	public static String[] GetPortName(){
 		return portNames;
+	}
+	
+	public static String[] getUnlockablePorts(){
+		return unlockablePorts;
+	}
+	
+	public static String getUnlockablePorts(int passedValue){
+		return unlockablePorts[passedValue];
+	}
+	
+	public static double[] getUnlockableLatitude(){
+		return unlockableLatitude;
+	}
+	
+	public static double[] getUnlockableLongitude(){
+		return unlockableLatitude;
+	}
+	
+	public static int GetPortNameLength(){
+		return portNames.length;
 	}
 	
 	public static String GetPortName(int passedValue){

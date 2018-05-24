@@ -37,12 +37,12 @@ public class UserFuel extends UserLocation{
 	}
 
 	public void IncreaseFuel(double fuelUsage){
-		Abstract.IncreaseValue(this.currentFuel, fuelUsage);
-		//this.currentFuel += fuelUsage;
+		//Abstract.IncreaseValue(this.currentFuel, fuelUsage);
+		this.currentFuel += fuelUsage;
 	}
 	
 	public void IncreaseFuel(){
-		Abstract.IncreaseValue(this.currentFuel, this.fuelConsumption);
+		//Abstract.IncreaseValue(this.currentFuel, this.fuelConsumption);
 		this.currentFuel += this.fuelConsumption;
 	}
 	
@@ -116,7 +116,7 @@ public class UserFuel extends UserLocation{
 		if(IsOutOfFuel() == false){
 			DecreaseFuel(getVariedFuelConsumption());
 		} else{
-			new RandomBreakdown().noFuel(playerObject);
+			new RandomEvent().noFuel(playerObject);
 		}
 	}
 

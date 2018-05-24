@@ -1,5 +1,7 @@
 package src.main.java;
 
+import src.main.java.Abstract.*;
+
 import java.awt.event.KeyEvent;
 
 public class Main{

@@ -1,6 +1,7 @@
 package src.main.java;
 
 import src.main.java.Player.*;
+import src.main.java.Abstract.*;
 
 public class Movement{
 
@@ -13,15 +14,23 @@ public class Movement{
 	public void iteration(Boat playerObject, PortChoice pc){
 		this.DeparturePort = null;
 		this.ArrivalPort = null;
-		this.DeparturePort = new LongitudeLatitude(playerObject.GetCurrentLocationLongitude(), playerObject.GetCurrentLocationLatitude());
+		//this.DeparturePort = new LongitudeLatitude(playerObject.GetCurrentLocationLongitude(), playerObject.GetCurrentLocationLatitude());
+		this.DeparturePort = new LongitudeLatitude.Builder()
+			.longitude(playerObject.GetCurrentLocationLongitude())
+			.latitude(playerObject.GetCurrentLocationLatitude())
+			.build();
 		//this.ArrivalPort = new LongitudeLatitude(pc.getDestinationPort());
-		this.ArrivalPort =  new LongitudeLatitude(Abstract.compareStringToTableToDouble(pc.getDestinationPort(), MenuDisplays.GetPortName(), MenuDisplays.GetPortLatitude()), Abstract.compareStringToTableToDouble(pc.getDestinationPort(), MenuDisplays.GetPortName(), MenuDisplays.GetPortLongitude()));
+		this.ArrivalPort =  new LongitudeLatitude.Builder()
+			.longitude(Abstract.compareStringToTableToDouble(pc.getDestinationPort(), MenuDisplays.GetPortName(), MenuDisplays.GetPortLongitude()))
+			.latitude(Abstract.compareStringToTableToDouble(pc.getDestinationPort(), MenuDisplays.GetPortName(), MenuDisplays.GetPortLatitude()))
+			.build();
+		//this.ArrivalPort =  new LongitudeLatitude(Abstract.compareStringToTableToDouble(pc.getDestinationPort(), MenuDisplays.GetPortName(), MenuDisplays.GetPortLatitude()), Abstract.compareStringToTableToDouble(pc.getDestinationPort(), MenuDisplays.GetPortName(), MenuDisplays.GetPortLongitude()));
 		
 		this.MovementDistanceCalculation = new DistanceCalculation(this.DeparturePort, this.ArrivalPort);
 		this.PortDistance = this.MovementDistanceCalculation.GetDistanceCalculation();
 		this.UserSpeed = playerObject.GetShipSpeed();
 		seaTravel(playerObject);
-		pc.changeCurrentAndDestination();
+		pc.changeCurrentAndDestination(playerObject);
 	}
 	
 	/*** I'll need to put in a Google Geotagging API here ***/
@@ -39,11 +48,11 @@ public class Movement{
 	}
 
 	private void seaTravel(Boat playerObject){ //This is the core of the class, this controls movement.
-		RandomBreakdown rb = new RandomBreakdown();
+		//RandomEvent rb = new RandomEvent();
 		int DistanceTraveled = 0;
 		int dayCount = 0;
 		while(this.PortDistance >= DistanceTraveled){
-			new RandomBreakdown().RandomOccurrence(playerObject);
+			new RandomEvent().RandomOccurrence(playerObject);
 			DistanceTraveled += Abstract.GetRandomizedDistancePerDay(this.UserSpeed); // I want to change this to be affected by temperature and weather.
 			DisplayDayAtSeaAndDate(playerObject, dayCount, DistanceTraveled);
 			playerObject.FuelMeasureAndConsumption(playerObject);

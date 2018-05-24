@@ -1,6 +1,7 @@
 package src.main.java;
 
 import src.main.java.Player.*;
+import src.main.java.Abstract.*;
 
 import java.util.HashMap;
 import java.util.*;
@@ -9,12 +10,12 @@ public class ShoreSide{
 
 	private double fuelPrice = 343.0;
 
-	public ShoreSide(Boat playerObject){
+	public ShoreSide(Boat playerObject, ArrayList<AvailablePorts> travelPorts){
 		int shoreSideChoice = 0;
 		do{
 			Abstract.RotateOptions(MenuDisplays.GetShoreOptionMenu()); //"Check Weather Report", "Manage crewmembers", "Check Ship Status", "Refuel Ship", "Check Port Prices", "Save Game" ,"Go Back"
 			System.out.print(": ");
-			shoreSideChoice = parseShoreMenu(playerObject, Abstract.ScannerInt());
+			shoreSideChoice = parseShoreMenu(playerObject, Abstract.ScannerInt(), travelPorts);
 
 /***************************************/
 	
@@ -31,7 +32,7 @@ public class ShoreSide{
 		System.out.println(playerObject.DisplayContainerCount() + "\n");
 	}
 	
-	private int parseShoreMenu(Boat playerObject, int userDecision){
+	private int parseShoreMenu(Boat playerObject, int userDecision, ArrayList<AvailablePorts> travelPorts){
 		Map<Integer, Runnable> shoreMenu = new HashMap<>();
 		shoreMenu.put(1, () -> new Weather().FormattedWeatherAndTemperature(playerObject, 30)); //"Check Weather Report"
 		shoreMenu.put(2, () -> new SailorMenu(playerObject)); //"Manage crewmembers"
@@ -47,12 +48,25 @@ public class ShoreSide{
 		return userDecision;
 	}
 	
+/*	 private void ContainerPrices(){
+		for(int i = 0; i < MenuDisplays.GetPortNameLength(); i++){
+			System.out.println("\n\n\t\t  --" + MenuDisplays.GetPortName(i) + "-- ");
+			System.out.println("Container Type -- Container Count -- Price Per Container");
+			for(int x = 0; x < 8; x++){
+				System.out.print(" " + Abstract.ModifyContainerLength(MenuDisplays.GetPortName(i), 13));
+				System.out.print(" --    " + Abstract.ModifyContainerLength("" + this.travelPorts.get(i).getQuantity(x), 4));
+				System.out.print("    --    $" + this.travelPorts.get(i).getPrice(x) + "\n");
+			}
+		}
+		System.out.println("\n");
+	}*/
+	
 	public void ShipStatusSubmenu(Boat playerObject){
 		int subMenuChoice = 0;
 		do{
 			Abstract.RotateOptions(MenuDisplays.GetShoreSubMenu()); //"Check for Damage", "Refit Storage", "Upgrade Ship", "Go Back"
 			System.out.print(": ");
-			subMenuChoice = parseSubShoreMenu(playerObject, Abstract.ScannerInt());
+			//subMenuChoice = parseSubShoreMenu(playerObject, Abstract.ScannerInt());
 		}while(subMenuChoice >= 4);
 	}
 	

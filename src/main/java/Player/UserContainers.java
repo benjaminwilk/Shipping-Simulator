@@ -35,7 +35,7 @@ public class UserContainers extends UserFuel{
 //	}
 
 	public void DecreaseSpecificContainerCount(int passedContainerType, int passedContainerCount){
-		this.userQuantities.setQuantity(passedContainerType - 1, (passedContainerCount - passedContainerType - 1));
+		this.userQuantities.setQuantity(passedContainerType - 1, (passedContainerCount - 1)); //passedContainerType - 1));
 	}
 		
 //	public void SetContainers(int userDefinedCurrentContainers, String passedContainerType){

@@ -1,5 +1,7 @@
 package src.main.java;
 
+import src.main.java.Abstract.*;
+
 public class MovementGraphics{
 	DisplayCommands dc; //= new DisplayCommands();
 

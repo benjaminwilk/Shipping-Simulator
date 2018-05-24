@@ -1,33 +1,45 @@
 package src.main.java;
 
+import src.main.java.Abstract.*;
+
 public class LongitudeLatitude{
 
 	private GeoPosition longitude;
 	private GeoPosition latitude;
 	private String title;
 	
-	public LongitudeLatitude(){ // Default constructor
-		this.longitude = new GeoPosition();
-		this.latitude = new GeoPosition();
-	}
-	
-	public LongitudeLatitude(double passedLongitude, double passedLatitude){ // Standard passing of two doubles.
-		this.longitude = new GeoPosition(passedLongitude);
-		this.latitude = new GeoPosition(passedLatitude);
-	}
-	
-	public LongitudeLatitude(String passedTitle, double passedLongitude, double passedLatitude){ // Default constructor
-		this.title = passedTitle;
-		this.longitude = new GeoPosition(passedLongitude);
-		this.latitude = new GeoPosition(passedLatitude);
-	}
-	
-	public LongitudeLatitude(String passedTitle){ // Standard passing of two doubles.
-		this.title = passedTitle;
-		this.longitude = new GeoPosition();
-		this.latitude = new GeoPosition();
-	}	
+	public static class Builder{
 		
+		private GeoPosition longitude = new GeoPosition();
+		private GeoPosition latitude = new GeoPosition();
+		private String title;
+	
+		public Builder title(String title){
+			this.title = title;
+			return this;
+		}
+		
+		public Builder longitude(double passedLongitude){
+			this.longitude.SetCoordinate(passedLongitude);
+			return this;
+		}
+		
+		public Builder latitude(double passedLatitude){
+			this.latitude.SetCoordinate(passedLatitude);
+			return this;
+		}
+		
+		public LongitudeLatitude build(){
+			return new LongitudeLatitude(this);
+		}
+	}
+	
+	private LongitudeLatitude(Builder builder){
+		title = builder.title;
+		longitude = builder.longitude;
+		latitude = builder.latitude;
+	}
+			
 	public void SetLongitude(double passedLongitude){
 		this.longitude.SetCoordinate(passedLongitude);
 	}
@@ -52,25 +64,22 @@ public class LongitudeLatitude{
 		return this.title;
 	}
 	
-	class GeoPosition{
+
+
+	static class GeoPosition{
 		private double coordinate;
 		private double blankCoordinate = 0.0;
 		
-		private GeoPosition(double passedCoordinate){
-			this.coordinate = passedCoordinate;
-		}
-		
-		private GeoPosition(){
+		public GeoPosition(){
 			this.coordinate = blankCoordinate;
 		}
 		
-		private void SetCoordinate(double passedCoordinate){
+		public void SetCoordinate(double passedCoordinate){
 			this.coordinate = passedCoordinate;
 		}
 	
-		private double GetCoordinate(){
+		public double GetCoordinate(){
 			return this.coordinate;
 		}
 	}
-
 }

@@ -11,7 +11,8 @@ public class UserLocation extends UserMoney {
 	private final static double defaultLongitude = -118.216458;
 	
 	public UserLocation(){
-		this.playerLongitudeLatitude = new LongitudeLatitude();
+		//this.playerLongitudeLatitude = new LongitudeLatitude();
+		this.playerLongitudeLatitude = new LongitudeLatitude.Builder().build();
 	}
 	
 	public void SetCurrentLocation(String UserDefinedLocation){

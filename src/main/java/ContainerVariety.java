@@ -2,46 +2,48 @@ package src.main.java;
 
 import java.util.ArrayList;
 import src.main.java.Player.*;
+import src.main.java.Abstract.*;
 
 public class ContainerVariety{
 	//private String[] goodTypes = {"standardContainers", "volatileContainers", "vehicleContainers", "refrigerationContainers", "oilVolume", "grainVolume", "gravelVolume", "chemicalVolume"};
 	
 	String[] containerNames = {"standard", "volatile", "vehicle", "refrigeration", "oil", "grain", "gravel", "chemical"};
-	QuantityAndPrice[] containerTypes = new QuantityAndPrice[containerNames.length];
+	ContainerAttributes[] containerTypes = new ContainerAttributes[containerNames.length];
+	double containerWeight;
 	
 	private static final int maximumQuantityCount = 1000;
 	private static final int minimumQuantityCount = 0;
 	private static final int maximumContainerPrice = 500;
 	private static final int minimumContainerPrice = 20;
+	private static final int maximumWeight = 70000;
+	private static final int minimumWeight = 9000;
 	
 	public ContainerVariety(String portOrShip){
 		if(portOrShip.equalsIgnoreCase("port")){
 			for(int i = 0; i < containerNames.length; i++){
-				this.containerTypes[i] = new QuantityAndPrice(generateRandomValue(), generateRandomDouble(), containerNames[i]);
+				this.containerTypes[i] = new ContainerAttributes.Builder()
+					.title(containerNames[i])
+					.price(generateRandomDouble())
+					.weight(generateContainerWeight())
+					.quantity(generateRandomValue())
+					.build();
 			}
-		/*	this.containerTypes[0] = new QuantityAndPrice(generateRandomValue(), generateRandomDouble(), "standard");
-			this.containerTypes[1] = new QuantityAndPrice(generateRandomValue(), generateRandomDouble(), "volatile");
-			this.containerTypes[2] = new QuantityAndPrice(generateRandomValue(), generateRandomDouble(), "vehicle");
-			this.containerTypes[3] = new QuantityAndPrice(generateRandomValue(), generateRandomDouble(), "refrigeration");
-			this.containerTypes[4] = new QuantityAndPrice(generateRandomValue(), generateRandomDouble(), "oil");
-			this.containerTypes[5] = new QuantityAndPrice(generateRandomValue(), generateRandomDouble(), "grain");
-			this.containerTypes[6] = new QuantityAndPrice(generateRandomValue(), generateRandomDouble(), "gravel");
-			this.containerTypes[7] = new QuantityAndPrice(generateRandomValue(), generateRandomDouble(), "chemical");*/
 			
 		} else{
 			for(int i = 0; i < containerNames.length; i++){
-				this.containerTypes[i] = new QuantityAndPrice(containerNames[i]);
+				this.containerTypes[i] = new ContainerAttributes.Builder()
+					.title(containerNames[i])
+				//	.price(generateRandomDouble())
+					.weight(generateContainerWeight())
+					.quantity(0)
+					.build();
 			}
-			/*this.containerTypes[0] = new QuantityAndPrice("standard");
-			this.containerTypes[1] = new QuantityAndPrice("volatile");
-			this.containerTypes[2] = new QuantityAndPrice("vehicle");
-			this.containerTypes[3] = new QuantityAndPrice("refrigeration");
-			this.containerTypes[4] = new QuantityAndPrice("oil");
-			this.containerTypes[5] = new QuantityAndPrice("grain");
-			this.containerTypes[6] = new QuantityAndPrice("gravel");
-			this.containerTypes[7] = new QuantityAndPrice("chemical");*/
 		}
 		
+	}
+	
+	private int generateContainerWeight(){
+		return Abstract.GetRandomValue(maximumWeight, minimumWeight);
 	}
 	
 	private int generateRandomValue(){

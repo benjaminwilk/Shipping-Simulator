@@ -1,6 +1,7 @@
 package src.main.java;
 
 import src.main.java.Player.*;
+import src.main.java.Abstract.*;
 
 public class PortChoice{
 	private String currentPort;
@@ -32,7 +33,7 @@ public class PortChoice{
 		return this.destinationPort;
 	}
 
-	private void setCurrentPort(int userValueChosenPort){
+/*	private void setCurrentPort(int userValueChosenPort){
 		this.currentPort = MenuDisplays.GetAvailablePorts(userValueChosenPort);
 	}
 
@@ -42,24 +43,25 @@ public class PortChoice{
 				this.currentPort = MenuDisplays.GetAvailablePorts(i);
 			}
 		}
-	}
+	}*/
 
 	private void SetDestinationAndCurrentPort(int destinationPort){
 		this.currentPort = this.destinationPort;
 		this.destinationPort = MenuDisplays.GetPortName(destinationPort - 1);
 	}
 	
-	public void changeCurrentAndDestination(){
+	public void changeCurrentAndDestination(Boat playerObject){
 		this.currentPort = this.destinationPort;
+		playerObject.SetCurrentLocation(this.destinationPort);
 		this.destinationPort = null;
 	}
 
-	private int setDestinationPort(int userValueChosenPort){
+/*	private int setDestinationPort(int userValueChosenPort){
 		this.destinationPort = MenuDisplays.GetAvailablePorts(userValueChosenPort);
 		return userValueChosenPort;
-	}
+	}*/
 
-	private int setDestinationPort(String userPortText){
+	/*private int setDestinationPort(String userPortText){
 		for(int i = 0; i < MenuDisplays.GetAvailablePortsSize(); i++){
 			if(userPortText.contains(MenuDisplays.GetAvailablePorts(i))){
 				this.destinationPort = MenuDisplays.GetAvailablePorts(i);
@@ -67,6 +69,6 @@ public class PortChoice{
 			}
 		}
 		return 0;
-	}
+	}*/
 
 }

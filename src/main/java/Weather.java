@@ -2,6 +2,7 @@ package src.main.java;
 
 import java.util.ArrayList;
 import src.main.java.Player.*;
+import src.main.java.Abstract.*;
 
 public class Weather{
 	

@@ -1,5 +1,7 @@
 package src.main.java;
 
+import src.main.java.Abstract.*;
+
 public class AvailablePorts{
 
 	private LongitudeLatitude portLonLat;
@@ -7,13 +9,17 @@ public class AvailablePorts{
 	//private QuantityAndPrice portPriceAndCount;
 	private ContainerVariety portPriceAndCount;
 
-	private double[] portLatitude = {33.754185, -33.858333,  22.287753};
-	private double[] portLongitude = {-118.216458, 151.233333, 114.173619};
-	private String[] portNames = {"Long Beach", "Hong Kong", "Sydney"};
+	//private double[] portLatitude = {33.754185, -33.858333,  22.287753};
+	//private double[] portLongitude = {-118.216458, 151.233333, 114.173619};
+	//private String[] portNames = {"Long Beach", "Hong Kong", "Sydney"};
 	
 	public AvailablePorts(String passedPortName){
 		this.portName = passedPortName;
-		this.portLonLat = new LongitudeLatitude(ParsePortToLon(this.portName), ParsePortToLon(this.portName));
+		//this.portLonLat = new LongitudeLatitude(ParsePortToLon(this.portName), ParsePortToLon(this.portName));
+		this.portLonLat = new LongitudeLatitude.Builder()
+			.longitude(ParsePortToLon(this.portName))
+			.latitude(ParsePortToLat(this.portName))
+			.build();
 		//this.portPriceAndCount = new QuantityAndPrice(Abstract.GetRandomValue(4000, 0), Abstract.GetRandomDoubleValue(500.0, 20.0), this.portName);
 		this.portPriceAndCount = new ContainerVariety("port");
 	}
@@ -117,18 +123,18 @@ public class AvailablePorts{
 	//***************************************************
 	
 	private double ParsePortToLat(String passedPortName){
-		for(int i = 0; i < portNames.length; i++){
-			if(passedPortName.equals(portNames[i])){
-				return portLatitude[i];
+		for(int i = 0; i < MenuDisplays.GetPortName().length; i++){
+			if(passedPortName.equals(MenuDisplays.GetPortName(i))){
+				return MenuDisplays.GetPortLatitude(i);
 			}
 		}
 		return -1.0;
 	}
 	
 	private double ParsePortToLon(String passedPortName){
-		for(int i = 0; i < portNames.length; i++){
-			if(passedPortName.equals(portNames[i])){
-				return portLongitude[i];
+		for(int i = 0; i < MenuDisplays.GetPortName().length; i++){
+			if(passedPortName.equals(MenuDisplays.GetPortName(i))){
+				return MenuDisplays.GetPortLongitude(i);
 			}
 		}
 		return -1.0;

@@ -2,7 +2,7 @@ package src.main.java;
 
 import src.main.java.Player.*;
 import java.util.ArrayList;
-
+import src.main.java.Abstract.*;
 
 public class PrimaryLoop{
 
@@ -19,16 +19,17 @@ public class PrimaryLoop{
 		InitializePlayer();
 		InitializePorts();
 		IterativeFunction();
+		
 	}
 
 	public void IterativeFunction(){
 		this.portDecision = new PortChoice();
-		this.shoreContainers = new LoadUnloadContainers(portLocations);
+		this.shoreContainers = new LoadUnloadContainers();
 		this.move = new Movement();
 		//this.LocationContainer = new PortContainer();
 		
 		while(true){
-			this.shoreContainers.Iteration(this.playerObject);
+			this.shoreContainers.Iteration(this.playerObject, this.portLocations);
 			this.portDecision.iteration(this.playerObject);
 			this.move.iteration(this.playerObject, portDecision);
 		}	

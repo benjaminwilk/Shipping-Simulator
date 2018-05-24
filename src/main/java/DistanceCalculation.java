@@ -1,5 +1,6 @@
 package src.main.java;
 
+import src.main.java.Abstract.*;
 import java.lang.NullPointerException;
 
 public class DistanceCalculation{
@@ -7,17 +8,24 @@ public class DistanceCalculation{
 	private LongitudeLatitude destinationLocation;
 
 	public DistanceCalculation(){
-		this.originLocation = new LongitudeLatitude();
-		this.destinationLocation = new LongitudeLatitude();
+		this.originLocation = new LongitudeLatitude.Builder().build();
+		this.destinationLocation = new LongitudeLatitude.Builder().build();
 	}
 	
 	public DistanceCalculation(LongitudeLatitude passedOriginCoordinates, LongitudeLatitude passedDestinationCoordinates){
-		this.originLocation = new LongitudeLatitude();
-		this.destinationLocation = new LongitudeLatitude();
-		this.originLocation.SetLongitude(passedOriginCoordinates.GetLongitude());
+		this.originLocation = new LongitudeLatitude.Builder()
+			.longitude(passedOriginCoordinates.GetLongitude())
+			.latitude(passedOriginCoordinates.GetLatitude())
+			.build();
+		this.destinationLocation = new LongitudeLatitude.Builder()
+			.longitude(passedDestinationCoordinates.GetLongitude())
+			.latitude(passedDestinationCoordinates.GetLatitude())
+			.build();
+		//this.destinationLocation = new LongitudeLatitude();
+/*		this.originLocation.SetLongitude(passedOriginCoordinates.GetLongitude());
 		this.originLocation.SetLatitude(passedOriginCoordinates.GetLatitude());
 		this.destinationLocation.SetLongitude(passedDestinationCoordinates.GetLongitude());
-		this.destinationLocation.SetLatitude(passedDestinationCoordinates.GetLatitude());
+		this.destinationLocation.SetLatitude(passedDestinationCoordinates.GetLatitude());*/
 	}
 	
 	public void SetOriginLongitude(double passedOriginLongitude){

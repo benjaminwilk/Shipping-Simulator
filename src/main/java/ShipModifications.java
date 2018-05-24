@@ -1,5 +1,6 @@
 package src.main.java;
 import src.main.java.Player.*;
+import src.main.java.Abstract.*;
 
 public class ShipModifications{
 
