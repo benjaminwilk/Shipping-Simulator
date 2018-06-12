@@ -20,7 +20,7 @@ public class SaveLoad{
 			fileWriter.writeObject(playerObject.GetCurrentFuel());
 			fileWriter.writeObject(playerObject.GetMaximumFuel());
 			fileWriter.writeObject(playerObject.GetMoney());
-			fileWriter.writeObject(playerObject.GetCurrentLocation());
+			fileWriter.writeObject(playerObject.GetCurrentName());
 			fileWriter.close();
 			fileCreator.close();
 			System.out.println("Saved!");

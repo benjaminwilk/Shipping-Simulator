@@ -10,12 +10,12 @@ public class ShoreSide{
 
 	private double fuelPrice = 343.0;
 
-	public ShoreSide(Boat playerObject, ArrayList<AvailablePorts> travelPorts){
+	public ShoreSide(Boat playerObject, AvailablePorts ports){
 		int shoreSideChoice = 0;
 		do{
 			Abstract.RotateOptions(MenuDisplays.GetShoreOptionMenu()); //"Check Weather Report", "Manage crewmembers", "Check Ship Status", "Refuel Ship", "Check Port Prices", "Save Game" ,"Go Back"
 			System.out.print(": ");
-			shoreSideChoice = parseShoreMenu(playerObject, Abstract.ScannerInt(), travelPorts);
+			shoreSideChoice = parseShoreMenu(playerObject, Abstract.ScannerInt(), ports);
 
 /***************************************/
 	
@@ -32,10 +32,10 @@ public class ShoreSide{
 		System.out.println(playerObject.DisplayContainerCount() + "\n");
 	}
 	
-	private int parseShoreMenu(Boat playerObject, int userDecision, ArrayList<AvailablePorts> travelPorts){
+	private int parseShoreMenu(Boat playerObject, int userDecision, AvailablePorts ports){
 		Map<Integer, Runnable> shoreMenu = new HashMap<>();
-		shoreMenu.put(1, () -> new Weather().FormattedWeatherAndTemperature(playerObject, 30)); //"Check Weather Report"
-		shoreMenu.put(2, () -> new SailorMenu(playerObject)); //"Manage crewmembers"
+		shoreMenu.put(1, () -> new Weather().FormattedWeatherAndTemperature(5));//new Weather().FormattedWeatherAndTemperature(playerObject, 30)); //"Check Weather Report"
+		shoreMenu.put(2, () -> new SailorMenu(playerObject, ports)); //"Manage crewmembers"
 		shoreMenu.put(3, () -> ShipStatusSubmenu(playerObject));//"Check Ship Status" // Jumps to Checking ship Status.  Will eventually revamp this.
 		shoreMenu.put(4, () -> shipFuel(playerObject));//"Refuel Ship" // Jumps to refueling the ship.  Will eventually revamp this.
 		shoreMenu.put(5, () -> PriceDisplay(playerObject)); //"Check Port Prices"
@@ -72,7 +72,7 @@ public class ShoreSide{
 	
 	private int parseSubShoreMenu(Boat playerObject, int userDecision){
 		Map<Integer, Runnable> shoreMenu = new HashMap<>();
-		shoreMenu.put(1, () -> new Weather().FormattedWeatherAndTemperature(playerObject, 30));
+		shoreMenu.put(1, () -> new Weather().FormattedWeatherAndTemperature());//new Weather().FormattedWeatherAndTemperature(playerObject, 30));
 		shoreMenu.put(2, () -> new ShipModifications(playerObject));//ShipStatusSubmenu(playerObject)); // Jumps to Checking ship Status.  Will eventually revamp this.
 		shoreMenu.put(3, () -> shipFuel(playerObject));//new ShipStatus(playerObject)); // Jumps to refueling the ship.  Will eventually revamp this.
 		shoreMenu.put(4, () -> PriceDisplay(playerObject));
@@ -105,8 +105,8 @@ public class ShoreSide{
 	public void shipFuel(Boat playerObject){
 		double fuelToFill = (playerObject.GetMaximumFuel() - playerObject.GetCurrentFuel());
 		double fuelToFillPrice = fuelToFill * fuelPrice;
-		System.out.println("Current fuel level: " + playerObject.GetCurrentFuel());
-		System.out.println("Maximum fuel: " + playerObject.GetMaximumFuel());
+		playerObject.DisplayCurrentFuel();
+		playerObject.DisplayMaximumFuel();
 		System.out.println("Fuel to fill: " + fuelToFill );
 		playerObject.DisplayMoney();
 		System.out.println("Current fuel price per ton: $" + fuelToFillPrice);

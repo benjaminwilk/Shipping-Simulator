@@ -1,53 +1,89 @@
 package src.main.java.Player;
 
 import src.main.java.*;
+import java.lang.invoke.WrongMethodTypeException;
 
 public class UserLocation extends UserMoney {
 
-	private String currentLocation;
-	private LongitudeLatitude playerLongitudeLatitude;
-	private final static String defaultLocation = "Long Beach";
+	//private String currentLocation;
+	private LongitudeLatitude playerLocation;
+	private LongitudeLatitude playerDestination;
+	private final static String defaultTitle = "Long Beach";
 	private final static double defaultLatitude = 33.754185;
 	private final static double defaultLongitude = -118.216458;
 	
 	public UserLocation(){
-		//this.playerLongitudeLatitude = new LongitudeLatitude();
-		this.playerLongitudeLatitude = new LongitudeLatitude.Builder().build();
+		this.playerLocation = new LongitudeLatitude.Builder().build();
+		this.playerDestination = new LongitudeLatitude.Builder().build();
 	}
 	
 	public void SetCurrentLocation(String UserDefinedLocation){
-		this.currentLocation = UserDefinedLocation;
-	}
-	
-	public String GetCurrentLocation(){
-		return this.currentLocation;
+		this.playerLocation.SetTitle(UserDefinedLocation);
 	}
 	
 	public void SetDefaultLocation(){
-		this.currentLocation = defaultLocation;
-		this.playerLongitudeLatitude.SetLatitude(defaultLatitude);
-		this.playerLongitudeLatitude.SetLongitude(defaultLongitude);
+		this.playerLocation.SetTitle(defaultTitle);
+		this.playerLocation.SetLatitude(defaultLatitude);
+		this.playerLocation.SetLongitude(defaultLongitude);
+	}
+	
+	public LongitudeLatitude GetCurrentCoordinates(){
+		return this.playerLocation;
+	}
+	
+	public LongitudeLatitude GetDestinationCoordinates(){
+		return this.playerDestination;
+	}
+	
+	public void SetDestinationLocation(String passedTitle){
+		this.playerDestination.SetTitle(passedTitle);
+	}
+	
+	public void SetDestinationLocation(String passedTitle, double passedLongitude, double passedLatitude){
+		this.playerDestination.SetTitle(passedTitle);
+		this.playerDestination.SetLongitude(passedLongitude);
+		this.playerDestination.SetLatitude(passedLatitude);
 	}
 	
 	public void SetLongitudeAndLatitude(double passedLongitude, double passedLatitude){
-		this.playerLongitudeLatitude.SetLongitude(passedLongitude);
-		this.playerLongitudeLatitude.SetLatitude(passedLatitude);
+		this.playerLocation.SetLongitude(passedLongitude);
+		this.playerLocation.SetLatitude(passedLatitude);
+	}
+	
+	public String GetCurrentName(){
+		return this.playerLocation.GetTitle();
 	}
 
-	public double GetCurrentLocationLongitude(){
-		return this.playerLongitudeLatitude.GetLongitude();
+	public double GetCurrentLongitude(){
+		return this.playerLocation.GetLongitude();
 	}
 
-	public double GetCurrentLocationLatitude(){
-		return this.playerLongitudeLatitude.GetLatitude();
+	public double GetCurrentLatitude(){
+		return this.playerLocation.GetLatitude();
 	}
 
-	public void DisplayCurrentLocation(){
-		System.out.println("Current Location: " + this.currentLocation);
+	public String GetDestinationName(){
+		return this.playerDestination.GetTitle();
+	}
+	
+	public double GetDestinationLatitude(){
+		return this.playerDestination.GetLatitude();
+	}
+	
+	public double GetDestinationLongitude(){
+		return this.playerDestination.GetLongitude();
+	}
+	
+	public void DisplayCurrentTitle(){
+		System.out.println("Current Location: " + this.playerLocation.GetTitle());
+	}
+	
+	public void DisplayDestinationTitle(){
+		System.out.println("Destination Location: " + this.playerDestination.GetTitle());
 	}
 	
 	public boolean ToSamePlace(String UserDefinedLocation){
-		if(UserDefinedLocation.contains(this.currentLocation)){
+		if(UserDefinedLocation.contains(this.playerLocation.GetTitle())){
 			return true;
 		} else {
 			return false;

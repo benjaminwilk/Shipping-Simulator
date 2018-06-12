@@ -1,6 +1,7 @@
 package src.main.java;
 
 import src.main.java.Player.*;
+import src.main.java.Abstract.*;
 import java.util.ArrayList;
 
 public class UserSailors{
@@ -10,15 +11,15 @@ public class UserSailors{
 	int totalDefense = 0;
 	int totalLoading = 0;
 	double totalSalary = 0.0;
-
+	
 	public void addSailor(Sailor passedCrewmen){
 		this.PlayerSailors.add(passedCrewmen);
 	}
-
+	
 	public void removeSailor(int passedValue){
 		this.PlayerSailors.remove(passedValue);
 	}
-
+	
 	public void recalculateLevels(){
 		collectEngineeringLevel();
 		collectSteeringLevel();
@@ -26,77 +27,80 @@ public class UserSailors{
 		collectLoadingLevel();
 		collectSalaryValue();
 	}
-
+	
 	private void collectEngineeringLevel(){
-		for(int i = 0; i <= this.PlayerSailors.size(); i++){
+		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
 			this.totalEngineering = this.PlayerSailors.get(i).getEngineering();
 		}
 	}
-
+	
 	private void collectSteeringLevel(){
-		for(int i = 0; i <= this.PlayerSailors.size(); i++){
+		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
 			this. totalSteering = this.PlayerSailors.get(i).getSteering();
 		}
 	}
-
+	
 	private void collectDefenseLevel(){
-		for(int i = 0; i <= this.PlayerSailors.size(); i++){
+		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
 			this.totalDefense = this.PlayerSailors.get(i).getDefense();
 		}
 	}
-
+	
 	private void collectLoadingLevel(){
-		for(int i = 0; i <= this.PlayerSailors.size(); i++){
+		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
 			this.totalLoading = this.PlayerSailors.get(i).getLoading();
 		}
 	}
-
+	
 	private void collectSalaryValue(){
-		for(int i = 0; i <= this.PlayerSailors.size(); i++){
+		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
 			this.totalSalary = this.PlayerSailors.get(i).getSalary();
 		}
 	}
-
+	
 	public int getEngineeringValue(){
 		return this.totalEngineering;
 	}
-
+	
 	public int getSteeringValue(){
 		return this.totalSteering;
 	}
-
+	
 	public int getDefenseValue(){
 		return this.totalDefense;
 	}
-
+	
 	public int getLoadingValue(){
 		return this.totalLoading;
 	}
-
+	
 	public double getSalaryTotal(){
 		return this.totalSalary;
 	}
-
+	
 	public Sailor getSailors(int passedValue){
 		return this.PlayerSailors.get(passedValue);
 	}
-
+	
 	public int getSailorCount(){
 		return this.PlayerSailors.size();
 	}
-
+	
 	public void DisplayTotals(){
-		System.out.println("Engineering: " + getEngineeringValue());
-		System.out.println("Steering: " + getSteeringValue());
+		System.out.println("\n----- Skill and Salary Totals -----");
+		System.out.println("Total Sailors: " + getSailorCount());
+		System.out.println("Weekly Salary Spend: $" + getSalaryTotal());
 		System.out.println("Defense: " + getDefenseValue());
-		System.out.println("Loading: " + getLoadingValue());
-		System.out.println("Total Salary: $" + getSalaryTotal());
+		System.out.println("Loading: " + getLoadingValue() + "\n");
+		System.out.println("Steering: " + getSteeringValue());
+		System.out.println("Engineering: " + getEngineeringValue());
+		
 	}
-
+	
 	public void displaySailorCount(){
 		System.out.println("Sailors aboard: " + getSailorCount());
 	}
-
+	
 	public boolean AnySailors(){
 		if(getSailorCount() == 0){
 			return false;
@@ -104,6 +108,6 @@ public class UserSailors{
 			return true;
 		}
 	}
-
-
+	
+	
 }

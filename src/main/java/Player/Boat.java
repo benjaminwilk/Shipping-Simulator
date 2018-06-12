@@ -106,7 +106,7 @@ public class Boat extends UserContainers {
 	
 	public void GetShortUserReadout(){ // Returns formatted date and current location.
 		DisplayFormattedDate();
-		DisplayCurrentLocation();
+		DisplayCurrentTitle();
 	}
 
 	public void GetUserReadout(){ // Returns a myriad of ship statistics.

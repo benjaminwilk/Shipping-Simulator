@@ -2,6 +2,8 @@ package src.main.java;
 import src.main.java.Player.*;
 import src.main.java.Abstract.*;
 
+enum shipCategory{smallFeeder, feeder, feederMax, Panamax, Suezmax, chinamax, Seawaymax, specialty}
+
 public class ShipModifications{
 
 	public ShipModifications(Boat playerObject){

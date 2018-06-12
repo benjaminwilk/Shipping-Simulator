@@ -1,27 +1,31 @@
 package src.main.java;
 
 import src.main.java.Abstract.*;
+import src.main.java.Player.*;
+import java.util.ArrayList;
 
-public class AvailablePorts{
+class Ports{
 
-	private LongitudeLatitude portLonLat;
 	private String portName;
+	private LongitudeLatitude portLonLat;
 	//private QuantityAndPrice portPriceAndCount;
 	private ContainerVariety portPriceAndCount;
-
-	//private double[] portLatitude = {33.754185, -33.858333,  22.287753};
-	//private double[] portLongitude = {-118.216458, 151.233333, 114.173619};
-	//private String[] portNames = {"Long Beach", "Hong Kong", "Sydney"};
+	private Weather portWeather;
+	private ArrayList<Sailor> SailorsInPort = new ArrayList<Sailor>();
 	
-	public AvailablePorts(String passedPortName){
+	public Ports(String passedPortName){
 		this.portName = passedPortName;
-		//this.portLonLat = new LongitudeLatitude(ParsePortToLon(this.portName), ParsePortToLon(this.portName));
-		this.portLonLat = new LongitudeLatitude.Builder()
-			.longitude(ParsePortToLon(this.portName))
-			.latitude(ParsePortToLat(this.portName))
-			.build();
-		//this.portPriceAndCount = new QuantityAndPrice(Abstract.GetRandomValue(4000, 0), Abstract.GetRandomDoubleValue(500.0, 20.0), this.portName);
+		this.portLonLat = new LongitudeLatitude.Builder().title(this.portName).longitude(ParsePortToLon(this.portName)).latitude(ParsePortToLat(this.portName)).build();
 		this.portPriceAndCount = new ContainerVariety("port");
+		this.portWeather = new Weather();
+		setRandomSailors();
+	}
+	
+	private void setRandomSailors(){
+		int randomSailorCount = Abstract.GetRandomValue(100, 0);
+		for(int i = 0; i < randomSailorCount; i++){
+			this.SailorsInPort.add(i, new Sailor.Builder().gender().Name().skills().Salary().Nationality().build());
+		}
 	}
 	
 	public String GetPortName(){
@@ -120,6 +124,31 @@ public class AvailablePorts{
 		return this.portPriceAndCount.getTotalCount();
 	}	
 	
+	public void displayAvailableCrew(){
+		System.out.println("Boolin");
+		int[] randomSailorValues = new int[6];
+		for(int i = 0 ; i < randomSailorValues.length; i++){
+			randomSailorValues[i] = Abstract.GetRandomValue(SailorsInPort.size(), 0);
+		}
+		System.out.println("----- Available Sailors for Hire -----");
+		for(int i = 0; i < 6; i++){
+			System.out.println(randomSailorValues[i]);
+			System.out.println("Name: " + this.SailorsInPort.get(randomSailorValues[i]).getName());
+			System.out.println("Gender: "+ this.SailorsInPort.get(randomSailorValues[i]).getGender());
+			System.out.println("Nationality: " + this.SailorsInPort.get(randomSailorValues[i]).getNationality());
+			System.out.println("Salary: $" + this.SailorsInPort.get(randomSailorValues[i]).getSalary());
+			System.out.println("Defense: " + this.SailorsInPort.get(randomSailorValues[i]).getDefense());
+			System.out.println("Loading: " + this.SailorsInPort.get(randomSailorValues[i]).getLoading());
+			System.out.println("Steering: " + this.SailorsInPort.get(randomSailorValues[i]).getSteering());
+			System.out.println("Engineering: " + this.SailorsInPort.get(randomSailorValues[i]).getEngineering());
+			System.out.println();
+		}
+	}
+	
+	private void removeAvailableSailor(int chosenSailor){
+		this.SailorsInPort.remove(chosenSailor);
+	}
+
 	//***************************************************
 	
 	private double ParsePortToLat(String passedPortName){
@@ -139,6 +168,24 @@ public class AvailablePorts{
 		}
 		return -1.0;
 	}
-	
 
+}
+
+public class AvailablePorts{
+	ArrayList <Ports> PortLocations = new ArrayList<Ports>();
+	
+	public AvailablePorts(String[] passedPorts){
+		for(int i = 0; i < passedPorts.length; i++){
+			this.PortLocations.add( new Ports(passedPorts[i]));
+		}
+	}
+
+	public void displayAvailableCrew(String passedName){
+		this.PortLocations.get(Abstract.convertStringToInt(passedName, MenuDisplays.GetPortName())).displayAvailableCrew();
+	}
+	
+	public void displayAvailableCrew(int passedValue){
+		this.PortLocations.get(passedValue).displayAvailableCrew();
+	}
+	
 }

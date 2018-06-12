@@ -7,15 +7,14 @@ import src.main.java.Abstract.*;
 public class PrimaryLoop{
 
 	Boat playerObject;
-	PortChoice portDecision;
 	LoadUnloadContainers shoreContainers;
 	Movement move;
-	Weather UserWeather;
-	ArrayList <AvailablePorts> portLocations = new ArrayList<AvailablePorts>();
+	AvailablePorts ports;
+	
+	//ArrayList <AvailablePorts> portLocations = new ArrayList<AvailablePorts>();
 	
 
 	public PrimaryLoop(){
-		this.UserWeather = new Weather();
 		InitializePlayer();
 		InitializePorts();
 		IterativeFunction();
@@ -23,15 +22,14 @@ public class PrimaryLoop{
 	}
 
 	public void IterativeFunction(){
-		this.portDecision = new PortChoice();
 		this.shoreContainers = new LoadUnloadContainers();
 		this.move = new Movement();
-		//this.LocationContainer = new PortContainer();
 		
 		while(true){
-			this.shoreContainers.Iteration(this.playerObject, this.portLocations);
-			this.portDecision.iteration(this.playerObject);
-			this.move.iteration(this.playerObject, portDecision);
+			this.shoreContainers.Iteration(this.playerObject, this.ports/*, this.portLocations*/);
+			this.move.currentLocationAndDestination(this.playerObject);
+			//this.portDecision.iteration(this.playerObject);
+			this.move.iteration(this.playerObject/*, portDecision*/);
 		}	
 	}
 		
@@ -43,9 +41,7 @@ public class PrimaryLoop{
 	}
 	
 	public void InitializePorts(){
-		for(int i = 0; i < MenuDisplays.GetPortName().length; i++){
-			portLocations.add(new AvailablePorts(MenuDisplays.GetPortName(i)));
-		}
+		this.ports = new AvailablePorts(MenuDisplays.GetPortName());
 	}
 	
 }

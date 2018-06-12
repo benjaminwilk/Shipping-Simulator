@@ -3,7 +3,7 @@ package src.main.java;
 import java.util.Random;
 import java.text.DecimalFormat;
 
-public class Randomize{
+public class Randomize extends propertyPull{
 
 	private static Random GenerateRandomValue(){ // Similar setup to "initializeScanner", all random values start here.
 		Random randomGeneratedValue = new Random();

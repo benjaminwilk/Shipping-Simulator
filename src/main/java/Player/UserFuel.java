@@ -2,6 +2,8 @@ package src.main.java.Player;
 import src.main.java.*;
 import java.lang.Math;
 
+enum engineType {diesel, bunker, lowSulfur}
+
 public class UserFuel extends UserLocation{
 	private double currentFuel;
 	private double maximumFuel;
