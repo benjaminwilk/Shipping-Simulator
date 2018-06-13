@@ -112,7 +112,7 @@ public class SailorMenu{
 		char sailorChoice = Abstract.ScannerChar();
 		if(Character.isDigit(sailorChoice)){
 			//playerObject.addSailor(this.AvailableSailors.get(Character.getNumericValue(sailorChoice) - 1));
-			//playerObject.addSailor(ports.)
+			//playerObject.addSailor(ports.) // This is the piece that's currently broken.
 			playerObject.displaySailorCount();
 		//	removeAvailableSailor(Character.getNumericValue(sailorChoice) - 1);
 		}
