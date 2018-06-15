@@ -9,7 +9,7 @@ public class Movement{
 	private int PortDistance;
 	private int UserSpeed;
 
-	
+
 	//*****************************************************
 	public void currentLocationAndDestination(Boat playerObject){
 		int portChoice = 0;
@@ -21,24 +21,24 @@ public class Movement{
 		}while((portChoice-1) >= 3);
 		//	SetDestinationAndCurrentPort(portChoice);
 		changeCurrentAndDestination(playerObject, portChoice);
-		
+
 	}
-	
+
 	//private void SetDestinationAndCurrentPort(int destinationPort){
 	//	playerObject.GetCurrentName();
 	//	playerObject
 		//this.currentPort = this.destinationPort;
 		//this.destinationPort = MenuDisplays.GetPortName(destinationPort - 1);
 	//}
-	
+
 /*	public void changeCurrentAndDestination(Boat playerObject){
 		this.currentPort = this.destinationPort;
 		playerObject.SetCurrentLocation(this.destinationPort);
 		this.destinationPort = null;
 	}*/
-		
+
 	//*****************************************************
-	
+
 	public void iteration(Boat playerObject/*, PortChoice pc*/){
 		//this.DeparturePort = null;
 		//this.ArrivalPort = null;
@@ -53,21 +53,21 @@ public class Movement{
 //			.latitude(Abstract.compareStringToTableToDouble(/*pc.getDestinationPort(),*/ playerObject.GetDestinationName(), MenuDisplays.GetPortName(), MenuDisplays.GetPortLatitude()))
 //			.build();
 		//this.ArrivalPort =  new LongitudeLatitude(Abstract.compareStringToTableToDouble(pc.getDestinationPort(), MenuDisplays.GetPortName(), MenuDisplays.GetPortLatitude()), Abstract.compareStringToTableToDouble(pc.getDestinationPort(), MenuDisplays.GetPortName(), MenuDisplays.GetPortLongitude()));
-		
+
 		this.MovementDistanceCalculation = new DistanceCalculation(playerObject.GetCurrentCoordinates(), playerObject.GetDestinationCoordinates());
 		this.PortDistance = this.MovementDistanceCalculation.GetDistanceCalculation();
 		this.UserSpeed = playerObject.GetShipSpeed();
 		seaTravel(playerObject);
 		changeCurrentAndDestination(playerObject);
 	}
-	
+
 	private void changeCurrentAndDestination(Boat playerObject, int portChoice){
 		playerObject.SetCurrentLocation(playerObject.GetDestinationName());
 		//playerObject.SetCurrentLocation(this.destinationPort);
 		//this.destinationPort = null;
 		playerObject.SetDestinationLocation(MenuDisplays.GetPortName(portChoice));
 	}
-	
+
 		private void changeCurrentAndDestination(Boat playerObject){
 		//this.currentPort = this.destinationPort;
 		playerObject.SetCurrentLocation(playerObject.GetDestinationName());
@@ -75,7 +75,7 @@ public class Movement{
 		//this.destinationPort = null;
 		playerObject.SetDestinationLocation(null);
 	}
-	
+
 	/*** I'll need to put in a Google Geotagging API here ***/
 	/** Long beach: 33.754185, -118.216458
 	Sydney: -33.858333, 151.233333
@@ -99,7 +99,7 @@ public class Movement{
 			DisplayDayAtSeaAndDate(playerObject, dayCount, DistanceTraveled);
 			playerObject.FuelMeasureAndConsumption(playerObject);
 			new MovementGraphics(DistanceTraveled, this.PortDistance);
-			playerObject.DisplayFormattedFuelPercentage();
+			playerObject.DisplayFuelGauge();
 			dayCount++;
 		}
 		System.out.println("\n\n\n");

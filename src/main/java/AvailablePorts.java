@@ -8,6 +8,7 @@ class Ports{
 
 	private String portName;
 	private LongitudeLatitude portLonLat;
+	private double fuelPrice;
 	//private QuantityAndPrice portPriceAndCount;
 	private ContainerVariety portPriceAndCount;
 	private Weather portWeather;
@@ -18,6 +19,7 @@ class Ports{
 		this.portLonLat = new LongitudeLatitude.Builder().title(this.portName).longitude(ParsePortToLon(this.portName)).latitude(ParsePortToLat(this.portName)).build();
 		this.portPriceAndCount = new ContainerVariety("port");
 		this.portWeather = new Weather();
+		this.fuelPrice = Abstract.GetRandomDoubleValue(500, 40);
 		setRandomSailors();
 	}
 
@@ -116,6 +118,10 @@ class Ports{
 		this.portPriceAndCount.displayNameQuantityAndPrice();
 	}
 
+	public double getFuelPrice(){
+		return this.fuelPrice;
+	}
+
 	public int length(){
 		return this.portPriceAndCount.length();
 	}
@@ -179,8 +185,22 @@ public class AvailablePorts{
 		}
 	}
 
+	public void AddAvailablePort(String[] passedPorts){
+		for(int i = 0; i < passedPorts.length; i++){
+			this.PortLocations.add( new Ports(passedPorts[i]));
+		}
+	}
+
+	public void AddAvailablePort(String passedPort){
+		this.PortLocations.add(new Ports(passedPort));
+	}
+
+	public double GetFuelPrice(String portName){
+		return this.PortLocations.get(Abstract.convertStringToInt(portName, MenuDisplays.GetPortName())).getFuelPrice();
+	}
+
 	public void getSpecificSailor(int specificSailor){
-		
+
 	}
 
 	public void displayAvailableCrew(String passedName, int[] sailorValues){
