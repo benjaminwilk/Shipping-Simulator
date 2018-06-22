@@ -2,31 +2,31 @@ package src.main.java.Player;
 
 import src.main.java.*;
 
-public class UserContainers extends UserFuel{
+public class UserContainers extends UserFuel{ // Class controls the containers on the ship.  I don't know if it's the way I daisy-chained the classes together is correct, but it works.
 	
-	private int maximumContainers;
-	private ContainerVariety userQuantities;
-	private boolean refrigeration = false;
-	private int cranes = 0;
+	private int maximumContainers; // Controls the maximum containers you can load on the ship.
+	private ContainerVariety userQuantities; // Controls the type of containers that ou have loaded on the ship.
+	private boolean refrigeration = false; // Does your ship have the equipment needed for refrigeration? // I should probably put an additional fuel cost involed with refrigeration usage.  
+	private int cranes = 0; // Feature not implemented yet, cranes will either make you more money, or speed up loading/unloading.
 	
-	public UserContainers(){
+	public UserContainers(){ //Constructor that goes into ContainerVariety, and passes that it's a ship.
 		this.userQuantities = new ContainerVariety("ship");
 	}
 	
-	public UserContainers(int passedContainers){
+	public UserContainers(int passedContainers){ // Similar to the constuctor above, passes ship as a variable, and sets maximum containers to the passed value.
 		this.userQuantities = new ContainerVariety("ship");
 		this.maximumContainers = passedContainers;
 	}
 	
-	public void SetMaximumContainers(int userDefinedMaxContainers){
+	public void SetMaximumContainers(int userDefinedMaxContainers){ // Sets the maximum containers to the passed value.
 		this.maximumContainers = userDefinedMaxContainers;
 	}
 	
-	public int GetSpecificContainerCount(int passedContainerType){
+	public int GetSpecificContainerCount(int passedContainerType){ // Provides the container count for a specific container type.  The passed value correlates to the container type stored in an array.
 		return this.userQuantities.getQuantity(passedContainerType - 1);
 	}
 	
-	public void SetSpecificContainerCount(int passedContainerType, int passedContainerCount){
+	public void SetSpecificContainerCount(int passedContainerType, int passedContainerCount){ // Sets a specific container type, to a specific container count.  
 		this.userQuantities.setQuantity(passedContainerType - 1, passedContainerCount);
 	}
 	
@@ -34,7 +34,7 @@ public class UserContainers extends UserFuel{
 //		this.userQuantities.setQuantity(passedContainerType - 1, (passedContainerCount + this.passedContainerType.-1));
 //	}
 
-	public void DecreaseSpecificContainerCount(int passedContainerType, int passedContainerCount){
+	public void DecreaseSpecificContainerCount(int passedContainerType, int passedContainerCount){ // 
 		this.userQuantities.setQuantity(passedContainerType - 1, (passedContainerCount - 1)); //passedContainerType - 1));
 	}
 		
@@ -43,15 +43,15 @@ public class UserContainers extends UserFuel{
 //		this.userStandardContainers.setQuantity(userDefinedCurrentContainers);
 //	}
 	
-	public int GetMaximumContainers(){
+	public int GetMaximumContainers(){ // Returns the maximum container value.
 		return this.maximumContainers;
 	}
 	
-	public boolean getRefrigeration(){
+	public boolean getRefrigeration(){ // Returns whether the ship can move refrigeration containers.
 		return this.refrigeration;
 	}
 	
-	public void setRefrigeration(){
+	public void setRefrigeration(){ // When this function is run, refrigeration is either toggled on or off.
 		if(this.refrigeration == false){
 			this.refrigeration = true;
 		} else {
@@ -59,12 +59,12 @@ public class UserContainers extends UserFuel{
 		}
 	}
 	
-	public int GetContainerCount(){
+	public int GetContainerCount(){ // Returns the total container count aboard the ship.
 		return this.userQuantities.getTotalCount();
 	}
 	
-	public String DisplayContainerCount(){
-		return "Total containers: " + this.userQuantities.getTotalCount();
+	public String DisplayContainerCount(){ // Displays the container count in a more presentable form.
+		return "Total containers: " + GetContainerCount();
 	}
 	
 	//public void SetContainerPayment(double userDefinedContainerPayment){
@@ -75,7 +75,7 @@ public class UserContainers extends UserFuel{
 //		return this.standardGoods.GetPrice();
 //	}
 	
-	public void DisplayContainerOverview(){
+	public void DisplayContainerOverview(){ // Displays the maximum containers allowed on board, and the container count on the ship currently.
 		DisplayMaximumContainers();
 		DisplayCurrentContainers();
 	}
@@ -93,27 +93,26 @@ public class UserContainers extends UserFuel{
 		
 	}*/
 	
-	public int getCranes(){
+	public int getCranes(){ // Returns the count of cranes you have aboard.
 		return this.cranes;
 	}
 	
-	public void increaseCranes(){
+	public void increaseCranes(){ // If the player decides to install a crane, this increases the count by one.
 		this.cranes++;
 	}
 	
-	
-	public void DisplayContainerQuantityAndPrice(){
+	public void DisplayContainerQuantityAndPrice(){ // Passes the displayname and price from userQuantities.
 		this.userQuantities.displayNameAndPrice();
 	}
 	
-	public void DisplayContainerQuantity(){
+	public void DisplayContainerQuantity(){ // An iterative loop that displays all the container types that can be aboard.  
 		System.out.println("--- Containers Aboard ---");
 		for(int i = 0 ; i < this.userQuantities.length(); i++){
-			System.out.println(" " + ModifyContainerLength(this.userQuantities.getName(i)) + "    --    " + this.userQuantities.getQuantity(i));
+			System.out.println(" " + UserContainers.ModifyContainerLength(this.userQuantities.getName(i)) + "    --    " + this.userQuantities.getQuantity(i));
 		}
 	}
 	
-	public String ModifyContainerLength(String passedName){
+	private static String ModifyContainerLength(String passedName){ // A helper function that adds padding, that makes lines of text a bit more presentable.
 		String spaceAdder = "";
 		for(int i = passedName.length(); i < 13; i++){
 			spaceAdder += new String(" ");
@@ -121,11 +120,11 @@ public class UserContainers extends UserFuel{
 		return passedName += spaceAdder;
 	}
 	
-	public void DisplayMaximumContainers(){
+	public void DisplayMaximumContainers(){ // Displays a presentable version showing the maximum containers allowed.
 		System.out.println("Max Containers: " + this.maximumContainers);
 	}
 	
-	public void DisplayCurrentContainers(){
+	public void DisplayCurrentContainers(){ // Displays a presentable version showing the current container count.
 		System.out.println("Current container load: " + GetContainerCount());
 	}
 	
@@ -137,7 +136,7 @@ public class UserContainers extends UserFuel{
 		}
 	}
 	
-	public boolean IsFullShip(){
+	public boolean IsFullShip(){ // Returns true if the player ship is full.  
 		if(this.userQuantities.getTotalCount() == this.maximumContainers){
 			return true;
 		} else {

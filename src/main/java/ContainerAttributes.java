@@ -2,99 +2,100 @@ package src.main.java;
 
 import src.main.java.Abstract.*;
 
-class Quantity{
-	private int quantity;
+class Quantity{ // Quantity class; nested inside Container attributes.
+	private int quantity; // Quantity of containers available.
 	private final static int defaultQuantity = 0;
 
-	public Quantity(){
+	public Quantity(){ //Default Quantity set to 0, if nothing is passed to it.
 		this.quantity = defaultQuantity;
 	}
 
-	public int GetQuantity(){
-		return this.quantity;
-	}
-
-	public void IncreaseQuantity(int passedQuantity){
-		Abstract.IncreaseValue(this.quantity, passedQuantity);
-	}
-
-	public void SetQuantity(int passedQuantity){
+	public void SetQuantity(int passedQuantity){ // Sets the quantity available to the passed value.
 		this.quantity = passedQuantity;
 	}
 
-	public void DecreaseQuantity(int passedQuantity){
+	public void IncreaseQuantity(int passedQuantity){ // Increases the quantity of available containers by the passed value.
+		Abstract.IncreaseValue(this.quantity, passedQuantity);
+	}
+
+	public void DecreaseQuantity(int passedQuantity){ // Decreases the quantity of available containers by the passed value.
 		Abstract.DecreaseValue(this.quantity, passedQuantity);
 	}
 
-}
-
-class Refrigeration{
-	private boolean refrigeration;
-
-	public Refrigeration(){
-		this.refrigeration = false;
-	}
-
-	public Refrigeration(boolean state){
-		this.refrigeration = state;
-	}
-
-	public void SetRefrigeration(boolean state){
-		this.refrigeration = state;
-	}
-
-	public boolean GetRefrigeration(){
-		return this.refrigeration;
+	public int GetQuantity(){ // Returns the available quantity of containers.
+		return this.quantity;
 	}
 
 }
 
+class Refrigeration{ // Refrigeration status; this also hasn't been implemented yet, but will eventually.  This is a boolean check value.
+	private boolean refrigerationStatus;
 
-class Weight{
-	private int weight;
+	public Refrigeration(){ //When initialized without arguments, refrigeration status is set to false.
+		this.refrigerationStatus = false;
+	}
+
+	public Refrigeration(boolean passedStatus){ // Constructor where if you pass true, refrigeration status is true!
+		setRefrigerationStatus(passedStatus);
+	}
+
+	public boolean getRefrigerationStatus(){ // Returns the state of refrigeration.
+		return this.refrigerationStatus;
+	}
+
+	public void setRefrigerationStatus(boolean passedStatus){  // Similar to the constructor above, allows you to set the status.
+		this.refrigerationStatus = passedStatus;
+	}
+
+}
 
 
-	public Weight(){
+class Weight{ // Weight class; This hasn't been implemented yet, but will eventually!  This will affect the amount of containers a ship can carry.
+	private int weight; //Weight is using int, rather than double, since we are talking about thousands of pounds.
+
+
+	public Weight(){ // When weight is initialized, weight is randomly set anywhere between 9K and 70K.
 		this.weight = Abstract.GetRandomValue(70000, 9000);
 	}
 
-	public void SetWeight(int passedWeight){
+	public void SetWeight(int passedWeight){ // Manually set the weight of the container type.
 		this.weight = passedWeight;
 	}
 
-	public int GetWeight(){
+	public int GetWeight(){ // Returns the weight value.
 		return this.weight;
 	}
 
 }
 
-class Price{
-	private double price;
+class Price{ // Price class; this is what controls the price of container type.
+	private double price; // Self-explanitory, price is stored in a double.
 	private final static double defaultPrice = 0.0;
 
-	public Price(){
+	public Price(){ // Constructor that sets the price of goods to $0.0
 		this.price = defaultPrice;
 	}
 
-	public double GetPrice(){
+	public double GetPrice(){ // Provides the set price.
 		return this.price;
 	}
 
-	public void IncreasePrice(double passedPrice){
+	public void IncreasePrice(double passedPrice){ // Increases the quantity of available containers by the passed value.
 		Abstract.IncreaseValue(this.price, passedPrice);
 	}
 
-	public void SetPrice(double passedPrice){
+	public void SetPrice(double passedPrice){ // Sets the price to a provided value.
 		this.price = passedPrice;
 	}
 
-	public void DecreasePrice(double passedPrice){
+	public void DecreasePrice(double passedPrice){ // Increases the quantity of available containers by the passed value.
 		Abstract.DecreaseValue(this.price, passedPrice);
 	}
 
 }
 
-enum GoodType{Container, Bulk}
+enum GoodType{Container, Bulk} // Enum that sets goods to either containers or bulk setting.  This can be expanded on.
+
 
 public class ContainerAttributes{
 	private String title;
@@ -175,14 +176,7 @@ public class ContainerAttributes{
 	private ContainerAttributes(Builder builder){
 		this.title = builder.title;
 
-		this.price 					 = builder.price;
-		this.quantity   		 = builder.quantity;
-		this.weight 		 		 = builder.weight;
-		this.refrigeration	 = builder.refrigeration;
-		this.GoodType 			 = builder.GoodType;
-	}
-
-	public void IncreaseQuantity(int passedQuantity){
+		this.price 					 = builder.pripublic void IncreaseQuantity(int passedQuantity){
 		this.quantity.IncreaseQuantity(passedQuantity);
 	}
 
@@ -216,6 +210,60 @@ public class ContainerAttributes{
 
 	public void SetRefrigeration(boolean state){
 		this.refrigeration.SetRefrigeration(state);
+	}
+
+	public void SetQuantity(int passedQuantity){
+		this.quantity.SetQuantity(passedQuantity);
+	}
+
+	public void DecreaseQuantity(int passedQuantity){
+		this.quantity.DecreaseQuantity(passedQuantity);
+		//IncreaseQuantity((-1)*passedQuantity);
+	}
+
+	public void DecreasePrice(double passedPrice){
+	//	Abstract.DecreaseValue(this.Value.GetPrice(), passedPrice);
+		//IncreasePrice((-1)*passedPrice);
+		this.price.DecreasePrice(passedPrice);
+	}
+
+}ce;
+		this.quantity   		 = builder.quantity;
+		this.weight 		 		 = builder.weight;
+		this.refrigeration	 = builder.refrigeration;
+		this.GoodType 			 = builder.GoodType;
+	}
+
+	public void IncreaseQuantity(int passedQuantity){
+		this.quantity.IncreaseQuantity(passedQuantity);
+	}
+
+	public void IncreasePrice(double passedPrice){
+		this.price.IncreasePrice(passedPrice);
+	}
+
+	public int GetQuantity(){
+		return this.quantity.GetQuantity();
+	}
+
+	public String getName(){
+		return this.title;
+	}
+
+	public void setRefrigerationStatus(boolean setRefrigerationStatus){
+		this.refrigeration.setRefrigerationStatus(setRefrigerationStatus);
+	}
+
+	public boolean getRefrigerationStatus(){
+		return this.refrigeration.getRefrigerationStatus();
+	}
+
+	public double GetPrice(){
+		return this.price.GetPrice();
+	}
+
+	public void SetPrice(double passedPrice){
+		this.price.SetPrice(passedPrice);
 	}
 
 	public void SetQuantity(int passedQuantity){

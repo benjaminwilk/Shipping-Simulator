@@ -9,19 +9,19 @@ import java.util.ArrayList;
 
 public class LoadUnloadContainers{
 	private int containerPaymentPercentage = 10;
-	private boolean loadContainerPort; 
+	private boolean loadContainerPort;
 	//ArrayList<AvailablePorts> travelPorts = new ArrayList<AvailablePorts>();
-	
+
 	/*public LoadUnloadContainers(ArrayList<AvailablePorts> passedPorts){
 		loadTravelPorts(passedPorts);
 	}
-	
+
 	public void loadTravelPorts(ArrayList<AvailablePorts> passedPorts){
 		for(int i = 0; i < passedPorts.size(); i++){
 			this.travelPorts.add(passedPorts.get(i));
 		}
 	}*/
-	
+
 	public void Iteration(Boat playerObject, AvailablePorts ports){
 		this.loadContainerPort = false;
 		int goodsChoice = 0;
@@ -45,7 +45,7 @@ public class LoadUnloadContainers{
 
 	private int ParseGoodsMenu(int userInputGoodsMenuDecision, Boat playerObject, AvailablePorts ports){
 		Map<Integer, Runnable> goodsMenu = new HashMap<>();
-		goodsMenu.put(1, () -> ContainerMenu(playerObject));
+		goodsMenu.put(1, () -> ContainerMenu(playerObject, ports));
 		goodsMenu.put(2, () -> new ShoreSide(playerObject, ports));
 		//goodsMenu.put(3, () -> return 3);
 		if(userInputGoodsMenuDecision == 2 || userInputGoodsMenuDecision == 1){
@@ -82,7 +82,7 @@ public class LoadUnloadContainers{
 			System.out.println();
 		}
 	}*/
-	
+
 	/*private void ContainerPrices(ArrayList<AvailablePorts> travelPorts){
 		for(int i = 0; i < travelPorts.size(); i++){
 			System.out.println("\n\n\t\t  --" + travelPorts.get(i).GetPortName() + "-- ");
@@ -96,43 +96,63 @@ public class LoadUnloadContainers{
 		System.out.println("\n");
 	}*/
 
-	  
-	private void ContainerMenu(Boat playerObject){
+	private void examineContainers(Boat playerObject, AvailablePorts ports){
+		String[] examineContainerFirstLine = {"standard containers", "volatile containers", "vehicle containers", "refrigeration containers", "oil bulk", "grain bulk", "gravel bulk", "chemical bulk" };
+		System.out.println("What containers would you like to examine: ");
+		GoodsMenu();
+		int examineChoice = Abstract.ScannerInt();
+		System.out.println("You are looking at the " + examineContainerFirstLine[examineChoice - 1] + ". ");
+		if(examineChoice > 3){
+			System.out.println("You peer into the " + examineContainerFirstLine[examineChoice - 1] + " container.");
+		} else {
+			System.out.println("You look at the stack of " + examineContainerFirstLine[examineChoice - 1] + " in the port");
+		}
+		System.out.println("Price of the container in your available ports: ");
+		for(int i = 0; i < ports.GetPortCount(); i++){
+			System.out.println(ports.GetPortName(i) + " -- " + ports.DisplayGoodAndPrice(i));
+		}
+
+	}
+
+
+	private void ContainerMenu(Boat playerObject, AvailablePorts ports){
 		int containerChoice = 0;
 		MovementGraphics.ContainerGraphics();
 		do{
 			System.out.println("Load or Unload");
 			Abstract.RotateOptions(MenuDisplays.GetContainerMenu()); //"Check Container Prices", "Display Loaded Containers", "Load Containers", "Unload Containers", "Go Back"
 			System.out.print(": ");
-			containerChoice = ContainerParser(Abstract.ScannerInt(), playerObject);
+			containerChoice = ContainerParser(playerObject, ports, Abstract.ScannerInt());
 		}while(containerChoice != 5);
 	}
-	
-	private int ContainerParser(int userDecision, Boat playerObject){
+
+	private int ContainerParser(Boat playerObject, AvailablePorts ports, int userDecision){
 		Map<Integer, Runnable> loadUnloadMenu = new HashMap<>();
-	//	loadUnloadMenu.put(1, () -> ContainerPrices()); //"Check Container Prices"
+		//loadUnloadMenu.put(1, () -> ContainerPrices()); //"Check Container Prices"
 		loadUnloadMenu.put(2, () -> playerObject.DisplayContainerQuantity());//Display Loaded Containers
 		loadUnloadMenu.put(3, () -> LoadContainers(playerObject)); //"Load Containers"
 		loadUnloadMenu.put(4, () -> UnloadContainers(playerObject)); //"Unload Containers"
-		
-		if(userDecision == 1 || userDecision == 2 || userDecision == 3 || userDecision == 4){
+		loadUnloadMenu.put(5, () -> examineContainers(playerObject, ports)); //"Examine Containers"
+
+		if(userDecision == 1 || userDecision == 2 || userDecision == 3 || userDecision == 4 ||  userDecision == 5){
 			loadUnloadMenu.get(userDecision).run();
 		}
 		return userDecision;
 	}
-	
+
 	private void DisplayCurrentContainers(){
-		
+
 	}
-	
+
 	private void LoadContainers(Boat playerObject){
 		MovementGraphics.LoadUnloadGraphics();
 		if(playerObject.IsFullShip() == true){
 			System.out.println("Your ship already has a full load!");
 		} else {
 			playerObject.DisplayContainerQuantity();
+		//	port.DisplayContainerReadout();
 		//	ContainersInPort(playerObject);
-			System.out.print("What type of containers would you like to load: ");
+			System.out.print("What type of containers would you like to load: (1,2,3... | B for back)");
 			int loadContainerType = Abstract.ScannerInt();
 			System.out.print("What quantity of containers would you like to load: ");
 			int containerCount = Abstract.ScannerInt();
@@ -145,14 +165,14 @@ public class LoadUnloadContainers{
 		}
 		playerObject.IncreaseDate();
 	}
-	
-	
+
+
 	private void UnloadContainers(Boat playerObject){
 		MovementGraphics.LoadUnloadGraphics();
 	//	System.out.println(this.loadContainerPort);
 		if(playerObject.IsEmptyShip() == true){
-			System.out.println("Your ship is empty. ");	
-		} 
+			System.out.println("Your ship is empty. ");
+		}
 		else if(this.loadContainerPort == true){
 			System.out.println("You loaded your ship in this port.  You can't unload the containers.");
 		} else{

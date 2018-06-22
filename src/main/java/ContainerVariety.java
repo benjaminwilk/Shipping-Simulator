@@ -8,8 +8,9 @@ public class ContainerVariety{
 	//private String[] goodTypes = {"standardContainers", "volatileContainers", "vehicleContainers", "refrigerationContainers", "oilVolume", "grainVolume", "gravelVolume", "chemicalVolume"};
 
 	String[] containerNames = {"standard", "volatile", "vehicle", "refrigeration", "oil", "grain", "gravel", "chemical"};
-	boolean[] refrigerationState = {false, false, false, true, false, false, false, false};
-	String[] goodState = {"Container", "Container", "Container", "Container", "Bulk", "Bulk", "Bulk", "Bulk"};
+	boolean[] coolingRequired = {false, false, false, true, false, false, false, true};
+	boolean[] craneRequired = {false, false, false, false, false, true, true, false};
+	boolean[] tankerRequired = {false, false, false, false, true, true, true, true};
 	ContainerAttributes[] containerTypes = new ContainerAttributes[containerNames.length];
 	double containerWeight;
 
@@ -28,7 +29,7 @@ public class ContainerVariety{
 					.price(generateRandomDouble())
 					.weight(generateContainerWeight())
 					.quantity(generateRandomValue())
-					.refrigeration(refrigerationState[i])
+					.refrigeration(coolingRequired[i])
 					.GoodType(goodState[i])
 					.build();
 			}
@@ -94,14 +95,6 @@ public class ContainerVariety{
 		this.containerTypes[passedPosition].SetQuantity(passedQuantity);
 	}
 
-	public boolean GetRefrigeration(int passedPosition){
-		return this.containerTypes[passedPosition].GetRefrigeration();
-	}
-
-	public void SetRefrigeration(int passedPosition, boolean state){
-		this.containerTypes[passedPosition].SetRefrigeration(state);
-	}
-
 	public void setQuantity(String passedName, int passedQuantity){
 		this.containerTypes[Abstract.convertStringToInt(passedName, containerNames)].SetQuantity(passedQuantity);
 	}
@@ -133,6 +126,26 @@ public class ContainerVariety{
 	public double getPrice(String passedName){
 		return this.containerTypes[Abstract.convertStringToInt(passedName, containerNames)].GetPrice();
 	}
+
+	public void setRefrigerationStatus(int passedPosition, boolean passedState){
+		this.containerTypes[passedPosition].setRefrigerationStatus(passedState);
+	}
+
+	public void setRefrigerationStatus(String passedName, boolean passedState){
+		this.containerTypes[Abstract.convertStringToInt(passedName, containerNames)].setRefrigerationStatus(passedState);
+	}
+
+	public boolean getRefrigerationStatus(String passedName){
+		return this.containerTypes[Abstract.convertStringToInt(passedName, containerNames)].getRefrigerationStatus();
+	}
+
+	public boolean getRefrigerationStatus(int passedPosition){
+		return this.containerTypes[passedPosition].getRefrigerationStatus();
+	}
+
+	//public static int GetContainerTypeCount(){
+	//	return containerNames.length;
+	//}
 
 	public void displayNameAndPrice(){
 		for(int i = 0; i < this.containerTypes.length; i++){

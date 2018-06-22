@@ -34,10 +34,10 @@ public class ShoreSide{
 		Map<Integer, Runnable> shoreMenu = new HashMap<>();
 		shoreMenu.put(1, () -> new Weather().FormattedWeatherAndTemperature(5));//new Weather().FormattedWeatherAndTemperature(playerObject, 30)); //"Check Weather Report"
 		shoreMenu.put(2, () -> new SailorMenu(playerObject, ports)); //"Manage crewmembers"
-		shoreMenu.put(3, () -> ShipStatusSubmenu(playerObject));//"Check Ship Status" // Jumps to Checking ship Status.  Will eventually revamp this.
+		shoreMenu.put(3, () -> ShipStatusSubmenu(playerObject, ports));//"Check Ship Status" // Jumps to Checking ship Status.  Will eventually revamp this.
 		shoreMenu.put(4, () -> shipFuel(playerObject, ports));//"Refuel Ship" // Jumps to refueling the ship.  Will eventually revamp this.
 		shoreMenu.put(5, () -> PriceDisplay(playerObject)); //"Check Port Prices"
-		shoreMenu.put(6, () -> new SaveLoad(playerObject)); //"Save Game"
+		shoreMenu.put(6, () -> new SaveLoad(playerObject, ports)); //"Hotel Visit"
 		//shoreMenu.put(4, () -> new GlobalContainerPrices()); // Jumps to Global Ports and prices.
 
 		if(userDecision <= 6 && userDecision > 0){
@@ -59,13 +59,13 @@ public class ShoreSide{
 		System.out.println("\n");
 	}*/
 
-	public void ShipStatusSubmenu(Boat playerObject){
+	public void ShipStatusSubmenu(Boat playerObject, AvailablePorts ports){
 		int subMenuChoice = 0;
 		do{
 			Abstract.RotateOptions(MenuDisplays.GetShoreSubMenu()); //"Check for Damage", "Refit Storage", "Upgrade Ship", "Go Back"
 			System.out.print(": ");
 			//subMenuChoice = parseSubShoreMenu(playerObject, Abstract.ScannerInt());
-		}while(subMenuChoice >= 4);
+		}while(subMenuChoice >= 5);
 	}
 
 	private int parseSubShoreMenu(Boat playerObject, AvailablePorts ports, int userDecision){
@@ -74,7 +74,7 @@ public class ShoreSide{
 		shoreMenu.put(2, () -> new ShipModifications(playerObject));//ShipStatusSubmenu(playerObject)); // Jumps to Checking ship Status.  Will eventually revamp this.
 		shoreMenu.put(3, () -> shipFuel(playerObject, ports));//new ShipStatus(playerObject)); // Jumps to refueling the ship.  Will eventually revamp this.
 		shoreMenu.put(4, () -> PriceDisplay(playerObject));
-		shoreMenu.put(5, () -> new SaveLoad(playerObject));
+		shoreMenu.put(5, () -> new SaveLoad(playerObject, ports));
 		//shoreMenu.put(4, () -> new GlobalContainerPrices()); // Jumps to Global Ports and prices.
 
 		if(userDecision <= 5 && userDecision > 0){
@@ -101,35 +101,36 @@ public class ShoreSide{
 	}
 
 	public void installCrane(Boat playerObject, AvailablePorts ports){
-		System.out.println("Your ship currently has " + playerObject.getCranes() + " cranes on your ship.");
+		System.out.println("Your ship currently has " + playerObject.getCranes() + " cranes installed.");
 		System.out.println("Crane installation will cost $");
-		System.out.println("Your ship will be out of service for ");
+		System.out.println("It will take two weeks to install the crane.");
 		System.out.print(": ");
 		char craneInstall = Abstract.ScannerChar();
 		if(craneInstall == 'y' || craneInstall == 'Y'){
-			; // I'll add something here eventually.
+			;
 		} else {
-
+			;
 		}
-
 	}
 
 	public void shipFuel(Boat playerObject, AvailablePorts ports){
 		double fuelPrice = ports.GetFuelPrice(playerObject.GetCurrentName());
+		System.out.println("You pull your ship up to the fuel port.");
 		double fuelToFill = (playerObject.GetMaximumFuel() - playerObject.GetCurrentFuel());
 		double fuelToFillPrice = fuelToFill * fuelPrice;
 		playerObject.DisplayCurrentFuel();
 		playerObject.DisplayMaximumFuel();
+		playerObject.DisplayFormattedFuelPercentage();
 		System.out.println("Fuel to fill: " + fuelToFill );
 		playerObject.DisplayMoney();
 		System.out.println("Current fuel price per ton: $" + fuelPrice);
-		System.out.println("Fuel fill up total: $" + fuelToFillPrice);
+		System.out.println("Price to fill ship: $" + fuelToFillPrice);
 		if(fuelToFill == 0){
 			System.out.println("Your ship fuel tanks are full.\n");
-			Abstract.ScannerString();
+	//		Abstract.ScannerString();
 		} else {
 			if(playerObject.GetMoney() < fuelToFillPrice){
-				System.out.println("\n\nSorry, you don't have enough funds!\n\n");
+				System.out.println("\n\nSorry, you don't have enough funds to completely fill your ship!\n\n");
 			} else {
 				System.out.print("Would you like to fill up your ship? : ");
 				char fuelYN = Abstract.ScannerChar();
@@ -139,6 +140,8 @@ public class ShoreSide{
 				}
 			}
 		}
+		System.out.print(" : ");
+		char leave = Abstract.ScannerChar();
 	}
 
 

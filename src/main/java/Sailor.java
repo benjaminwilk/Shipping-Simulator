@@ -12,14 +12,14 @@ class skills{ // I would like to implement the ability to have as many or as few
 	private int steering; // This is a skill
 	private int engineering; // This is a skill
 	private String[] skillList = {"defense", "loading", "steering", "engineering"};
-	
+
 	public void generateSkills(){
 		setDefense();
 		setLoading();
 		setSteering();
 		setEngineering();
 	}
-	
+
 	private int skillLevelGeneration(){
 		int totalSkill = 0;
 		int firstValue = Abstract.GetRandomValue(10, 0);
@@ -28,65 +28,65 @@ class skills{ // I would like to implement the ability to have as many or as few
 		}
 		return totalSkill / 5;
 	}
-	
+
 	public int skillListCount(){
 		return skillList.length;
 	}
-	
+
 	public String skillList(int passedValue){
 		return skillList[passedValue];
 	}
-	
+
 	public void setDefense(){
 		this.defense = skillLevelGeneration();
 	}
-	
+
 	public void setDefense(int passedDefense){
 		this.defense = passedDefense;
 	}
-	
+
 	public void setLoading(){
 		this.loading = skillLevelGeneration();
 	}
-	
+
 	public void setLoading(int passedLoading){
 		this.loading = passedLoading;
 	}
-	
+
 	public void setSteering(){
 		this.steering = skillLevelGeneration();
 	}
-	
+
 	public void setSteering(int passedSteering){
 		this.steering = passedSteering;
 	}
-	
+
 	public void setEngineering(){
 		this.engineering = skillLevelGeneration();
 	}
-	
+
 	public void setEngineering(int passedEngineering){
 		this.engineering = passedEngineering;
 	}
-	
+
 	public int getDefense(){
 		return this.defense;
 	}
-	
+
 	public int getLoading(){
 		return this.loading;
 	}
-	
+
 	public int getSteering(){
 		return this.steering;
 	}
-	
+
 	public int getEngineering(){
 		return this.engineering;
 	}
-	
+
 }
-	
+
 /*	public void generateSailor(){
 		setName();
 		setNationality();
@@ -94,7 +94,7 @@ class skills{ // I would like to implement the ability to have as many or as few
 		setSalary();
 		setSkills();
 	}
-	
+
 	//public Crewmen(String passedName){
 //		this.name = passedName;
 //	}
@@ -112,23 +112,23 @@ class skills{ // I would like to implement the ability to have as many or as few
 	public void setDefense(){
 		this.defense = Abstract.GetRandomValue(10, 0);
 	}
-	
+
 	public void setLoading(){
 		this.loading = Abstract.GetRandomValue(10, 0);
 	}
-	
+
 	public void setSteering(){
 		this.steering = Abstract.GetRandomValue(10, 0);
 	}
-	
+
 	public void setEngineering(){
 		this.engineering = Abstract.GetRandomValue(10, 0);
 	}
-	
+
 	public void setSalary(){
 		this.salary = Math.round(Abstract.GetRandomDoubleValue(100, 5) * 100.0) / 100.0;
 	}
-	
+
 	public void setSkills(){
 		setSalary();
 		setEngineering();
@@ -136,7 +136,7 @@ class skills{ // I would like to implement the ability to have as many or as few
 		setLoading();
 		setDefense();
 	}
-	
+
 	public gender setGender(){
 		int randomValue = Abstract.GetRandomValue(2, 0);
 		if(randomValue == 1){
@@ -145,11 +145,11 @@ class skills{ // I would like to implement the ability to have as many or as few
 			return crewGender.Female;
 		}
 	}
-	
+
 	public void setNationality(){
 		this.nationality = MenuDisplays.GetCountry(Abstract.GetRandomValue(MenuDisplays.GetCountryCount(), 0));
 	}
-	
+
 	public String getName(){
 		return this.name;
 	}
@@ -157,63 +157,63 @@ class skills{ // I would like to implement the ability to have as many or as few
 	public int getDefense(){
 		return this.defense;
 	}
-	
+
 	public int getLoading(){
 		return this.loading;
 	}
-	
+
 	public int getSteering(){
 		return this.steering;
 	}
-	
+
 	public int getEngineering(){
 		return this.engineering;
 	}
-	
+
 	public double getSalary(){
 		return this.salary;
 	}
-	
+
 	public String getGender(){
 		return "" + this.crewGender;
 	}
-	
+
 	public String getNationality(){
 		return this.nationality;
 	}
-	
+
 	public void displayName(){
 		System.out.println("Name: " + getName());
 	}
-	
+
 	public void displayGender(){
 		System.out.println("Gender: " + getGender());
 	}
-	
+
 	public void displayDefense(){
 		System.out.println("Defense: " + getDefense() + " / 10");
 	}
-	
+
 	public void displayLoading(){
 		System.out.println("Loading: " + getLoading() + " / 10");
 	}
-	
+
 	public void displaySteering(){
 		System.out.println("Steering: " + getSteering() + " / 10");
 	}
-	
+
 	public void displayEngineering(){
 		System.out.println("Engineering: " + getEngineering() + " / 10");
 	}
-	
+
 	public void displaySalary(){
 		System.out.println("Salary: $" + getSalary());
 	}
-	
+
 	public void displayNationality(){
 		System.out.println("Nationality: " + getNationality());
 	}
-	
+
 	public void displayCrewmenInformation(){
 		displayName();
 		displayGender();
@@ -224,25 +224,42 @@ class skills{ // I would like to implement the ability to have as many or as few
 		displaySteering();
 		displayEngineering();
 	}
-	
+
 }*/
 
+class Contract{ // Not currently implemented.
+	private int lengthOfTime;
+	private int signedDate;
+
+	public Contract(){
+
+	}
+
+	public void setContractLength(int passedTime){
+		this.lengthOfTime = passedTime;
+	}
+
+
+}
+
+
 public class Sailor{
-	
+
 	private String Name;
 	private gender gender;
 	private String Nationality;
 	private double Salary;
 	private skills skills;
-	
+
 	public static class Builder{
 		private String Name;
 		private gender gender;
 		private String Nationality;
 		private double Salary;
 		private skills skills = new skills();
-		
+
 		public Builder Name() {
+			gender();
 			if(this.gender == gender.Male){
 				this.Name = MenuDisplays.GetMaleNames(Abstract.GetRandomValue(MenuDisplays.GetMaleNameCount(), 0));
 			} else{
@@ -250,9 +267,9 @@ public class Sailor{
 			}
 			this.Name += " " + MenuDisplays.GetLastNames(Abstract.GetRandomValue(MenuDisplays.GetLastNameCount(), 0));
 			return this;
-        }
-		
-		public Builder gender(){
+    }
+
+		private Builder gender(){ // builder function that generates random value, for gender setting.  If 1, then male, and if 2, then female.  This is really only for the naming scheme.
 			int randomValue = Abstract.GetRandomValue(2, 0);
 			if(randomValue == 1){
 				this.gender = gender.Male;
@@ -261,28 +278,28 @@ public class Sailor{
 			}
 			return this;
 		}
-			
-		public Builder Nationality() {
+
+		public Builder Nationality() { // Builder function that randomly sets the sailor country
 			this.Nationality = MenuDisplays.GetCountry(Abstract.GetRandomValue(MenuDisplays.GetCountryCount(), 0));
 			return this;
         }
-		
-		public Builder Salary() {
+
+		public Builder Salary() { // Builder function that tries to generate a sane salary value.  Eventually I want it to be handcuffed to sailor skills.
 			this.Salary = Math.round(Abstract.GetRandomDoubleValue(100, 5) * 100.0) / 100.0;
 			return this;
         }
-		
-		public Builder skills(){
+
+		public Builder skills(){ // Builder function that generates the skills for the sailor.
 			this.skills.generateSkills();
 			return this;
 		}
-		
+
 		public Sailor build() {
 			return new Sailor(this);
         }
-		
+
 	}
-	
+
 	private Sailor(Builder builder) {
 		gender = builder.gender;
 		Name = builder.Name;
@@ -291,45 +308,45 @@ public class Sailor{
 		skills = builder.skills;
 
     }
-	
-	public String getName(){
-		return this.Name;
-	}
-	
-	public String getGender(){
-		return "" + this.gender;
-	}
-	
-	public int getDefense(){
-		return this.skills.getDefense();
-	}
-	
-	public int getLoading(){
-		return this.skills.getLoading();
-	}
-	
-	public int getSteering(){
-		return this.skills.getSteering();
-	}
-	
-	public int getEngineering(){
-		return this.skills.getEngineering();
-	}
 
-	public String getNationality(){
-		return this.Nationality;
+		public String getName(){ // Passthrough function that returns the sailor name.
+			return this.Name;
+		}
+
+		public String getGender(){ // Passthrough function that returns the sailor gender as a String.
+			return "" + this.gender;
+		}
+
+		public int getDefense(){ // Passthrough function that returns the sailor defense skill.
+			return this.skills.getDefense();
+		}
+
+		public int getLoading(){ // Passthrough function that returns the sailor loading skill.
+			return this.skills.getLoading();
+		}
+
+		public int getSteering(){ // Passthrough function that returns the sailor steering skill.
+			return this.skills.getSteering();
+		}
+
+		public int getEngineering(){ // Passthrough function that returns the sailor engineering skill.
+			return this.skills.getEngineering();
+		}
+
+		public String getNationality(){ // Passthrough function that returns the sailor nationality.
+			return this.Nationality;
+		}
+
+		public double getSalary(){ // Passthrough function that returns the sailor salary.
+			return this.Salary;
+		}
+
+		public int skillListCount(){ //
+			return this.skills.skillListCount();
+		}
+
+		public String skillList(int passedValue){
+			return this.skills.skillList(passedValue);
+		}
+
 	}
-	
-	public double getSalary(){
-		return this.Salary;
-	}
-	
-	public int skillListCount(){
-		return this.skills.skillListCount();
-	}
-	
-	public String skillList(int passedValue){
-		return this.skills.skillList(passedValue);
-	}
-	
-}
