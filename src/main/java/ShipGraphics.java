@@ -22,8 +22,8 @@ public class ShipGraphics{
     System.out.println("      |\\              /X/====/ \\");
     System.out.println("      | \\            /=/ XX /   \\");
     System.out.println("      |  \\__________/X/====/_____\\");
-    System.out.println("   \\ \\  |    _    /=/XXXX/      |");
-    System.out.println("   |\\ \\ |   |o|  | /    /       |");
+    System.out.println("   \\ \\   |    _    /=/XXXX/      |");
+    System.out.println("   |\\ \\  |   |o|  | /    /       |");
     System.out.println("   \\ \\ \\|___|_|__|/____/|_______|");
     System.out.println("    \\ \\                          \\");
     System.out.println("     \\ \\          _______         \\");
@@ -37,21 +37,36 @@ public class ShipGraphics{
   }
 
   public static void smallFreighter(){
-    System.out.println("");
-    System.out.println("");
-    System.out.println("");
-    System.out.println("");
-    System.out.println("    |");
-    System.out.println("     \\");
-    System.out.println("      \\");
-    System.out.println("       \\");
-    System.out.println("        ");
-    System.out.println("");
-    System.out.println("");
-    System.out.println("");
-
 
   }
+
+  public static void shipBridge(){
+    System.out.println("   _________________________________________________");
+    System.out.println("  |   _________________________________      __     |\\");
+    System.out.println("  |   |\\__                          __/|    |__|    |");
+    System.out.println("  |   | |                            | |     PWR    |");
+    System.out.println("  |   |                                |            |");
+    System.out.println("  |   |                                |    ( )     |");
+    System.out.println("  |   |                                |            |");
+    System.out.println("  |   |                                |            |");
+    System.out.println("  |   |                                |            |");
+    System.out.println("  |   |                                |    ( )     |");
+    System.out.println("  |   | |_                          _| |            |");
+    System.out.println("  |   |/______________________________\\|            |");
+    System.out.println("  |              World GPS                          |");
+    System.out.println("  |_________________________________________________|\\");
+    System.out.println("   \\");
+
+  }
+
+
+
+
+
+
+
+
+
 
 
 }
