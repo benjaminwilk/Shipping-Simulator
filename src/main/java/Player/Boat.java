@@ -6,23 +6,21 @@ enum haulerType{containers, bulk, refrigeration, dredger, tug, heavyLift}
 public class Boat extends UserContainers {
 	private String userName;
 	private int speed;
-	private DateDisplay userDate;
+	private DateDisplay userDate; //I don't completely like that the date is in the player object, I may move it to the port objects.
 	private ShipState sc;
 	private haulerType shipType;
 
 	
 	public Boat(String userDefinedName, int[] defaultShipInformation){ // Creates the player's ship.
 		this.userDate = new DateDisplay();
-		this.sc = new ShipState();
+		this.sc = new ShipState("Boat");
 		SetShipName(userDefinedName);
 		SetMaximumContainers(UpgradePath.getDefaultUserShip(0));
 		haulerType shipType = haulerType.containers;
-	//	SetContainers();//UpgradePath.getDefaultUserShip(1), "standard");
 		SetShipSpeed(UpgradePath.getDefaultUserShip(2));
 	//	SetUserShipCharacteristics(UpgradePath.getDefaultUserShip());
 		SetFuelConsumption(1.5);//(UpgradePath.getDefaultUserShip(3));*/
-		SetDefaultLocation();
-		System.out.println(GetShipSpeed());
+		SetDefaultLocation(); // Located on UserLocation
 		GetUserReadout();
 	}
 	
@@ -39,25 +37,33 @@ public class Boat extends UserContainers {
 		this.speed = userDefinedSpeed;
 	}
 	
-	public void IncreaseDate(){ // A passthrough to increase the date.  
-		this.userDate.IncreaseDate();
+	public void increaseDay(){ // A passthrough to increase the date.  
+		this.userDate.increaseDay();
 	}
 	
 	public String GetDate(){ // A passthrough that returns the date.
-		return this.userDate.GetDate();
+		return this.userDate.getDate();
 	}
 	
+/*	public LocalDate returnDate(){
+		return this.userDate.returnDate();
+	}
+	
+	public void setStartDate(int passedValue){ 
+		this.PlayerSailors.get(passedValue).setStartDate(GetDate());
+	}*/
+	
 	public void DisplayDate(){ //Still a passthrough, but displays the date.
-		System.out.print(this.userDate.GetDate());
+		System.out.print(this.userDate.getDate());
 	}
 	
 	public void DisplayFormattedDate(){ // A passthrough that displays the date in a formatted manner.
-		System.out.println("Date: " + this.userDate.GetDate());
+		System.out.println("Date: " + this.userDate.getDate());
 	}
 	
 	public String GetAndIncreaseDate(){ // A passthrough that increases the date and returns the date.
-		this.userDate.IncreaseDate();
-		return this.userDate.GetDate();
+		this.userDate.increaseDay();
+		return this.userDate.getDate();
 	}
 
 /*	public void SetUserShipCharacteristics(int[] passedData){ // This doesn't completely work at this point, but eventually it will parse the array you pass it. 

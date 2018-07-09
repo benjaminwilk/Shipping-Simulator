@@ -4,103 +4,71 @@ import src.main.java.Player.*;
 import src.main.java.Abstract.*;
 import java.util.ArrayList;
 
-public class UserSailors{
-	private ArrayList<Sailor> PlayerSailors = new ArrayList<Sailor>();
-	int totalEngineering = 0;
-	int totalSteering = 0;
-	int totalDefense = 0;
-	int totalLoading = 0;
-	double totalSalary = 0.0;
+public class UserSailors extends ShipState{ // This extension controls the sailors hired for the ship.
+	private ArrayList<Sailor> PlayerSailors = new ArrayList<Sailor>(); //This is the big arraylist that holds the current player's sailors.
+	private Skillset Skillset; // This variable holds the skill name and combined value.  
+	double totalSalary = 0.0; // This holds the total salary owed weekly
 	
-	public void addSailor(Sailor passedCrewmen){
+	public UserSailors(){ // Constructor starts a new version of skillset and jumps into recalculating the levels.
+		this.Skillset = new Skillset();
+		recalculateLevels();
+	}
+	
+	public void addSailor(Sailor passedCrewmen){ // This is the function that is used when a sailor is added to the player's ship.
 		this.PlayerSailors.add(passedCrewmen);
 	}
 	
-	public void removeSailor(int passedValue){
+	public void removeSailor(int passedValue){ // Function that is used when a sailor is removed from the ship.
 		this.PlayerSailors.remove(passedValue);
 	}
 	
-	public void recalculateLevels(){
-		collectEngineeringLevel();
-		collectSteeringLevel();
-		collectDefenseLevel();
-		collectLoadingLevel();
+	public void recalculateLevels(){ // This recalculates the total salary cost and total skill values of everyone aboard.  
+		collectSkillValues();
 		collectSalaryValue();
 	}
 	
-	private void collectEngineeringLevel(){
-		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
-			this.totalEngineering = this.PlayerSailors.get(i).getEngineering();
-		}
-	}
-	
-	private void collectSteeringLevel(){
-		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
-			this. totalSteering = this.PlayerSailors.get(i).getSteering();
-		}
-	}
-	
-	private void collectDefenseLevel(){
-		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
-			this.totalDefense = this.PlayerSailors.get(i).getDefense();
-		}
-	}
-	
-	private void collectLoadingLevel(){
-		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
-			this.totalLoading = this.PlayerSailors.get(i).getLoading();
-		}
-	}
-	
-	private void collectSalaryValue(){
+	private void collectSalaryValue(){ //Gathers every sailor's salary requirements.  
 		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
 			this.totalSalary = this.PlayerSailors.get(i).getSalary();
 		}
 	}
 	
-	public int getEngineeringValue(){
-		return this.totalEngineering;
+	private void collectSkillValues(){
+		for(int i = 0; i < Skillset.getSkillSize(); i++){
+			int cumulativeValue = 0;
+			for(int x = 0; x < this.PlayerSailors.size(); x++){
+				cumulativeValue += this.PlayerSailors.get(x).getSkill(i);
+			}
+			this.Skillset.setSkill(i, cumulativeValue);
+		}
 	}
 	
-	public int getSteeringValue(){
-		return this.totalSteering;
-	}
-	
-	public int getDefenseValue(){
-		return this.totalDefense;
-	}
-	
-	public int getLoadingValue(){
-		return this.totalLoading;
-	}
-	
-	public double getSalaryTotal(){
+	public double getSalaryTotal(){ // Returns salary value as a double.
 		return this.totalSalary;
 	}
 	
-	public Sailor getSailors(int passedValue){
+	public Sailor getSailors(int passedValue){ // Returns the specific sailor package, specified by argument.
 		return this.PlayerSailors.get(passedValue);
 	}
 	
-	public int getSailorCount(){
+	public int getSailorCount(){ // Returns the number of sailors aboard.  
 		return this.PlayerSailors.size();
 	}
 	
-	public void DisplayTotals(){
-		System.out.println("\n----- Skill and Salary Totals -----");
-		System.out.println("Total Sailors: " + getSailorCount());
-		System.out.println("Weekly Salary Spend: $" + getSalaryTotal());
-		System.out.println("Defense: " + getDefenseValue());
-		System.out.println("Loading: " + getLoadingValue() + "\n");
-		System.out.println("Steering: " + getSteeringValue());
-		System.out.println("Engineering: " + getEngineeringValue());
-		
-	}
-	
-	public void displaySailorCount(){
+	public void displaySailorCount(){ // Not much different from getSailorCount, returns total sailor count in a presentable way.
 		System.out.println("Sailors aboard: " + getSailorCount());
 	}
 	
+	public void DisplayTotals(){ // Displays the total sailors aboard, weekly salary costs, and total skill levels.  
+		System.out.println("\n----- Skill and Salary Totals -----");
+		displaySailorCount();
+		System.out.println("Weekly Salary Spend: $" + getSalaryTotal());
+		for(int i = 0; i < this.Skillset.getSkillList().length; i++){
+			System.out.println("Total " + this.Skillset.getSkillTitle(i) + ": " + this.Skillset.getSkillValue(i));
+		}
+		System.out.println("\n");
+	}
+
 	public boolean AnySailors(){
 		if(getSailorCount() == 0){
 			return false;

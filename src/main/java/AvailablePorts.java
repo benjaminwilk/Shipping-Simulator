@@ -8,17 +8,22 @@ class Ports{
 
 	private String portName;
 	private LongitudeLatitude portLonLat;
-	private double fuelPrice;
-	//private QuantityAndPrice portPriceAndCount;
 	private ContainerVariety portPriceAndCount;
+	private double fuelPrice;
 	private Weather portWeather;
 	private ArrayList<Sailor> SailorsInPort = new ArrayList<Sailor>();
+	private DateDisplay DateDisplay;
+	private ArrayList<Integer> sailorSet = new ArrayList<Integer>();
+	private final static int displayCrewCount = 6;
 
-	public Ports(String passedPortName){
-		this.portName = passedPortName;
-		System.out.println(ParsePortToLon(passedPortName));
+	public Ports(String locationName, double longitude, double latitude){
+		this.portName = locationName;
+		this.portLonLat = new LongitudeLatitude.Builder().title(this.portName).longitude(longitude).latitude(latitude).build();
+		initializer();
+	}
+
+	private void initializer(){
 		this.fuelPrice = Abstract.GetRandomDoubleValue(500.0, 40.0);
-		this.portLonLat = new LongitudeLatitude.Builder().title(this.portName).longitude(ParsePortToLon(this.portName)).latitude(ParsePortToLat(this.portName)).build();
 		this.portPriceAndCount = new ContainerVariety("port");
 		this.portWeather = new Weather();
 		setRandomSailors();
@@ -27,7 +32,7 @@ class Ports{
 	private void setRandomSailors(){
 		int randomSailorCount = Abstract.GetRandomValue(100, 0);
 		for(int i = 0; i < randomSailorCount; i++){
-			this.SailorsInPort.add(i, new Sailor.Builder().Name().skills().Salary().Nationality().build());
+			this.SailorsInPort.add(i, new Sailor.Builder().Name().Contract().Salary().skills().Nationality().build());
 		}
 	}
 
@@ -47,15 +52,19 @@ class Ports{
 		return this.portLonLat.GetLongitude();
 	}
 
-	public void GetContainerCount(){
-		this.portPriceAndCount.displayNameAndQuantity();
+//	public void GetContainerCount(){
+//		this.portPriceAndCount.displayNameAndQuantity();
 		//return this.portPriceAndCount.GetQuantity();
-	}
+//	}
 
-	public void GetNameAndPrice(){
-		this.portPriceAndCount.displayNameAndPrice();
-		//return this.portPriceAndCount[].GetPrice();
-	}
+//	public void GetNameAndPrice(){
+//		this.portPriceAndCount.displayNameAndPrice();
+	//	//return this.portPriceAndCount[].GetPrice();
+//	}
+
+public double getContainerPrice(int passedLocation){
+	return this.portPriceAndCount.getPrice(passedLocation);
+}
 
 	//***************************************************
 
@@ -131,65 +140,71 @@ class Ports{
 		return this.portPriceAndCount.getTotalCount();
 	}
 
-	public void displayAvailableCrew(){
-		int[] randomSailorValues = new int[6];
-		for(int i = 0 ; i < randomSailorValues.length; i++){
-			randomSailorValues[i] = Abstract.GetRandomValue(SailorsInPort.size(), 0);
+	private void generateDisplayCrewValues(){
+		for(int i = 0 ; i < displayCrewCount; i++){
+			this.sailorSet.add(Abstract.GetRandomValue(SailorsInPort.size(), 0));
 		}
+	}
 
+	public void displayAvailableCrew(){
+		generateDisplayCrewValues();
 		System.out.println("----- Available Sailors for Hire -----");
-		for(int i = 0; i < 6; i++){
-		//	System.out.println(randomSailorValues[i]);
-			System.out.println("Name: " + this.SailorsInPort.get(randomSailorValues[i]).getName());
-			System.out.println("Gender: "+ this.SailorsInPort.get(randomSailorValues[i]).getGender());
-			System.out.println("Nationality: " + this.SailorsInPort.get(randomSailorValues[i]).getNationality());
-			System.out.println("Salary: $" + this.SailorsInPort.get(randomSailorValues[i]).getSalary());
-			System.out.println("Defense: " + this.SailorsInPort.get(randomSailorValues[i]).getDefense());
-			System.out.println("Loading: " + this.SailorsInPort.get(randomSailorValues[i]).getLoading());
-			System.out.println("Steering: " + this.SailorsInPort.get(randomSailorValues[i]).getSteering());
-			System.out.println("Engineering: " + this.SailorsInPort.get(randomSailorValues[i]).getEngineering());
+		for(int i = 0; i < displayCrewCount; i++){
+			this.SailorsInPort.get(this.sailorSet.get(i)).displaySailorVitals();
+			for(int x = 0; x < MenuDisplays.getSailorSkillCount(); x++){
+				System.out.println(this.SailorsInPort.get(this.sailorSet.get(i)).getSkillTitle(x) + ": " + this.SailorsInPort.get(this.sailorSet.get(i)).getSkill(x) );
+			}
 			System.out.println();
 		}
 	}
-
-	private void removeAvailableSailor(int chosenSailor){
-		this.SailorsInPort.remove(chosenSailor);
+	public Sailor getSpecificSailor(int passedValue){
+		return this.SailorsInPort.get(sailorSet.get(passedValue));
+	}
+	public void removeAvailableSailor(int chosenSailor){ // Removes the selected sailor from the value display array, and from the sailor in port array.
+		this.sailorSet.remove(sailorSet.get(chosenSailor));
+		this.SailorsInPort.remove(sailorSet.get(chosenSailor));
 	}
 
-	//***************************************************
-
-	private double ParsePortToLat(String passedPortName){
-		for(int i = 0; i < MenuDisplays.GetPortName().length; i++){
-			if(passedPortName.equals(MenuDisplays.GetPortName(i + 1))){
-				return MenuDisplays.GetPortLatitude(i);
-			}
-		}
-		return -1.0;
-	}
-
-	private double ParsePortToLon(String passedPortName){
-		for(int i = 0; i < MenuDisplays.GetPortName().length; i++){
-			if(passedPortName.equals(MenuDisplays.GetPortName(i + 1))){
-				return MenuDisplays.GetPortLongitude(i);
-			}
-		}
-		return -1.0;
-	}
 
 }
 
 public class AvailablePorts{
 	ArrayList <Ports> PortLocations = new ArrayList<Ports>();
 
-	public AvailablePorts(String[] passedPorts){
+	/*public AvailablePorts(String[] passedPorts){
 		for(int i = 0; i < passedPorts.length; i++){
 			this.PortLocations.add( new Ports(passedPorts[i]));
 		}
+	}*/
+
+	public AvailablePorts(String[] portName, double[] portLongitude, double[] portLatitude){
+		int nameLength = portName.length;
+		int longLength = portLongitude.length;
+		int latLength = portLatitude.length;
+		if(((longLength == latLength) == false) && (nameLength == longLength) == false){
+			System.err.println("\n\nSomething broke with the port loading\n\n");
+		} else {
+			for(int i = 0; i < portName.length; i++){
+				this.PortLocations.add(new Ports(portName[i], portLongitude[i], portLatitude[i]));
+				new AvailablePortNames().setPorts(portName[i]);
+			}
+		}
 	}
 
-	public void AddAdditionalPort(String newPort){
-		this.PortLocations.add(new Ports(newPort));
+	public AvailablePorts(String portName, double longitude, double latitude){ // Experimental; This will eventually allow the passage of custom ports
+		this.PortLocations.add(new Ports(portName, longitude, latitude));
 	}
+
+	public void AddAdditionalPort(String newPort, double portLongitude, double portLatitude){
+		this.PortLocations.add(new Ports(newPort, portLatitude, portLatitude));
+	}
+
+	public void AddAdditionalPort(String[] newPort, double[] portLongitude, double[] portLatitude){
+		for(int i = 0; i < newPort.length; i++){
+			this.PortLocations.add( new Ports(newPort[i], portLongitude[i], portLatitude[i]));
+		}
+	}
+
 
 	public void AddAdditionalPort(String[] newPort){
 		for(int i = 0; i < newPort.length; i++){
@@ -205,6 +220,57 @@ public class AvailablePorts{
 		}
 	}
 
+	public String getContainerName(int passedValue){ // Passes through the container name from the passed value.
+		return this.PortLocations.get(passedValue).getName(passedValue);
+	}
+
+	public String getContainerName(int passedPosition, int passedValue){  // Returns the container name, requires the port value and the container type value.
+		return this.PortLocations.get(passedPosition).getName(passedValue);
+	}
+
+	public int getContainerQuantity(int passedValue){
+		return this.PortLocations.get(passedValue).getQuantity(passedValue);
+	}
+
+	public int getContainerQuantity(int passedPosition, int passedValue){
+		return this.PortLocations.get(passedPosition).getQuantity(passedValue);
+	}
+
+	public double getContainerPrice(int passedValue){
+		return this.PortLocations.get(passedValue).getContainerPrice(passedValue);
+	}
+
+	public double getContainerPrice(int passedPosition, int passedValue){ // This function is being whack right now, for whatever reason it keeps thinking its a string.
+		double containerPrice = this.PortLocations.get(passedPosition).getContainerPrice(passedValue);
+		return Math.round(containerPrice * 100d) / 100d;
+	}
+
+	public void removeAvailableSailor(String passedLocation, int passedSailor){
+		int currentPort = getCurrentPort(passedLocation);
+		this.PortLocations.get(currentPort).removeAvailableSailor(passedSailor);
+	}
+
+	public void removeAvailableSailor(int passedLocation, int passedSailor){
+		this.PortLocations.get(passedLocation).removeAvailableSailor(passedSailor);
+	}
+
+	public String GetPortName(String passedName){
+		for(int i = 0; i < this.PortLocations.size(); i++){
+			if(passedName == this.PortLocations.get(i).GetPortName()){
+				return this.PortLocations.get(i).GetPortName();
+			}
+		}
+		return "Error";
+	}
+
+	public Sailor getSpecificSailor(int passedLocation, int passedValue){
+		return this.PortLocations.get(passedLocation).getSpecificSailor(passedValue);
+	}
+
+	public Sailor getSpecificSailor(String passedLocation, int passedValue){
+		return this.PortLocations.get(getCurrentPort(passedLocation)).getSpecificSailor(passedValue);
+	}
+
 	public String GetPortName(int passedValue){
 		return this.PortLocations.get(passedValue).GetPortName();
 	}
@@ -213,16 +279,25 @@ public class AvailablePorts{
 		return this.PortLocations.get(passedValue).getPrice(passedValue);
 	}
 
-	public int GetPortCount(){
+	public int getCurrentPort(String passedPortName){
+		for(int i = 0; i < this.PortLocations.size(); i++){
+			if(this.PortLocations.get(i).GetPortName() == passedPortName){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	public int GetPortCount(){ // Returns the amount of ports currently avaialable to you.
 		return this.PortLocations.size();
 	}
 
-	public double GetFuelPrice(String passedName){
-		return this.PortLocations.get(Abstract.convertStringToInt(passedName, MenuDisplays.GetPortName())).GetFuelPrice();
+	public double GetFuelPrice(String passedName){ // Returns current price of fuel
+		return this.PortLocations.get(Abstract.convertArrayListToInt(passedName, AvailablePortNames.getPorts())).GetFuelPrice();
 	}
 
 	public void displayAvailableCrew(String passedName){
-		this.PortLocations.get(Abstract.convertStringToInt(passedName, MenuDisplays.GetPortName())).displayAvailableCrew();
+		this.PortLocations.get(Abstract.convertArrayListToInt(passedName, AvailablePortNames.getPorts())).displayAvailableCrew();
 	}
 
 	public void displayAvailableCrew(int passedValue){

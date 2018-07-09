@@ -1,10 +1,20 @@
 package src.main.java;
+import java.util.ArrayList;
 
 public class Comparitors extends Randomize{
 
 	public static int convertStringToInt(String passedString, String[] setOfData){
 		for(int i = 0; i < setOfData.length; i++){
 			if(passedString.contains(setOfData[i])){
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public static int convertArrayListToInt(String passedString, ArrayList setOfData){
+		for(int i = 0; i < setOfData.size(); i++){
+			if(passedString == setOfData.get(i)){
 				return i;
 			}
 		}

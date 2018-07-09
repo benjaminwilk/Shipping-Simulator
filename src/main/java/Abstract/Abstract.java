@@ -1,6 +1,7 @@
 package src.main.java;
 
 import src.main.java.Player.*;
+import java.util.ArrayList;
 
 public class Abstract extends valueInput{
 
@@ -24,6 +25,12 @@ public class Abstract extends valueInput{
 	public static <E> void RotateOptionsWithEscapement(E[] displayOptionList){ // Same things as "rotateOptions", but gives you the opportunity to go back.  Doesn't work at the moment.
 		RotateOptions(displayOptionList);
 		System.out.println(("0") + ". " + "Go back");
+	}
+	
+	public static void RotateArrayList(ArrayList passedOptions){
+		for(int i = 0; i < passedOptions.size(); i++){
+			System.out.println((i + 1) + ". " + passedOptions.get(i));
+		}
 	}
 	
 	public static boolean HigherThanHalf(){

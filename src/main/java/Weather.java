@@ -18,7 +18,6 @@ class Temperature{ // This class contains the temperature settings.
 		this.temperature = initializedValue;
 	}
 
-
 	protected int getTemperature(){ // Returns temperature value.
 		return this.temperature;
 	}
@@ -45,7 +44,7 @@ class Conditions{ // Class contains weather conditions.
 	}
 
 	protected void setConditions(){ // Sets the condition variable to a random option.
-		this.conditions = Abstract.GetRandomValue(MenuDisplays.GetWeatherOptionLength(), 1);
+		this.conditions = MenuDisplays.GetWeatherOptions(Abstract.GetRandomValue(MenuDisplays.GetWeatherOptionLength(), 1));
 	}
 
 	protected String getConditions(){ // Returns the weather condition string.

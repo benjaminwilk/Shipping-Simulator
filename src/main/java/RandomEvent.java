@@ -8,18 +8,18 @@ public class RandomEvent{
 	public void noFuel(Boat playerObject){
 		System.out.println("Beep boop -- No Fuel");
 	}
-	
+
 	public static void RandomOccurrence(Boat playerObject){
 		int OccurrenceValue = (Abstract.GetRandomValue(100, 0));
 		if(OccurrenceValue > 95){
 			System.out.println("Either because of poor structural holds, or weather");
 			System.out.println("you have " + " containers go overboard.");
-			
+
 			Abstract.PressAnyKey();
 		}
 		//System.out.println(OccurrenceValue);
 	}
-	
+
 	public static void CannotLeavePort(Boat playerObject){
 		int OccurrenceValue = (Abstract.GetRandomValue(100, 0));
 		if(OccurrenceValue > 95){
@@ -28,7 +28,7 @@ public class RandomEvent{
 			Abstract.PressAnyKey();
 		}
 	}
-	
+
 	public static void CannotEnterPort(Boat playerObject){
 		int OccurrenceValue = (Abstract.GetRandomValue(100, 0));
 		if(OccurrenceValue > 95){
@@ -38,7 +38,7 @@ public class RandomEvent{
 			// Repeat
 		}
 	}
-	
+
 	public static void LongshoremanStrike(Boat playerObject){
 		int OccurrenceValue = (Abstract.GetRandomValue(100, 0));
 		if(OccurrenceValue > 95){
@@ -48,10 +48,14 @@ public class RandomEvent{
 			//Repeat
 		}
 	}
-	
-	public void GoodEvent(){
-		
+
+	public void sailorOverboard(){
+
 	}
-		
-	
+
+	public void GoodEvent(){
+
+	}
+
+
 }

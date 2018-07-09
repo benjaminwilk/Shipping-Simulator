@@ -11,7 +11,7 @@ public class ShoreSide{
 	public ShoreSide(Boat playerObject, AvailablePorts ports){
 		int shoreSideChoice = 0;
 		do{
-			Abstract.RotateOptions(MenuDisplays.GetShoreOptionMenu()); //"Check Weather Report", "Manage crewmembers", "Check Ship Status", "Refuel Ship", "Check Port Prices", "Save Game" ,"Go Back"
+			Abstract.RotateOptions(MenuDisplays.GetShoreOptionMenu()); //"Check Weather Report", "Manage crewmembers", "Check Ship Status", "Refuel Ship", "Check Port Prices", "Hotel Visit" ,"Go Back"
 			System.out.print(": ");
 			shoreSideChoice = parseShoreMenu(playerObject, Abstract.ScannerInt(), ports);
 
@@ -21,7 +21,7 @@ public class ShoreSide{
 		//	Abstract.rotateOptions(MenuDisplays.getShoreOptionMenu());
 		//	System.out.print("blerp: ");
 		//	shoreSideChoice = parseShoreMenu(playerObject, Abstract.scannerInt());
-		}while(shoreSideChoice >= 7);
+		}while(shoreSideChoice >= MenuDisplays.GetShoreOptionMenu().length);
 	}
 
 	public void PriceDisplay(Boat playerObject){
@@ -65,7 +65,7 @@ public class ShoreSide{
 			Abstract.RotateOptions(MenuDisplays.GetShoreSubMenu()); //"Check for Damage", "Refit Storage", "Upgrade Ship", "Go Back"
 			System.out.print(": ");
 			//subMenuChoice = parseSubShoreMenu(playerObject, Abstract.ScannerInt());
-		}while(subMenuChoice >= 5);
+		}while(subMenuChoice >= MenuDisplays.GetShoreSubMenu().length);
 	}
 
 	private int parseSubShoreMenu(Boat playerObject, AvailablePorts ports, int userDecision){
