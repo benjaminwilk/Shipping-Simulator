@@ -19,7 +19,7 @@ enum areas{ // Not implemented yet.  The idea for this is that random occurrence
 //	gulf_of_alaska
 }
 
-public class UserLocation extends UserMoney {
+public class UserLocation extends UserEngine {
 
 	//private String currentLocation;
 	private LongitudeLatitude playerLocation; // Player location is stored in this object.
@@ -68,7 +68,7 @@ public class UserLocation extends UserMoney {
 		this.playerLocation.SetLatitude(passedLatitude);
 	}
 	
-	public String GetCurrentName(){ // Returns the current location name.
+	public String getCurrentLocation(){ // Returns the current location name.
 		return this.playerLocation.GetTitle();
 	}
 

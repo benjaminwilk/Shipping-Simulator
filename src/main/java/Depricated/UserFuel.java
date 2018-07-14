@@ -1,4 +1,4 @@
-package src.main.java.Player;
+/*package src.main.java.Player;
 import src.main.java.*;
 import java.lang.Math;
 
@@ -7,8 +7,7 @@ enum engineType {diesel, bunker, lowSulfur} // Not currently implemented; ship e
 public class UserFuel extends UserLocation{
 	private double currentFuel; //Double value that holds the current amount of fuel aboard.
 	private double maximumFuel; //Double value that holds the maximum fuel allowed aboard.
-//	private double fuelPrice;
-	private double fuelConsumption; // double value that controls the fuel consumption.
+	//private double fuelConsumption; // double value that controls the fuel consumption.
 
 	private final static int fuelPriceChange = 15; //I don't think this is completely implemented.
 	
@@ -30,7 +29,6 @@ public class UserFuel extends UserLocation{
 	public UserFuel(double userDefinedCurrentFuel, double userDefinedMaxFuel){//, double UserDefinedFuelPrice){ // Constructor that takes in two doubles, and sets current and maximum fuel amount.
 		this.currentFuel = userDefinedCurrentFuel;
 		this.maximumFuel = userDefinedMaxFuel;
-	//	this.fuelPrice = UserDefinedFuelPrice;
 	}
 
 	public void DecreaseFuel(double fuelUsage){ // Decreases the fuel amount by the passed fuel usage value. 
@@ -40,9 +38,14 @@ public class UserFuel extends UserLocation{
 	
 	public void DecreaseFuel(){ // Decreases fuel amount by the standard fuel consumption value.
 		//Abstract.DecreaseValue(this.currentFuel, this.fuelConsumption);
-		this.currentFuel -= this.fuelConsumption;
+		this.currentFuel -= getFuelConsumption();
 	}
 
+	public void IncreaseFuel(int fuelUsage){ // Increase fuel amount by the passed fuel usage value. 
+		//Abstract.IncreaseValue(this.currentFuel, fuelUsage);
+		this.currentFuel += (double)fuelUsage;
+	}
+	
 	public void IncreaseFuel(double fuelUsage){ // Increase fuel amount by the passed fuel usage value. 
 		//Abstract.IncreaseValue(this.currentFuel, fuelUsage);
 		this.currentFuel += fuelUsage;
@@ -50,7 +53,7 @@ public class UserFuel extends UserLocation{
 	
 	public void IncreaseFuel(){ // Increase fuel amount by the standard fuel consumption value.
 		//Abstract.IncreaseValue(this.currentFuel, this.fuelConsumption);
-		this.currentFuel += this.fuelConsumption;
+		this.currentFuel += getFuelConsumption();
 	}
 	
 	public void SetCurrentFuel(int userDefinedFuel){ // Sets the current fuel value by a passed integer.  The integer is converted to a double.  
@@ -61,11 +64,11 @@ public class UserFuel extends UserLocation{
 		this.currentFuel = passedUserFuel;
 	}
 
-	public void SetFuelConsumption(double userDefinedConsumption){ // Sets the fuel consumption value by a passed double.
+	/*public void SetFuelConsumption(double userDefinedConsumption){ // Sets the fuel consumption value by a passed double.
 		this.fuelConsumption = userDefinedConsumption;
-	}
+	}*/
 	
-	public void SetMaximumFuel(int userDefinedFuel){ // Sets the maximum fuel value by a passed integer.  The integer is converted to a double.
+	/*public void SetMaximumFuel(int userDefinedFuel){ // Sets the maximum fuel value by a passed integer.  The integer is converted to a double.
 		this.maximumFuel = (double)userDefinedFuel;
 	}
 	
@@ -82,11 +85,11 @@ public class UserFuel extends UserLocation{
 	}
 	
 	public double GetFuelConsumption(){ // Returns the fuel consumption value that has been rounded.
-		return Math.round(this.fuelConsumption);
+		return Math.round(getFuelConsumption());
 	}
 	
 	public String GetFuelPercentage(){ // Returns a percentage value of the fuel available on the ship.
-		return ((GetCurrentFuel() / GetMaximumFuel()) * 100) + "%";
+		return Math.round((((GetCurrentFuel() / GetMaximumFuel()) * 100) * 100d) / 100d) + "%";
 	}
 	
 	public void DisplayFuelPercentage(){ // Returns the current fuel value over the maximum fuel value.
@@ -154,9 +157,9 @@ public class UserFuel extends UserLocation{
 			this.currentFuel = 0;
 			return true;
 		}
-		return false;
+		return false;*/
 			/*System.out.println("Out of fuel");*/
-	}
+//	}
 	
 /*	private void IncreaseDecreaseFuelPrice(){
 		this.fuelPrice += Abstract.IncreaseDecrease(fuelPriceChange);
@@ -168,4 +171,4 @@ public class UserFuel extends UserLocation{
 		}
 	}*/
 
-}
+//}

@@ -5,24 +5,24 @@ import src.main.java.Player.*;
 
 import java.util.ArrayList;
 
-class health{
+class Health{
 	private String title;
 	private int currentHealth;
 	private int maximumHealth;
 	
-	public health(String passedName){
+	public Health(String passedName){
 		this.title = passedName;
 		this.currentHealth = 100;
 		this.maximumHealth = 100;
 	}
 	
-	public health(String passedName, int passedMaximumHealth){
+	public Health(String passedName, int passedMaximumHealth){
 		this.title = passedName;
 		this.currentHealth = passedMaximumHealth;
 		this.maximumHealth = passedMaximumHealth;
 	}
 	
-	public health(String passedName, int passedMaximumHealth, int passedCurrentHealth){
+	public Health(String passedName, int passedMaximumHealth, int passedCurrentHealth){
 		this.title = passedName;
 		this.currentHealth = passedCurrentHealth;
 		this.maximumHealth = passedMaximumHealth;
@@ -63,7 +63,7 @@ class health{
 }
 
 public class ShipState{
-	private ArrayList<health> objectHealth = new ArrayList<health>();
+	private ArrayList<Health> objectHealth = new ArrayList<Health>();
 	private static final String[] shipParts = {"Bridge", "Engine", "Hull", "Crew Quarters", "Fuel Tank"};
 	private static final String[] portPortions = {"Crane", "Dock", "Fuel Tanks", "Management Office", "Train services", "Semi truck services"};
 	private String[] additionalParts = {}; // Add additional parts here.
@@ -71,19 +71,19 @@ public class ShipState{
 	public ShipState(String passedObject){
 		if(passedObject == "ship"){ // Used a factory for this portion, if ship, it uses the ship parts.
 			for(int i = 0; i < this.shipParts.length; i++){
-				this.objectHealth.add(new health(this.shipParts[i]));
+				this.objectHealth.add(new Health(this.shipParts[i]));
 			}
 		}
 		if(passedObject == "port"){
 			for(int i = 0; i < this.portPortions.length; i++){
-				this.objectHealth.add(new health(this.portPortions[i]));
+				this.objectHealth.add(new Health(this.portPortions[i]));
 			}
 		}
 	}
 	
 	public ShipState(){ // This defaults to ship.
 		for(int i = 0; i < this.shipParts.length; i++){
-			this.objectHealth.add(new health(this.shipParts[i]));
+			this.objectHealth.add(new Health(this.shipParts[i]));
 		}
 
 	}

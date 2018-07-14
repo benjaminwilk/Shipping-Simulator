@@ -9,25 +9,35 @@ public class Comparitors extends Randomize{
 				return i;
 			}
 		}
-		return -1;
+		return -555555;
 	}
 	
 	public static int convertArrayListToInt(String passedString, ArrayList setOfData){
-		for(int i = 0; i < setOfData.size(); i++){
-			if(passedString == setOfData.get(i)){
-				return i;
+		try{
+			for(int i = 0; i < setOfData.size(); i++){
+				if(passedString.equals(setOfData.get(i))){
+					return i;
+				}
 			}
+		} catch(ArrayIndexOutOfBoundsException aioobe){
+			System.err.println("Could not convert Arraylist to Integer" + aioobe);
+			return -999;
 		}
-		return -1;
+		return -999;
 	}
 	
 	public static double convertStringToDouble(String passedString, double[] setOfData){
-		for(int i = 0; i < setOfData.length; i++){
-			if(passedString.contains("" + setOfData[i])){
-				return i;
+		try{
+			for(int i = 0; i < setOfData.length; i++){
+				if(passedString.contains("" + setOfData[i])){
+					return i;
+				}
 			}
+		}catch(ArrayIndexOutOfBoundsException aioobe){
+			System.err.println("Could not convert String to Double" + aioobe);
+			return -444.444;
 		}
-		return -1.0;
+		return -444.444;
 	}
 	
 	public static double compareStringToTableToDouble(String passedString, String[] table, double[] setOfData){
@@ -36,7 +46,7 @@ public class Comparitors extends Randomize{
 				return setOfData[i];
 			}
 		}
-		return -1.0;
+		return -888.888;
 	}
 
 }

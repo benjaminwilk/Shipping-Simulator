@@ -2,9 +2,12 @@ package src.main.java;
 
 import src.main.java.Player.*;
 import src.main.java.Abstract.*;
-import java.util.ArrayList;
 
-public class UserSailors extends ShipState{ // This extension controls the sailors hired for the ship.
+import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class UserSailors extends UserDamage{ // This extension controls the sailors hired for the ship.
 	private ArrayList<Sailor> PlayerSailors = new ArrayList<Sailor>(); //This is the big arraylist that holds the current player's sailors.
 	private Skillset Skillset; // This variable holds the skill name and combined value.  
 	double totalSalary = 0.0; // This holds the total salary owed weekly
@@ -26,7 +29,7 @@ public class UserSailors extends ShipState{ // This extension controls the sailo
 		collectSkillValues();
 		collectSalaryValue();
 	}
-	
+
 	private void collectSalaryValue(){ //Gathers every sailor's salary requirements.  
 		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
 			this.totalSalary = this.PlayerSailors.get(i).getSalary();
@@ -63,19 +66,30 @@ public class UserSailors extends ShipState{ // This extension controls the sailo
 		System.out.println("\n----- Skill and Salary Totals -----");
 		displaySailorCount();
 		System.out.println("Weekly Salary Spend: $" + getSalaryTotal());
-		for(int i = 0; i < this.Skillset.getSkillList().length; i++){
+		for(int i = 0; i < new Skillset().getSkillSize(); i++){
 			System.out.println("Total " + this.Skillset.getSkillTitle(i) + ": " + this.Skillset.getSkillValue(i));
 		}
 		System.out.println("\n");
 	}
-
-	public boolean AnySailors(){
+	
+	public boolean AnySailors(){ // Sanity check to see if you have any sailors aboard.
 		if(getSailorCount() == 0){
 			return false;
 		} else {
 			return true;
 		}
 	}
-	
-	
+
+	/*public void checkSailors(){ // This function checks whether your sailors contracts are complete.
+		if(getSailorCount() != 0){
+			for(int i = 0; i < getSailorCount(); i++){
+				isContractComplete(i, GetDate());
+			}
+		//	GetDate();
+		}
+	}*/
+
+/*	public boolean isContractComplete(int passedValue, LocalDate passedDate){
+		this.PlayerSailors.get(passedValue).isContractComplete(passedDate);
+	}*/
 }

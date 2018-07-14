@@ -1,6 +1,7 @@
 package src.main.java;
 
 import src.main.java.Abstract.*;
+import src.main.java.Player.*;
 
 public class MovementGraphics{
 	DisplayCommands dc; //= new DisplayCommands();
@@ -146,6 +147,22 @@ public class MovementGraphics{
 		System.out.println("");
 	}
 	
+	public static void displayFuelGauge(Boat playerObject){ // Displays a easily read fuel gauge.  '#' means available, and ' ' is blank.
+		char fuelCharacter = '#';
+		char emptyCharacter = ' ';
+		System.out.print("E |");
+		for(int i = 0; i < 11; i++){
+			//System.out.println("║           ║");
+			if(((playerObject.getCurrentFuel() / playerObject.getMaxFuel()) * 11) >= i){
+				System.out.print(fuelCharacter);
+			} else {
+				System.out.print(emptyCharacter);
+			}
+		}
+		System.out.println("| F");
+		System.out.println("  |=====|=====|  ");
+	}
+	
 }
 
 enum DisplayTopBottom{
@@ -177,4 +194,5 @@ class DisplayCommands{
 	public DisplayTopBottom DisplayStatus(){
 		return this.dtb;
 	}
+	
 }

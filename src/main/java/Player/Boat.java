@@ -1,25 +1,23 @@
 package src.main.java.Player;
 import src.main.java.*;
 
-enum haulerType{containers, bulk, refrigeration, dredger, tug, heavyLift}
+// Boat -> UserMoney -> UserLocation -> UserEngine -> UserContainers -> UserSailor -> UserDamage -> ShipState
 
-public class Boat extends UserContainers {
+enum HullMaterial{SingleSteel, DoubleSteel, fiberglas}
+
+public class Boat extends UserMoney {
 	private String userName;
-	private int speed;
 	private DateDisplay userDate; //I don't completely like that the date is in the player object, I may move it to the port objects.
 	private ShipState sc;
-	private haulerType shipType;
-
+	private HullMaterial hullmaterial;
 	
-	public Boat(String userDefinedName, int[] defaultShipInformation){ // Creates the player's ship.
+	public Boat(String userDefinedName){ // Creates the player's ship.
 		this.userDate = new DateDisplay();
 		this.sc = new ShipState("Boat");
 		SetShipName(userDefinedName);
 		SetMaximumContainers(UpgradePath.getDefaultUserShip(0));
-		haulerType shipType = haulerType.containers;
-		SetShipSpeed(UpgradePath.getDefaultUserShip(2));
-	//	SetUserShipCharacteristics(UpgradePath.getDefaultUserShip());
-		SetFuelConsumption(1.5);//(UpgradePath.getDefaultUserShip(3));*/
+
+		initalizeEngine("Samsung 1000HP", "diesel", 12.0, 6.0, 140, 1.5);
 		SetDefaultLocation(); // Located on UserLocation
 		GetUserReadout();
 	}
@@ -29,12 +27,12 @@ public class Boat extends UserContainers {
 		System.err.println("\n\n Uh oh, something broke. \n\n\n");
 	}*/
 	
+	public String getHullMaterial(){
+		return "" + this.hullmaterial;
+	}
+	
 	public void SetShipName(String userDefinedName){ // Takes user input for ship name. This really isn't modified by the user, but can be.  
 		this.userName = userDefinedName;
-	}
-
-	public void SetShipSpeed(int userDefinedSpeed){ // Takes user input for ship speed. Same thing as ship name, this isn't modified by the user.
-		this.speed = userDefinedSpeed;
 	}
 	
 	public void increaseDay(){ // A passthrough to increase the date.  
@@ -66,45 +64,17 @@ public class Boat extends UserContainers {
 		return this.userDate.getDate();
 	}
 
-/*	public void SetUserShipCharacteristics(int[] passedData){ // This doesn't completely work at this point, but eventually it will parse the array you pass it. 
-		System.out.println(passedData.length);
-		if(passedData.length >= 0){
-			SetContainers(passedData[0], "standard");
-		}
-		else if(passedData.length >= 1){
-			SetMaximumContainers(passedData[1]);
-		}
-		else if(passedData.length >= 2){
-			SetShipSpeed(passedData[2]);
-		}
-		else if(passedData.length >= 3){
-			SetFuelConsumption(passedData[3]);
-		}
-	}*/
-
-	public String GetShipName(){ // Returns the ship name
+	public String getShipName(){ // Returns the ship name
 		return this.userName;
 	}
 
-	public void DisplayShipName(){ // Displays the ship name in a more presentable format.  
-		System.out.println("Name: " + GetShipName());
-	}
-
-	public int GetShipSpeed(){ // Returns the ship speed. This is in knots.
-		return this.speed;
-	}
-	
-	public void DisplayShipSpeed(){ // Displays the ship speed.  This is in knots.
-		System.out.println("Speed: " + GetShipSpeed() + " knots");
+	public void displayShipName(){ // Displays the ship name in a more presentable format.  
+		System.out.println("Name: " + getShipName());
 	}
 	
 	public void GetUpgradeReadout(){ // Displays ship speed and container quantity in a presentable format.  
-		DisplayShipSpeed();
-		DisplayContainerQuantity();
-	}
-	
-	public String GetHaulType(){ // Probably shouldn't be publically visible, checks to make sure you don't load oil inside a container ship.
-		return "" + this.shipType;
+		displayAverageKnots();
+		displayMaximumContainers();
 	}
 	
 	public void GetShortUserReadout(){ // Returns formatted date and current location.
@@ -114,9 +84,9 @@ public class Boat extends UserContainers {
 
 	public void GetUserReadout(){ // Returns a myriad of ship statistics.
 		DisplayFormattedDate();
-		DisplayShipName();
-		DisplayShipSpeed();
-		DisplayContainerQuantity();
+		displayShipName();
+		displayAverageKnots();
+		displayMaximumContainers();
 		DisplayMoney();
 		System.out.println();
 	}

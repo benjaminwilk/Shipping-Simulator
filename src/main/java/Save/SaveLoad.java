@@ -51,17 +51,21 @@ public class SaveLoad{
 	public void SaveGame(Boat playerObject){
 		System.out.println("Saving");
 		try {
-			FileOutputStream fileCreator = new FileOutputStream("C:\\Program Files\\Java\\Boat1.txt");
+			FileOutputStream fileCreator = new FileOutputStream("src/main/java/Save/Boat1.txt");
 			ObjectOutputStream fileWriter = new ObjectOutputStream(fileCreator);
 			fileWriter.writeObject("Date=" + playerObject.GetDate() + "\n");
-			fileWriter.writeObject("ShipName=" + playerObject.GetShipName() + "\n");
-			fileWriter.writeObject("MaxContainers=" + playerObject.GetMaximumContainers() + "\n");
-			fileWriter.writeObject("CurrentFuel=" + playerObject.GetCurrentFuel() + "\n");
-			fileWriter.writeObject("MaxFuel=" + playerObject.GetMaximumFuel() + "\n");
+			fileWriter.writeObject("ShipName=" + playerObject.getShipName() + "\n");
+			fileWriter.writeObject("MaxContainers=" + playerObject.getMaximumContainers() + "\n");
+			fileWriter.writeObject("CurrentFuel=" + playerObject.getCurrentFuel() + "\n");
+			fileWriter.writeObject("MaxFuel=" + playerObject.getMaxFuel() + "\n");
 			fileWriter.writeObject("Money=" + playerObject.GetMoney() + "\n");
-			fileWriter.writeObject("CurrentLocation=" + playerObject.GetCurrentName() + "\n");
-		//	for(int i = 0; i < ContainerVariety.GetContainerTypeCount(); i++){
-		//		fileWriter.writeObject(playerObject.getName(i));
+			fileWriter.writeObject("CurrentLocation=" + playerObject.getCurrentLocation() + "\n");
+		//	if(!(playerObject.isContainerSlipEmpty())){ // This is currently broken for some reason
+		//		for(int i = 0; i < playerObject.getContainerSlipSize(); i++){
+		//			fileWriter.writeObject("Container" + (i+1) + "=" + playerObject.getContainerSlip(i) + "\n");
+		//		}
+		//	} else {
+		//		fileWriter.writeObject("Container1=");
 		//	}
 			fileWriter.close();
 			fileCreator.close();
@@ -76,7 +80,7 @@ public class SaveLoad{
 	public void LoadGame(Boat playerObject, AvailablePorts ports){
 	//	Boat playerObject = null;
 		try{
-			FileInputStream fileFinder = new FileInputStream("C:\\Program Files\\Java\\Boat1.sav");
+			FileInputStream fileFinder = new FileInputStream("src/main/java/Save/Boat1.txt");
 			ObjectInputStream fileReader = new ObjectInputStream(fileFinder);
 			playerObject = (Boat) fileReader.readObject();
 			fileReader.close();

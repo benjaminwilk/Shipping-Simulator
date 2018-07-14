@@ -52,8 +52,12 @@ public class Randomize extends propertyPull{
 		return minValue + (maxValue - minValue) * GenerateRandomValue().nextDouble();
 	}
 	
-	public static int GetRandomizedDistancePerDay(int passedUserSpeed){
+	/*public static int GetRandomizedDistancePerDay(int passedUserSpeed){
 		return GetRandomValue(passedUserSpeed, (passedUserSpeed / 2) )* 24;
+	}*/
+	
+	public static double GetRandomizedDistancePerDay(double passedUserSpeed){
+		return GetRandomDoubleValue(passedUserSpeed, (passedUserSpeed / 2.0) )* 24.0;
 	}
 
 }

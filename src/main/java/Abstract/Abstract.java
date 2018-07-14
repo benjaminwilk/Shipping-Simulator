@@ -106,4 +106,20 @@ public class Abstract extends valueInput{
 		return passedName;
 	}
 	
+	public static double roundValue(double passedDouble){
+		return Math.round((passedDouble * 100d) / 100d);
+	}
+
+	public static String addPadding(String passedName, int prefixPadding, int postfixPadding){
+		String spaceAdder = "";
+		for(int i = 0; i <= prefixPadding; i++){
+			spaceAdder += new String(" ");
+		}
+		spaceAdder += passedName;
+		for(int z = 0; z <= prefixPadding; z++){
+			spaceAdder += new String(" ");
+		}
+		return spaceAdder;
+	}
+	
 }
