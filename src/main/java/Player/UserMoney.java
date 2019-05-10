@@ -1,11 +1,12 @@
-package src.main.java.Player;
-import src.main.java.*;
+package main.java.Player;
 
 
 /*public interface UserMoney extends UserShip{
 	public int getMoney();
 	public void setMoney(int userPassedValue);
 }*/
+
+import main.java.Abstract.Abstract;
 
 public class UserMoney extends UserLocation{
 	private double shipPurse; // Variable that contains the money value.

@@ -1,4 +1,4 @@
-/*package src.main.java;
+package main.java.Depricated;/*package src.main.java;
 
 import src.main.java.Player.*;
 

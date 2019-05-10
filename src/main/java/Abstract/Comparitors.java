@@ -1,4 +1,4 @@
-package src.main.java;
+package main.java.Abstract;
 import java.util.ArrayList;
 
 public class Comparitors extends Randomize{

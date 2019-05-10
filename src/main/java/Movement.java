@@ -1,7 +1,9 @@
-package src.main.java;
+package main.java;
 
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
+import main.java.Graphics.MovementGraphics;
+import main.java.Player.*;
+import main.java.Abstract.*;
+import main.java.Containers.*;
 
 public class Movement{
 	private DistanceCalculation MovementDistanceCalculation;

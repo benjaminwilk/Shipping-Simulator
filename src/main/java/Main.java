@@ -1,6 +1,4 @@
-package src.main.java;
-
-import src.main.java.Abstract.*;
+package main.java;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;

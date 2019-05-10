@@ -1,9 +1,5 @@
-package src.main.java;
+package main.java.Properties;
 
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
-
-import java.util.*;
 import java.util.ArrayList;
 import java.io.*;
 import java.lang.Exception;

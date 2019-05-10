@@ -1,3 +1,5 @@
+package main.java.Graphics;
+
 public class ShipGraphics{
 
   public static void tugboat(){

@@ -1,14 +1,22 @@
-package src.main.java;
-
-import src.main.java.Abstract.*;
-import java.nio.charset.CoderMalfunctionError;
+package main.java;
 
 public class LongitudeLatitude{
 
 	private GeoPosition longitude;
 	private GeoPosition latitude;
 	private String title;
-	
+
+	public LongitudeLatitude(double passedLongitude, double passedLatitude){
+		this.longitude = new GeoPosition(passedLongitude);
+		this.latitude = new GeoPosition(passedLatitude);
+	}
+
+	public LongitudeLatitude(){
+		this.longitude = new GeoPosition();
+		this.latitude = new GeoPosition();
+	}
+
+
 	public static class Builder{
 		
 		private GeoPosition longitude = new GeoPosition(); // variable named longitude that uses geoposition.

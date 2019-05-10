@@ -1,5 +1,6 @@
-package src.main.java.Player;
-import src.main.java.*;
+package main.java.Player;
+import main.java.*;
+import main.java.Abstract.Abstract;
 
 class Fuel{
 	private double fuel;

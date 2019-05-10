@@ -1,8 +1,11 @@
-package src.main.java;
+package main.java;
 
-import src.main.java.Player.*;
+import main.java.Containers.LoadUnloadContainers;
+import main.java.Player.*;
+import main.java.Properties.PropertiesReader;
+import main.java.Ship.Ship;
+
 import java.util.ArrayList;
-import src.main.java.Abstract.*;
 
 public class PrimaryLoop{
 
@@ -32,6 +35,7 @@ public class PrimaryLoop{
 		
 	public void InitializePlayer(){
 		this.playerObject = new Boat("USS Enterprise");
+		//this.playerObject = new Ship.Builder("USS Enterprise").Containers().IMO().build;
 	}
 	
 	public void InitializePorts(){

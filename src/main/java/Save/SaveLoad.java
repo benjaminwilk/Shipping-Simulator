@@ -1,7 +1,7 @@
-package src.main.java;
+package main.java.Save;
 
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
+/*import main.java.Player.*;
+import main.java.Abstract.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.*;
@@ -51,7 +51,7 @@ public class SaveLoad{
 	public void SaveGame(Boat playerObject){
 		System.out.println("Saving");
 		try {
-			FileOutputStream fileCreator = new FileOutputStream("src/main/java/Save/Boat1.txt");
+			FileOutputStream fileCreator = new FileOutputStream("main/java/Save/Boat1.txt");
 			ObjectOutputStream fileWriter = new ObjectOutputStream(fileCreator);
 			fileWriter.writeObject("Date=" + playerObject.GetDate() + "\n");
 			fileWriter.writeObject("ShipName=" + playerObject.getShipName() + "\n");
@@ -80,7 +80,7 @@ public class SaveLoad{
 	public void LoadGame(Boat playerObject, AvailablePorts ports){
 	//	Boat playerObject = null;
 		try{
-			FileInputStream fileFinder = new FileInputStream("src/main/java/Save/Boat1.txt");
+			FileInputStream fileFinder = new FileInputStream("main/java/Save/Boat1.txt");
 			ObjectInputStream fileReader = new ObjectInputStream(fileFinder);
 			playerObject = (Boat) fileReader.readObject();
 			fileReader.close();
@@ -95,4 +95,4 @@ public class SaveLoad{
 		}
 	}
 
-}
+}*/

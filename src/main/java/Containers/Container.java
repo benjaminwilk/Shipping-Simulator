@@ -1,6 +1,6 @@
-package src.main.java;
+package main.java.Containers;
 
-import src.main.java.Abstract.*;
+import main.java.Abstract.*;
 
 class Quantity{ // Quantity class; nested inside Container attributes.
 	private int quantity; // Quantity of containers available.

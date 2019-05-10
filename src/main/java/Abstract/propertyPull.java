@@ -1,10 +1,9 @@
-package src.main.java;
+package main.java.Abstract;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 public class propertyPull{
 

@@ -1,6 +1,6 @@
-package src.main.java.Player;
+package main.java.Player;
 
-import src.main.java.*;
+import main.java.Abstract.Abstract;
 
 import java.util.ArrayList;
 

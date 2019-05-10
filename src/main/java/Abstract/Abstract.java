@@ -1,7 +1,16 @@
-package src.main.java;
+package main.java.Abstract;
 
-import src.main.java.Player.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Abstract extends valueInput{
 
@@ -120,6 +129,61 @@ public class Abstract extends valueInput{
 			spaceAdder += new String(" ");
 		}
 		return spaceAdder;
+	}
+
+	public static int GetListCount(String passedFilePath){
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(passedFilePath));
+			int lines = 0;
+			while (reader.readLine() != null) lines++;
+			reader.close();
+			return lines;
+		}catch(FileNotFoundException fnfe){
+			System.err.println(fnfe);
+		}catch(IOException ioe){
+			System.err.println(ioe);
+		}
+		return -1;
+	}
+
+	public static String GetItemFromList(String passedFilePath, int passedValue){
+		try {
+			Path pathToMyTextFile = Paths.get(passedFilePath);
+			List<String> linesInFile = Files.readAllLines(pathToMyTextFile, StandardCharsets.ISO_8859_1);
+
+			String finalString = linesInFile.get(passedValue).replace("\"", "");
+
+			return finalString;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException ioe){
+			ioe.printStackTrace();
+		}
+		return "-1";
+	}
+
+	public static String GetItemFromList(String passedFilePath){
+		try {
+			Path pathToMyTextFile = Paths.get(passedFilePath);
+			List<String> linesInFile = Files.readAllLines(pathToMyTextFile, StandardCharsets.ISO_8859_1);
+			Random randomUtil = new Random();
+
+			int max = linesInFile.size() - 1;
+			int min = 0;
+
+			int randomIndexForWord = randomUtil.nextInt((max - min + 1)) + min;
+
+			String finalString = linesInFile.get(randomIndexForWord).replace("\"", "");
+
+			return finalString;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException ioe){
+			ioe.printStackTrace();
+		}
+		return "-1";
 	}
 	
 }

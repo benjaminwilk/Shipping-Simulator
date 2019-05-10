@@ -1,7 +1,4 @@
-package src.main.java;
-
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
+package main.java.Depricated;
 
 public class PortChoice{
 /*	private String currentPort;

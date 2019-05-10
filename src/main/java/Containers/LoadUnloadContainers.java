@@ -1,12 +1,14 @@
-package src.main.java;
+package main.java.Containers;
 
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
+import main.java.AvailablePorts;
+import main.java.Graphics.MovementGraphics;
+import main.java.MenuDisplays;
+import main.java.Player.*;
+import main.java.Abstract.*;
+import main.java.ShoreSide;
 
 import java.util.HashMap;
 import java.util.*;
-import java.util.ArrayList;
-import java.lang.Math;
 
 public class LoadUnloadContainers{
 	private int containerPaymentPercentage = 10;

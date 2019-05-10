@@ -1,15 +1,13 @@
-package src.main.java;
+package main.java.Player;
 
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
+import main.java.Sailor.Sailor;
+import main.java.Sailor.Skillset;
 
 import java.util.ArrayList;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class UserSailors extends UserDamage{ // This extension controls the sailors hired for the ship.
 	private ArrayList<Sailor> PlayerSailors = new ArrayList<Sailor>(); //This is the big arraylist that holds the current player's sailors.
-	private Skillset Skillset; // This variable holds the skill name and combined value.  
+	private main.java.Sailor.Skillset Skillset; // This variable holds the skill name and combined value.
 	double totalSalary = 0.0; // This holds the total salary owed weekly
 	
 	public UserSailors(){ // Constructor starts a new version of skillset and jumps into recalculating the levels.

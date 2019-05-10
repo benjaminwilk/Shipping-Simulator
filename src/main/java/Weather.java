@@ -1,8 +1,6 @@
-package src.main.java;
+package main.java;
 
-import java.util.ArrayList;
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
+import main.java.Abstract.*;
 
 class Temperature{ // This class contains the temperature settings.
 	private int temperature; // contains the temperature as a solid value, rather than a double.

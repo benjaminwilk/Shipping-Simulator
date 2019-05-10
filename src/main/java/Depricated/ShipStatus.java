@@ -1,6 +1,4 @@
-package src.main.java;
-
-import src.main.java.Player.*;
+package main.java.Depricated;
 
 public class ShipStatus{
 	

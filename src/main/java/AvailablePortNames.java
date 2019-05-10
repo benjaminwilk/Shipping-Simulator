@@ -1,7 +1,5 @@
-package src.main.java;
+package main.java;
 
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
 import java.util.ArrayList;
 
 

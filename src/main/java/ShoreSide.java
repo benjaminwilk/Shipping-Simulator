@@ -1,7 +1,8 @@
-package src.main.java;
+package main.java;
 
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
+import main.java.Player.*;
+import main.java.Abstract.*;
+import main.java.Sailor.SailorMenu;
 
 import java.util.HashMap;
 import java.util.*;
@@ -38,7 +39,7 @@ public class ShoreSide{
 		shoreMenu.put(3, () -> ShipStatusSubmenu(playerObject, ports)); // Jumps to Checking ship Status.  Will eventually revamp this.
 		shoreMenu.put(4, () -> shipFuel(playerObject, ports));//"Refuel Ship" // Jumps to refueling the ship.  Will eventually revamp this.
 		shoreMenu.put(5, () -> PriceDisplay(playerObject)); //"Check Port Prices"
-		shoreMenu.put(6, () -> new SaveLoad(playerObject, ports)); //"Hotel Visit"
+		//shoreMenu.put(6, () ->); // new SaveLoad(playerObject, ports)); //"Hotel Visit"
 		//shoreMenu.put(4, () -> new GlobalContainerPrices()); // Jumps to Global Ports and prices.
 		
 		if(userDecision <= 6 && userDecision > 0){
@@ -75,7 +76,7 @@ public class ShoreSide{
 		shoreMenu.put(2, () -> new ShipModifications(playerObject));// Jumps to Checking ship Status.  Will eventually revamp this.
 		shoreMenu.put(3, () -> shipFuel(playerObject, ports)); // Refuels the ship.
 		shoreMenu.put(4, () -> PriceDisplay(playerObject));
-		shoreMenu.put(5, () -> new SaveLoad(playerObject, ports));
+	//	shoreMenu.put(5, () -> new SaveLoad(playerObject, ports));
 		//shoreMenu.put(4, () -> new GlobalContainerPrices()); // Jumps to Global Ports and prices.
 		
 		if(userDecision <= 5 && userDecision > 0){

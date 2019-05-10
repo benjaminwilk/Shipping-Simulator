@@ -1,6 +1,6 @@
-package src.main.java;
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
+package main.java;
+import main.java.Player.*;
+import main.java.Abstract.*;
 
 enum shipCategory{smallFeeder, feeder, feederMax, Panamax, Suezmax, chinamax, Seawaymax, specialty}
 

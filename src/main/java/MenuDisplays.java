@@ -1,8 +1,4 @@
-package src.main.java;
-
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
-import java.util.ArrayList;
+package main.java;
 
 public class MenuDisplays{
 

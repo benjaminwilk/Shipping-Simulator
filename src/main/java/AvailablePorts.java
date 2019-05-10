@@ -1,10 +1,12 @@
-package src.main.java;
+package main.java;
 
-import src.main.java.Abstract.*;
-import src.main.java.Player.*;
+import main.java.Abstract.*;
+import main.java.Containers.*;
+import main.java.Containers.ContainerVariety;
+import main.java.Sailor.Sailor;
+import main.java.Sailor.*;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 class Fuel{
 	private double price;
@@ -69,7 +71,7 @@ class Ports{
 	private void setRandomSailors(){
 		int randomSailorCount = Abstract.GetRandomValue(100, 0);
 		for(int i = 0; i < randomSailorCount; i++){
-			this.SailorsInPort.add(i, new Sailor.Builder().Name().Contract().skills().Salary().Nationality().build());
+			this.SailorsInPort.add(i, new Sailor.Builder().Name().skills().Salary().Nationality().build());
 		}
 	}
 	

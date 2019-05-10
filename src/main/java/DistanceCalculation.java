@@ -1,6 +1,5 @@
-package src.main.java;
+package main.java;
 
-import src.main.java.Abstract.*;
 import java.lang.NullPointerException;
 
 public class DistanceCalculation{

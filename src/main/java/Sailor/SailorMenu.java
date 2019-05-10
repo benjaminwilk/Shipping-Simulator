@@ -1,8 +1,10 @@
-package src.main.java;
+package main.java.Sailor;
 
 import java.util.ArrayList;
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
+
+import main.java.AvailablePorts;
+import main.java.Player.*;
+import main.java.Abstract.*;
 
 public class SailorMenu{
 	ArrayList<Sailor> SailorsAboard = new ArrayList<Sailor>();

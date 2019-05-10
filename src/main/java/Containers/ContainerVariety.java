@@ -1,26 +1,8 @@
-package src.main.java;
+package main.java.Containers;
 
 import java.util.ArrayList;
-import src.main.java.Player.*;
-import src.main.java.Abstract.*;
 
-class ContainerTypes{
-	private static final String[] containerTypes = {"standard", "volatile", "vehicle", "refrigeration", "oil", "grain", "gravel", "chemical"}; // Standard set of container types.
-	private String[] additionalContainerTypes = {}; // Add additional container types here.
-	
-	public static String getContainerTypes(int passedValue){
-		return containerTypes[passedValue];
-	}
-	
-	public static String[] getAllContainerTypes(){
-		return containerTypes;
-	}
-	
-	public static int getContainerSize(){
-		return containerTypes.length;
-	}
-	
-}
+import main.java.Abstract.*;
 
 class Cooling{
 	private static final boolean[] refrigerationRequired = {false, false, false, true, false, false, false, true};

@@ -1,5 +1,5 @@
-package src.main.java.Player;
-import src.main.java.*;
+package main.java.Player;
+import main.java.*;
 
 // Boat -> UserMoney -> UserLocation -> UserEngine -> UserContainers -> UserSailor -> UserDamage -> ShipState
 

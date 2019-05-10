@@ -1,4 +1,4 @@
-/*package src.main.java.Player;
+package main.java.Depricated;/*package src.main.java.Player;
 import src.main.java.*;
 import java.lang.Math;
 

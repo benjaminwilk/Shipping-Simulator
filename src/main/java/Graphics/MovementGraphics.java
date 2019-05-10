@@ -1,7 +1,6 @@
-package src.main.java;
+package main.java.Graphics;
 
-import src.main.java.Abstract.*;
-import src.main.java.Player.*;
+import main.java.Player.*;
 
 public class MovementGraphics{
 	DisplayCommands dc; //= new DisplayCommands();

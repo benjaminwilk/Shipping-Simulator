@@ -1,6 +1,6 @@
-package src.main.java.Player;
+package main.java.Player;
 
-import src.main.java.*;
+import main.java.*;
 
 enum areas{ // Not implemented yet.  The idea for this is that random occurrences will occur depending on where the player is located.  
 //	east_china_sea,
