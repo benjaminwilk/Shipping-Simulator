@@ -4,16 +4,17 @@ import main.java.Graphics.MovementGraphics;
 import main.java.Player.*;
 import main.java.Abstract.*;
 import main.java.Containers.*;
+import main.java.Ship.Ship;
 
 public class Movement{
 	private DistanceCalculation MovementDistanceCalculation;
 	private int PortDistance;
 
 	//*****************************************************
-	public void currentLocationAndDestination(Boat playerObject){
+	public void currentLocationAndDestination(Ship playerObject){
 		int portChoice = 0;
 		do{
-			playerObject.DisplayCurrentTitle();
+		//	playerObject.DisplayCurrentTitle();
 			Abstract.RotateArrayList(AvailablePortNames.getPorts());
 			System.out.print(": ");
 			portChoice = Abstract.ScannerInt();
@@ -38,7 +39,7 @@ public class Movement{
 		
 	//*****************************************************
 	
-	public void iteration(Boat playerObject/*, PortChoice pc*/){
+	public void iteration(Ship playerObject/*, PortChoice pc*/){
 		//this.DeparturePort = null;
 		//this.ArrivalPort = null;
 		//this.DeparturePort = new LongitudeLatitude(playerObject.GetCurrentLocationLongitude(), playerObject.GetCurrentLocationLatitude());
@@ -60,20 +61,20 @@ public class Movement{
 		changeCurrentAndDestination(playerObject);
 	}
 	
-	private void changeCurrentAndDestination(Boat playerObject, int portChoice){
-		playerObject.SetCurrentLocation(playerObject.GetDestinationName());
+	private void changeCurrentAndDestination(Ship playerObject, int portChoice){
+		playerObject.SetLocation(playerObject.GetDestination());
 		//playerObject.SetCurrentLocation(this.destinationPort);
 		//this.destinationPort = null;
-		playerObject.SetDestinationLocation(AvailablePortNames.getPortName(portChoice));//MenuDisplays.GetPortName(portChoice));
+	//	playerObject.SetDestination(AvailablePortNames.getPortName());//MenuDisplays.GetPortName(portChoice));
 	}
 	
-	private void changeCurrentAndDestination(Boat playerObject){
-		playerObject.SetCurrentLocation(playerObject.GetDestinationName());
-		playerObject.SetDestinationLocation(null);
+	private void changeCurrentAndDestination(Ship playerObject){
+		playerObject.SetLocation(playerObject.GetDestination());
+		playerObject.SetDestination(null);
 	}
 
-	private static void DisplayDayAtSeaAndDate(Boat playerObject, int dayCount, int DistanceTraveled){
-		System.out.print("\nDay " + (dayCount + 1) + ". " +  playerObject.GetAndIncreaseDate() + ". ");
+	private static void DisplayDayAtSeaAndDate(Ship playerObject, int dayCount, int DistanceTraveled){
+		System.out.print("\nDay " + (dayCount + 1) + ". ");// +  playerObject.GetAndIncreaseDate() + ". ");
 		DisplayDistanceTraveled(DistanceTraveled);
 	}
 
@@ -81,14 +82,14 @@ public class Movement{
 		System.out.print("You have traveled " + DistanceTraveled + " miles.\n");
 	}
 
-	private void seaTravel(Boat playerObject){ //This is the core of the class, this controls movement.
+	private void seaTravel(Ship playerObject){ //This is the core of the class, this controls movement.
 		int DistanceTraveled = 0;
 		int dayCount = 0;
 		while(this.PortDistance >= DistanceTraveled){
 			new RandomEvent().RandomOccurrence(playerObject);
-			DistanceTraveled += Abstract.GetRandomizedDistancePerDay(playerObject.getKnots()); // I want to change this to be affected by temperature and weather.
+			DistanceTraveled += Abstract.GetRandomizedDistancePerDay(playerObject.GetKnots()); // I want to change this to be affected by temperature and weather.
 			DisplayDayAtSeaAndDate(playerObject, dayCount, DistanceTraveled);
-			playerObject.FuelMeasureAndConsumption(playerObject);
+		//	playerObject.FuelMeasureAndConsumption();
 			new MovementGraphics(DistanceTraveled, this.PortDistance);
 			//playerObject.DisplayFormattedFuelPercentage();
 			MovementGraphics.displayFuelGauge(playerObject);

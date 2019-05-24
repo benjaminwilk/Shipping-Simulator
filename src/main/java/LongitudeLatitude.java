@@ -11,6 +11,10 @@ public class LongitudeLatitude{
 		this.latitude = new GeoPosition(passedLatitude);
 	}
 
+	public LongitudeLatitude(String passedTitle){
+		this.title = passedTitle;
+	}
+
 	public LongitudeLatitude(){
 		this.longitude = new GeoPosition();
 		this.latitude = new GeoPosition();
@@ -62,7 +66,7 @@ public class LongitudeLatitude{
 	public void SetLatitude(double passedLatitude){ // Passes through to the geoposition functions, sets latitude to passed double.
 		this.latitude.SetCoordinate(passedLatitude);
 	}
-	
+
 	public double GetLongitude(){ // Pass through to the geoposition function, returns longitude double value.  
 		return this.longitude.GetCoordinate();
 	}
@@ -74,7 +78,7 @@ public class LongitudeLatitude{
 	public void SetTitle(String passedTitle){ // Pass through to the geoposition function, sets title to passed title.
 		this.title = passedTitle;
 	}
-	
+
 	public String GetTitle(){ // Pass through to the geoposition function, returns the title. 
 		return this.title;
 	}

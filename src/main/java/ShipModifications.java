@@ -1,16 +1,17 @@
 package main.java;
 import main.java.Player.*;
 import main.java.Abstract.*;
+import main.java.Ship.Ship;
 
 enum shipCategory{smallFeeder, feeder, feederMax, Panamax, Suezmax, chinamax, Seawaymax, specialty}
 
 public class ShipModifications{
 
-	public ShipModifications(Boat playerObject){
+	public ShipModifications(Ship playerObject){
 		modificationArea(playerObject);
 	}
 
-	public void modificationArea(Boat playerObject){
+	public void modificationArea(Ship playerObject){
 		int modificationChoice = 0;
 		System.out.print("What area of the ship would you like to modify: ");
 		do{
@@ -20,7 +21,7 @@ public class ShipModifications{
 		}while(modificationChoice >= 6);
 	}
 
-	private int parseModificationMenu(Boat playerObject, int userDecision){
+	private int parseModificationMenu(Ship playerObject, int userDecision){
 	/*	Map<Integer, Runnable> modificationMenu = new HashMap<>();
 		modificationMenu.put(1, () -> 
 		modificationMenu.put(2, () ->

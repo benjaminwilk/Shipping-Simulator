@@ -2,6 +2,7 @@ package main.java;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
+import main.java.PrimaryLoop;
 
 // 80 lines wide
 // 54 lines high

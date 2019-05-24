@@ -2,14 +2,15 @@ package main.java;
 
 import main.java.Player.*;
 import main.java.Abstract.*;
+import main.java.Ship.Ship;
 
 public class RandomEvent{
 
-	public void noFuel(Boat playerObject){
+	public void noFuel(Ship playerObject){
 		System.out.println("Beep boop -- No Fuel");
 	}
 	
-	public static void RandomOccurrence(Boat playerObject){
+	public static void RandomOccurrence(Ship playerObject){
 		int OccurrenceValue = (Abstract.GetRandomValue(100, 0));
 		if(OccurrenceValue > 95){
 			System.out.println("Either because of poor structural holds, or weather");
@@ -20,7 +21,7 @@ public class RandomEvent{
 		//System.out.println(OccurrenceValue);
 	}
 	
-	public static void CannotLeavePort(Boat playerObject){
+	public static void CannotLeavePort(Ship playerObject){
 		int OccurrenceValue = (Abstract.GetRandomValue(100, 0));
 		if(OccurrenceValue > 95){
 			System.out.println("Other freighters are moving slowly leaving port. ");
@@ -29,7 +30,7 @@ public class RandomEvent{
 		}
 	}
 	
-	public static void CannotEnterPort(Boat playerObject){
+	public static void CannotEnterPort(Ship playerObject){
 		int OccurrenceValue = (Abstract.GetRandomValue(100, 0));
 		if(OccurrenceValue > 95){
 			System.out.println("A backup at the port has created a line of freighters waiting to enter the port. ");
@@ -39,7 +40,7 @@ public class RandomEvent{
 		}
 	}
 	
-	public static void LongshoremanStrike(Boat playerObject){
+	public static void LongshoremanStrike(Ship playerObject){
 		int OccurrenceValue = (Abstract.GetRandomValue(100, 0));
 		if(OccurrenceValue > 95){
 			System.out.println("The longshoremen are striking in the port, and containers are not being loaded or unloaded");

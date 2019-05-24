@@ -8,46 +8,46 @@ import java.time.format.DateTimeFormatter;
 public class DateDisplay{
 	
 	private final static String startDate = "1992-11-20";
-	private LocalDate outputDate;
-	private int totalDays;
-	private final static int defaultStartDate = 0;	 // When DateDisplay is initialized, 0 is the value it starts with.
+	LocalDate outputDate;
+	int totalDays;
+	final static int defaultStartDate = 0;	 // When DateDisplay is initialized, 0 is the value it starts with.
 	
 	public DateDisplay(){ // Constructor; sets the total days to the default value and sets the output date to the default.  
 		this.totalDays = defaultStartDate;
 		this.outputDate = LocalDate.parse(startDate);
 	}
 
-	public void increaseDateRandom(){ // If something bad occurs, this will increase the date by a max of 30 days.
+	public void IncreaseDateRandom(){ // If something bad occurs, this will increase the date by a max of 30 days.
 		this.totalDays = this.totalDays + Abstract.GetRandomValue(30);
 		//this.outputDate.plusDays(this.totalDays);
-		addDaysToOutput(this.totalDays);
+		IncreaseDay(this.totalDays);
 	}
 
-	public void increaseMonth(){
-		this.outputDate.plusMonths(1);
+	public void IncreaseMonth(){
+		IncreaseMonth(1);
 	}
 	
-	public void increaseMonth(int passedMonths){
+	public void IncreaseMonth(int passedMonths){
 		this.outputDate.plusMonths(passedMonths);
 	}
 	
-	public void increaseDay(){ // Increase the date by one day.
+	public void IncreaseDay(){ // Increase the date by one day.
 		this.totalDays++;
 		//this.outputDate.plusDays(this.totalDays);
-		addDaysToOutput(this.totalDays);
+		IncreaseDay(this.totalDays);
 	}
 	
-	private void addDaysToOutput(int passedDays){
+	public void IncreaseDay(int passedDays){
 		this.outputDate.plusDays(passedDays);
 		
 	}
 	
-	public String getDate(){ //Displays the date in the MM/dd/yyyy format.
+	public String GetDate(){ //Displays the date in the MM/dd/yyyy format.
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DatePattern.getPattern());//this.dateDisplayPattern);
 		return "" + (this.outputDate.plusDays(this.totalDays).format(formatter));
 	}
 	
-	public String returnDate(){
+	public String ReturnDate(){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DatePattern.getPattern());//this.dateDisplayPattern);
 		return (this.outputDate.plusDays(this.totalDays).format(formatter));
 	}

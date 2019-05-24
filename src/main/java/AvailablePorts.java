@@ -182,7 +182,7 @@ class Ports{
 		generateDisplayCrewValues();
 		System.out.println("----- Available Sailors for Hire -----");
 		for(int i = 0; i < displayCrewCount; i++){
-			this.SailorsInPort.get(this.sailorSet.get(i)).displaySailorVitals();
+			SailorCalls.DisplaySailorVitals(this.SailorsInPort.get(this.sailorSet.get(i)));
 			for(int x = 0; x < new Skillset().getSkillSize(); x++){
 				System.out.println(this.SailorsInPort.get(this.sailorSet.get(i)).getSkillTitle(x) + ": " + this.SailorsInPort.get(this.sailorSet.get(i)).getSkill(x) );
 			}
