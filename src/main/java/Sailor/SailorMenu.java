@@ -5,32 +5,38 @@ import java.util.ArrayList;
 import main.java.AvailablePorts;
 import main.java.Player.*;
 import main.java.Abstract.*;
+import main.java.Port.Port;
+import main.java.Ship.Ship;
 
 public class SailorMenu{
 	ArrayList<Sailor> SailorsAboard = new ArrayList<Sailor>();
 	boolean generatorStatus = false;
+	Port currentPort;
 
-	public SailorMenu(Boat playerObject, AvailablePorts ports){
+	public SailorMenu(Ship playerObject, AvailablePorts allPorts){
+		this.currentPort = Abstract.ReturnCurrentPort(playerObject, allPorts);
 		copyMembersFromPlayer(playerObject);
-		hireOrFire(playerObject, ports);
+		hireOrFire(playerObject);
 	}
 	
-	private void copyMembersFromPlayer(Boat playerObject){
+	private void copyMembersFromPlayer(Ship playerObject){
 		if(playerObject.AnySailors()){
-			for(int i = 0; i < playerObject.getSailorCount(); i++){
-				this.SailorsAboard.add(playerObject.getSailors(i));
-			}
+			this.SailorsAboard.addAll(playerObject.GetAllSailors());
 		}
+		/*	for(int i = 0; i < playerObject.GetSailorCount(); i++){
+				this.SailorsAboard.add(playerObject.GetSailor(i));
+			}
+		}*/
 	}
 	
-	private void displayPlayerSailors(Boat playerObject){
+	private void displayPlayerSailors(Ship playerObject){
 		System.out.println("----- Your Hired Sailors -----");
 		if(playerObject.AnySailors()){
 			for(int x = 0; x < getSailorCount(); x++){
-				this.SailorsAboard.get(x).displaySailorVitals();
+				playerObject.GetSailor(x).DisplaySailorVitals();// .DisplaySailorVitals(this.SailorsAboard.get(x));
 				System.out.println("Time in Contract: ");
 				for(int i = 0; i < new Skillset().getSkillSize(); i++){
-					System.out.println(this.SailorsAboard.get(x).getSkillTitle(i) + ": " + this.SailorsAboard.get(x).getSkill(i) );
+					System.out.println(this.SailorsAboard.get(x).GetSkillTitle(i) + ": " + this.SailorsAboard.get(x).GetSkill(i) );
 				}
 			}
 			System.out.println();
@@ -43,16 +49,17 @@ public class SailorMenu{
 		return this.SailorsAboard.size();
 	}
 
-	private void hireOrFire(Boat playerObject, AvailablePorts ports){
+	private void hireOrFire(Ship playerObject) {
 		System.out.print("Are you looking to add sailors, or make changes to your current roster(Hire/fire/examine/totals/Back): ");
 		String hireChoice = Abstract.ScannerString();
-		if(hireChoice.equalsIgnoreCase("Hire") || hireChoice.equalsIgnoreCase("h") || hireChoice.equalsIgnoreCase("1")){
-			hireSailor(playerObject, ports);
+		if (hireChoice.equalsIgnoreCase("Hire") || hireChoice.equalsIgnoreCase("h") || hireChoice.equalsIgnoreCase("1")) {
+			hireSailor(playerObject);
 		}
-		if(hireChoice.equalsIgnoreCase("examine") || hireChoice.equalsIgnoreCase("e") || hireChoice.equalsIgnoreCase("3")){
+		if (hireChoice.equalsIgnoreCase("examine") || hireChoice.equalsIgnoreCase("e") || hireChoice.equalsIgnoreCase("3")) {
 			examineSailor(playerObject);
 		}
-		if(hireChoice.equalsIgnoreCase("total") || hireChoice.equalsIgnoreCase("t") || hireChoice.equalsIgnoreCase("4")){
+	}
+	/*	if(hireChoice.equalsIgnoreCase("total") || hireChoice.equalsIgnoreCase("t") || hireChoice.equalsIgnoreCase("4")){
 			playerObject.recalculateLevels();
 			playerObject.DisplayTotals();
 		}
@@ -61,43 +68,46 @@ public class SailorMenu{
 		}
 		playerObject.recalculateLevels();
 		playerObject.increaseDay();
-	}
+	}*/
 	
-	private void fireSailor(Boat playerObject){
+	private void fireSailor(Ship playerObject){
 		displayPlayerSailors(playerObject);
 		fireDecision(playerObject);
 	}
 	
-	private void examineSailor(Boat playerObject){
-		if(playerObject.getSailorCount() != 0){
+	private void examineSailor(Ship playerObject){
+		if(playerObject.GetSailorCount() != 0){
 			System.out.println("\n----- Your Hired Sailors -----");
-			for(int i = 0; i < playerObject.getSailorCount(); i++){
-				System.out.println( (i+1) + ". " + playerObject.getSailors(i).getName());
+			for(int i = 0; i < playerObject.GetSailorCount(); i++){
+				System.out.println( (i+1) + ". " + playerObject.GetSailor(i).DisplayName());
 			}
 			System.out.print("Which sailors would you like to examine?(1,2,3 | 0 to go back): ");
 			int sailorExaminer = Abstract.ScannerInt();
 			System.out.println();
-			playerObject.getSailors(sailorExaminer - 1).displaySailorVitals();
-			playerObject.getSailors(sailorExaminer - 1).displaySkills();
+			for(int i = 0; i < playerObject.GetSailorCount(); i++){
+				System.out.println((i + 1) + ". " + playerObject.GetSailor(i));
+			}
+			//playerObject.DisplaySailorVitals();//playerObject.GetSailor(sailorExaminer - 1));
+			playerObject.GetSailor(sailorExaminer - 1).DisplaySkills();
 			Abstract.PressAnyKey();
 		} else {
 			System.out.println("Failure.  You don't have any sailors.");
 		}
 	}
 	
-	private void hireSailor(Boat playerObject, AvailablePorts ports){
+	private void hireSailor(Ship playerObject){
 		displayPlayerSailors(playerObject);
-		ports.displayAvailableCrew(playerObject.getCurrentLocation());
-		hireCrewDecision(playerObject, ports);
+		currentPort.DisplayAvailablePortCrew();
+		hireCrewDecision(playerObject);
 	}
 	
-	private void fireDecision(Boat playerObject){ // Function that goes through to fire a sailor you have hired.
-		if(playerObject.getSailorCount() > 0){
+	private void fireDecision(Ship playerObject){ // Function that goes through to fire a sailor you have hired.
+		if(playerObject.GetSailorCount() > 0){
 			System.out.print("Choose which employee to let go (1,2,3... | 0 to quit): ");
 			int fireChoice = Abstract.ScannerInt(); // User input for which employee to fire.
 			if(fireChoice != 0) { 
 				displayFiredSailor(playerObject);
-				playerObject.removeSailor(fireChoice - 1);
+				playerObject.RemoveSailor(fireChoice - 1);
 			} else {
 				;
 			}
@@ -106,23 +116,23 @@ public class SailorMenu{
 		}
 	}
 	
-	public void displayFiredSailor(Boat playerObject){ // A simple message that a sailor has been fired.  
-		System.out.println("\nYou have let go " + playerObject.getSailors(playerObject.getSailorCount() - 1).getName() + ". \n");
+	public void displayFiredSailor(Ship playerObject){ // A simple message that a sailor has been fired.
+		System.out.println("\nYou have let go " + playerObject.GetSailor(playerObject.GetSailorCount() - 1).GetName() + ". \n");
 	}
 	
-	public void displayNewSailor(Boat playerObject){ // A simple message that states that a sailor has been hired.
-		System.out.println("\nYou have hired " + playerObject.getSailors(playerObject.getSailorCount() - 1).getName() + ". \n");
+	public void displayNewSailor(Ship playerObject){ // A simple message that states that a sailor has been hired.
+		System.out.println("\nYou have hired " + playerObject.GetSailor(playerObject.GetSailorCount() - 1).GetName() + ". \n");
 	}
 	
-	private void hireCrewDecision(Boat playerObject, AvailablePorts ports){
+	private void hireCrewDecision(Ship playerObject){
 		System.out.print("Which sailors would you like to hire?(1,2,3 | 0 to go back): ");
 		int sailorChoice = Abstract.ScannerInt();
 		if(sailorChoice != 0){
-			playerObject.addSailor(ports.getSpecificSailor(playerObject.getCurrentLocation(), (sailorChoice - 1))); // This line adds the sailor to the player sailor array.
+			playerObject.AddSailor(currentPort.GetSailor(sailorChoice - 1)); // This line adds the sailor to the player sailor array.
 			displayNewSailor(playerObject);
-			playerObject.displaySailorCount(); // A simple function that displays how many sailors you have aboard.
-			ports.removeAvailableSailor(playerObject.getCurrentLocation(), (sailorChoice - 1)); // This removes the sailor you just hired from the port applicant pool.
-	//		playerObject.setStartDate(); This hasn't been implemented yet; this will put the timestamp of when the sailor was hired.  
+			playerObject.DisplaySailorCount(); // A simple function that displays how many sailors you have aboard.
+			currentPort.RemovePortSailor(sailorChoice - 1); // This removes the sailor you just hired from the port applicant pool.
+	//		playerObject.setStartDate(); This hasn't been implemented yet; this will put the timestamp of when the sailor was hired.
 		}
 	}
 	

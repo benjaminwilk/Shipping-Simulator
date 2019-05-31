@@ -1,6 +1,9 @@
 package main.java.Port;
 
 import main.java.Abstract.Abstract;
+import main.java.Containers.Container;
+import main.java.LongitudeLatitude;
+import main.java.Sailor.Sailor;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -8,67 +11,58 @@ import java.util.Random;
 
 interface PortCalls {
 
-    default String GetCity(Port port){
-        return port.cityName;
-    }
+    String GetCity();
 
-    default String GetCountry(Port port){
-        return port.countryName;
-    }
+    String GetCountry();
 
-    default String DisplayLocation(Port port){
-        return GetCity(port) + ", " + GetCountry(port);
-    }
+    String DisplayLocation();
 
-    default double GetLongitude(Port port){
-        return port.longitude;
-    }
+    double GetLongitude();
 
-    default double GetLatitude(Port port){
-        return port.latitude;
-    }
+    double GetLatitude();
 
-    default String GetOutputContainerName(Port port, int passedPosition){
-        return port.outputContainerName.get(passedPosition).toString();
-    }
+    String GetOutputContainerName(int passedPosition);
 
-    default String DisplayOutputContainerName(Port port, int passedPosition){
-        return "Outgoing Container: " + GetOutputContainerName(port, passedPosition);
-    }
+    String DisplayOutputContainerName(int passedPosition);
 
-    default double GetOutputContainerCount(Port port, int passedPosition){
-        return Double.parseDouble(port.outputContainerCount.get(passedPosition).toString());
-    }
+    double GetOutputContainerCount(int passedPosition);
 
-    default String DisplayOutputContainerCount(Port port, int passedPosition){
-        return "Outgoing Container Count: " + GetOutputContainerCount(port, passedPosition);
-    }
+    String DisplayOutputContainerCount(int passedPosition);
 
-    default double GetOutputContainerPrice(Port port, int passedPosition){
-        return Double.parseDouble(port.outputContainerPrice.get(passedPosition).toString());
-    }
+    double GetOutputContainerPrice(int passedPosition);
 
-    default String DisplayOutputContainerPrice(Port port, int passedPosition){
-        return "Outgoing Container Price: $" + GetOutputContainerPrice(port, passedPosition);
-    }
+    String DisplayOutputContainerPrice(int passedPosition);
+
+    String GetPortSailorName(int passedPosition);
+
+    String GetPortSailorVitals(int passedPosition);
+
+    void RemovePortSailor(int passedPosition);
+
+    Sailor GetSailor(int passedPosition);
+
+    void DisplayAvailablePortCrew();
+
+    double GetFuelPrice();
+
+    String DisplayFuelPrice();
+
+    void DecreaseOutgoingContainerCount(int passedContainerType, double passedCount);
 
 }
 
 abstract class City{
     protected String cityName;
     protected String countryName;
-    protected double longitude;
-    protected double latitude;
+    protected LongitudeLatitude coordinates;
 
-    protected ArrayList outputContainerName;
-    protected ArrayList outputContainerCount;
-    protected ArrayList outputContainerPrice;
+    protected ArrayList<Container> incoming;
 
-    protected ArrayList inputContainerName;
-    protected ArrayList inputContainerCount;
-    protected ArrayList inputContainerPrice;
+    protected ArrayList<Container> outgoing;
 
+    protected ArrayList<Sailor> availableSailors;
 
+    protected Fuel portFuel;
 }
 
 public class Port extends City implements PortCalls {
@@ -80,20 +74,20 @@ public class Port extends City implements PortCalls {
     public static class Builder{
         protected String cityName;
         protected String countryName;
-        protected double longitude;
-        protected double latitude;
+        protected LongitudeLatitude coordinates;
 
-        protected ArrayList outputContainerName;
-        protected ArrayList outputContainerCount;
-        protected ArrayList outputContainerPrice;
+        protected ArrayList<Container> incoming;
 
-        protected ArrayList inputContainerName;
-        protected ArrayList inputContainerCount;
-        protected ArrayList inputContainerPrice;
+        protected ArrayList<Container> outgoing;
+
+        protected ArrayList<Sailor> availableSailors;
+
+        protected Fuel portFuel;
 
         public Builder(){
-            SetCity();
-            SetCountry();
+            City();
+            Country();
+            Fuel();
         }
 
         public Builder(String passedCity, String passedCountry){
@@ -101,41 +95,63 @@ public class Port extends City implements PortCalls {
             this.countryName = passedCountry;
         }
 
-        private Builder SetCity(){
+        public Builder City(){
             this.cityName = Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\Cities.properties");
             return this;
         }
 
-        private Builder SetCountry(){
+        public Builder City(String passedCityName){
+            this.cityName = passedCityName;
+            return this;
+        }
+
+        public Builder Sailor(){
+            int sailorCount = new Random().nextInt();
+            for(int i = 0; i < sailorCount; i++){
+                availableSailors.add(new Sailor.Builder().Name().Nationality().Salary().build());
+            }
+            return this;
+        }
+
+        public Builder Country(){
             this.countryName = Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\NationList.properties");
             return this;
         }
 
-        public Builder Containers(){
-            initializeArrays();
-            int containerCount = Abstract.GetListCount("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\CargoTypes.properties");
-            DecimalFormat decimalPointTwo = new DecimalFormat("#.##");
-            for(int i = 0; i < containerCount; i++){
-                this.outputContainerName.add(Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\CargoTypes.properties", i));
-                this.outputContainerCount.add(new Random().nextInt(400 - 1)+1);
-                this.outputContainerPrice.add(Double.parseDouble(decimalPointTwo.format((Math.random()* (400 - 1)+1) + 1)));
-            }
-            for(int p = 0; p < containerCount; p++){
-                this.inputContainerName.add(Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\CargoTypes.properties", p));
-
-                this.inputContainerCount.add(new Random().nextInt(400 - 1)+1);
-                this.inputContainerPrice.add(Double.parseDouble(decimalPointTwo.format((Math.random()* (400 - 1)+1) + 1)));
-            }
+        public Builder Country(String passedCountryName){
+            this.countryName = passedCountryName;
             return this;
         }
 
-        private Builder initializeArrays(){
-            this.outputContainerName = new ArrayList();
-            this.outputContainerPrice = new ArrayList();
-            this.outputContainerCount = new ArrayList();
-            this.inputContainerName = new ArrayList();
-            this.inputContainerPrice = new ArrayList();
-            this.inputContainerCount = new ArrayList();
+        public Builder Fuel(){
+            this.portFuel = new Fuel();
+            return this;
+        }
+
+        public Builder Fuel(double passedPrice){
+            this.portFuel = new Fuel(passedPrice);
+            return this;
+        }
+
+        public Builder Coordinates(){
+            this.coordinates = new LongitudeLatitude();
+            return this;
+        }
+
+        public Builder Coordinates(double passedLongitude, double passedLatitude){
+            this.coordinates = new LongitudeLatitude(passedLongitude, passedLatitude);
+            return this;
+        }
+
+        public Builder Containers(){
+            int containerCount = Abstract.GetListCount("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\CargoTypes.properties");
+            DecimalFormat decimalPointTwo = new DecimalFormat("#.##");
+            for(int i = 0; i < containerCount; i++){
+                this.outgoing.add(new Container.Builder().Title(Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\CargoTypes.properties", i)).Price((Math.random()* (400 - 1)+1) + 1).Quantity((double)new Random().nextInt(400 - 1)+1).build());
+            }
+            for(int p = 0; p < containerCount; p++){
+                this.incoming.add(new Container.Builder().Title(Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\CargoTypes.properties", p)).Price((Math.random()* (400 - 1)+1) + 1).Quantity((double)new Random().nextInt(400 - 1)+1).build());
+            }
             return this;
         }
 
@@ -148,14 +164,125 @@ public class Port extends City implements PortCalls {
     public Port(Builder builder){
         this.cityName = builder.cityName;
         this.countryName = builder.countryName;
-        this.longitude = builder.longitude;
-        this.latitude = builder.latitude;
-        this.outputContainerName = builder.outputContainerName;
-        this.outputContainerCount = builder.outputContainerCount;
-        this.outputContainerPrice = builder.outputContainerPrice;
-        this.inputContainerName = builder.inputContainerName;
-        this.inputContainerCount = builder.inputContainerCount;
-        this.inputContainerPrice = builder.inputContainerPrice;
+        this.coordinates = builder.coordinates;
+        this.incoming = builder.incoming;
+        this.outgoing = builder.outgoing;
+        this.availableSailors = builder.availableSailors;
+        this.portFuel = builder.portFuel;
     }
 
+    @Override
+    public String GetCity() {
+        return this.cityName;
+    }
+
+    @Override
+    public String GetCountry() {
+        return this.countryName;
+    }
+
+    @Override
+    public String DisplayLocation() {
+        return GetCity() + ", " + GetCountry();
+    }
+
+    @Override
+    public double GetLongitude() {
+        return this.coordinates.GetLongitude();
+    }
+
+    @Override
+    public double GetLatitude() {
+        return this.coordinates.GetLatitude();
+    }
+
+    @Override
+    public String GetOutputContainerName(int passedPosition) {
+        return this.outgoing.get(passedPosition).GetContainerName();
+    }
+
+    @Override
+    public String DisplayOutputContainerName(int passedPosition) {
+        return "Container Name: " + GetOutputContainerName(passedPosition);
+    }
+
+    @Override
+    public double GetOutputContainerCount(int passedPosition) {
+        return this.outgoing.get(passedPosition).GetContainerCount();
+    }
+
+    @Override
+    public String DisplayOutputContainerCount(int passedPosition) {
+        return "Outgoing Containers Available: " + GetOutputContainerCount(passedPosition);
+    }
+
+    @Override
+    public double GetOutputContainerPrice(int passedPosition) {
+        return this.outgoing.get(passedPosition).GetContainerPrice();
+    }
+
+    @Override
+    public String DisplayOutputContainerPrice(int passedPosition) {
+        return "$" + GetOutputContainerPrice(passedPosition);
+    }
+
+    @Override
+    public String GetPortSailorName(int passedPosition){
+        return this.availableSailors.get(passedPosition).GetName();
+    }
+
+    @Override
+    public String GetPortSailorVitals(int passedPosition){
+        return this.availableSailors.get(passedPosition).DisplaySailorVitals();
+    }
+
+    @Override
+    public void RemovePortSailor(int passedPosition){
+        this.availableSailors.remove(passedPosition);
+    }
+
+    @Override
+    public Sailor GetSailor(int passedPosition) {
+        return this.availableSailors.get(passedPosition);
+    }
+
+    @Override
+    public void DisplayAvailablePortCrew(){
+        int[] fiveRandomNumbers = new int[5];
+        for(int p = 0; p < 5; p++){
+            System.out.print(this.availableSailors.get(fiveRandomNumbers[p]).DisplaySailorVitals());
+        }
+    }
+
+    @Override
+    public void DecreaseOutgoingContainerCount(int passedContainerType, double passedCount){
+        this.outgoing.get(passedContainerType).DecreaseContainerCount(passedCount);
+    }
+
+    @Override
+    public double GetFuelPrice(){
+        return this.portFuel.price;
+    }
+
+    @Override
+    public String DisplayFuelPrice(){
+        return "Fuel Price: $" + GetFuelPrice();
+    }
+
+}
+
+class Fuel{
+    public double price;
+
+    public Fuel(){
+        this.price = Abstract.GetRandomDoubleValue(500.0, 40.0);
+    }
+
+    public Fuel(double passedPrice){
+        this.price = passedPrice;
+    }
+
+    public void SetPrice(double passedPrice){
+        this.price = passedPrice;
+    }
 }

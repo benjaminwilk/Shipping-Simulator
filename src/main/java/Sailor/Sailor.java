@@ -8,6 +8,38 @@ import main.java.Sailor.*;
 
 enum gender{Male, Female} // enum setting for gender.
 
+interface SailorCalls{
+	String GetName();
+
+	void SetName(String passedName);
+
+	String DisplayName();
+
+	String GetSkillTitle(int passedValue);
+
+	String GetNationality();
+
+	String DisplayNationality();
+
+	String GetGender();
+
+	String DisplayGender();
+
+	String GetAssignedPosition();
+
+	void SetAssignedPosition(String passedPosition);
+
+	int GetSkill(int passedValue);
+
+	double GetSalary();
+
+	String DisplaySalary();
+
+	String DisplaySailorVitals();
+
+
+}
+
 class Skill{ // I would like to implement the ability to have as many or as few skills as wanted.
 	private String title;
 	private int value;
@@ -104,21 +136,21 @@ class AssignedPosition{
 	private static final String blankPosition = "None";
 	
 	public AssignedPosition(){ //Sets the initial position as blank.
-		setPosition(blankPosition);
+		SetPosition(blankPosition);
 	}
 	
-	public void setPosition(String passedPosition){ // Allows the user to define where the sailor will work. 
+	public void SetPosition(String passedPosition){ // Allows the user to define where the sailor will work.
 		this.position = passedPosition;
 	}
 	
-	public String getPosition(){ //Returns the working position
+	public String GetPosition(){ //Returns the working position
 		return this.position;
 	}
 }
 
-public class Sailor{
+public class Sailor implements SailorCalls{
 	private String Name; // Generated sailor name.
-	private gender gender; // variable that holds gender setting.
+	private gender Gender; // variable that holds gender setting.
 	private String Nationality; // Randomly generated nationality.
 	private Salary salary; //Randomly generated salary.  Eventually I would like this to coordinate with the skills a sailor has.
 	private Skillset skillset;
@@ -127,15 +159,15 @@ public class Sailor{
 	
 	public static class Builder{
 		private String Name; // Generated sailor name.
-		private gender gender; // variable that holds gender setting.
+		private gender Gender; // variable that holds gender setting.
 		private String Nationality; // Randomly generated nationality.
 		private Salary salary; //Randomly generated salary.  Eventually I would like this to coordinate with the skills a sailor has.
 		private Skillset skillset;
 	//	private contractDate contractDate; // Contract function for sailor.  Right now randomly generated.
-		
+
 		public Builder Name() { 
-			gender();
-			if(this.gender == gender.Male){
+			Gender();
+			if(this.Gender == gender.Male){
 				this.Name = MenuDisplays.GetMaleNames(Abstract.GetRandomValue(MenuDisplays.GetMaleNameCount(), 0));
 			} else{
 				this.Name = MenuDisplays.GetFemaleNames(Abstract.GetRandomValue(MenuDisplays.GetFemaleNameCount(), 0));
@@ -144,12 +176,12 @@ public class Sailor{
 			return this;
         }
 		
-		private Builder gender(){ // builder function that generates random value, for gender setting.  If 1, then male, and if 2, then female.  This is really only for the naming scheme.
+		public Builder Gender(){ // builder function that generates random value, for gender setting.  If 1, then male, and if 2, then female.  This is really only for the naming scheme.
 			int randomValue = Abstract.GetRandomValue(2, 0);
 			if(randomValue == 1){
-				this.gender = gender.Male;
+				this.Gender = gender.Male;
 			} else{
-				this.gender = gender.Female;
+				this.Gender = gender.Female;
 			}
 			return this;
 		}
@@ -170,7 +202,7 @@ public class Sailor{
 			return this;
         }
 		
-		public Builder skills(){
+		public Builder Skills(){
 			this.skillset = new Skillset();
 			return this;
 		}
@@ -181,69 +213,81 @@ public class Sailor{
 		
 	}
 	
-	private Sailor(Builder builder) {
-		gender = builder.gender;
+	public Sailor(Builder builder) {
+		Gender = builder.Gender;
 		Name = builder.Name;
 		Nationality = builder.Nationality;
 		salary = builder.salary;
 	//	contractDate = builder.contractDate;
 		skillset = builder.skillset;
     }
-	
-	public void setName(String passedName){ // I don't really know why I have this, I don't know why you'd change a name.
+
+    @Override
+	public void SetName(String passedName){ // I don't really know why I have this, I don't know why you'd change a name.
 		this.Name = passedName;
 	}
-	
-	public String getName(){ // Passthrough function that returns the sailor name.
+
+	@Override
+	public String GetName(){ // Passthrough function that returns the sailor name.
 		return this.Name;
 	}
-	
-	public void displayName(){ // Displays sailor name in formatted way.
-		System.out.println("Name: " + getName());
+
+	@Override
+	public String DisplayName(){ // Displays sailor name in formatted way.
+		return "Name: " + GetName();
 	}
-	
-	public String getGender(){ // Passthrough function that returns the sailor gender as a String.
-		return "" + this.gender;
+
+	@Override
+	public String GetGender(){ // Passthrough function that returns the sailor gender as a String.
+		return "" + this.Gender;
 	}
-	
-	public void displayGender(){ // Displays sailor gender in presentable way.
-		System.out.println("Gender: "+ getGender());
+
+	@Override
+	public String DisplayGender(){ // Displays sailor gender in presentable way.
+		return "Gender: "+  GetGender();
 	}
-	
-	public String getSkillTitle(int passedValue){ //Returns the skill name of a passed argument.
+
+	@Override
+	public String GetSkillTitle(int passedValue){ //Returns the skill name of a passed argument.
 		return this.skillset.getSkillTitle(passedValue);
 	}
-	
-	public String getNationality(){ // Passthrough function that returns the sailor nationality.
+
+	@Override
+	public String GetNationality(){ // Passthrough function that returns the sailor nationality.
 		return this.Nationality;
 	}
-	
-	public void displayNationality(){ // Displays sailor nationality in a presentable way.
-		System.out.println("Nationality: " + getNationality());
+
+	@Override
+	public String DisplayNationality(){ // Displays sailor nationality in a presentable way.
+		return "Nationality: " + GetNationality();
 	}
-	
-	public double getSalary(){ // Passthrough function that returns the sailor salary.
+
+	@Override
+	public double GetSalary(){ // Passthrough function that returns the sailor salary.
 		return this.salary.getSalary();
 	}
-	
-	public void displaySalary(){ // Displays the salary information in a slightly more presentable way.
-		System.out.println("Salary: $" + getSalary());
+
+	@Override
+	public String DisplaySalary(){ // Displays the salary information in a slightly more presentable way.
+		return "Salary: $" + GetSalary();
 	}
-	
-	public int getSkill(int passedValue){ // Returns the skill value of a passed argument.
+
+	@Override
+	public int GetSkill(int passedValue){ // Returns the skill value of a passed argument.
 		return this.skillset.getSkillValue(passedValue);
 	}
-	
+
 /*	public boolean isContractComplete(LocalDate passedDate){
 		this.contractDate.isContractComplete(passedDate);
 	}*/
-	
-	public String getAssignedPosition(){ // Returns the user defined position.
-		return this.assignedPosition.getPosition();
+	@Override
+	public String GetAssignedPosition(){ // Returns the user defined position.
+		return this.assignedPosition.GetPosition();
 	}
-	
-	public void setAssignedPosition(String passedPosition){ // Allows the user to define where the sailor will work.
-		this.assignedPosition.setPosition(passedPosition);
+
+	@Override
+	public void SetAssignedPosition(String passedPosition){ // Allows the user to define where the sailor will work.
+		this.assignedPosition.SetPosition(passedPosition);
 	}
 	
 /*	public int getContractLength(){ // Returns initial contract length.
@@ -254,17 +298,15 @@ public class Sailor{
 		System.out.println("Contract length: " + getContractLength() + " months" );
 	}*/
 	
-	public void displaySkills(){ 
+	public void DisplaySkills(){
 		for(int i = 0; i < this.skillset.getSkillSize(); i++){
 			System.out.println(this.skillset.displaySkillTitleAndValue(i));
 		}
 	}
-	
-	public void displaySailorVitals(){ // Displays sailor name, gender, nationality, 
-		displayName();
-		displayGender();
-		displayNationality();
-		displaySalary();
+
+	@Override
+	public String DisplaySailorVitals(){ // Displays sailor name, gender, nationality,
+		return DisplayName() + "\n" + DisplayGender() + "\n" + /*	DisplayNationality(passedSailor); */ DisplaySalary();
 	//	displayContractLength();
 	}
 	

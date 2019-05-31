@@ -2,6 +2,7 @@ package main.java;
 
 import main.java.Player.*;
 import main.java.Abstract.*;
+import main.java.Port.Port;
 import main.java.Sailor.SailorMenu;
 import main.java.Ship.Ship;
 
@@ -10,13 +11,16 @@ import java.util.*;
 
 public class ShoreSide{
 
-	public ShoreSide(Ship playerObject, AvailablePorts ports){
+	Port currentPort;
+
+	public ShoreSide(Ship playerObject, AvailablePorts allPorts){
+		currentPort = Abstract.ReturnCurrentPort(playerObject, allPorts);
 		int shoreSideChoice = 0;
 		System.out.println("\nYou and your crew step ashore.");
 		do{
 			Abstract.RotateOptions(MenuDisplays.GetShoreOptionMenu()); //"Check Weather Report", "Manage crewmembers", "Check Ship Status", "Refuel Ship", "Check Port Prices", "Hotel Visit" ,"Go Back"
 			System.out.print(": ");
-			shoreSideChoice = parseShoreMenu(playerObject, Abstract.ScannerInt(), ports);
+			shoreSideChoice = parseShoreMenu(playerObject, Abstract.ScannerInt(), allPorts);
 
 /***************************************/
 	
@@ -33,12 +37,12 @@ public class ShoreSide{
 //		System.out.println(playerObject.DisplayCurrentContainers() + "\n"); // This is currently broken
 	}
 	
-	private int parseShoreMenu(Ship playerObject, int userDecision, AvailablePorts ports){
+	private int parseShoreMenu(Ship playerObject, int userDecision, AvailablePorts allPorts){
 		Map<Integer, Runnable> shoreMenu = new HashMap<>();
 		shoreMenu.put(1, () -> new Weather().FormattedWeatherAndTemperature(5)); //"Check Weather Report"
-		shoreMenu.put(2, () -> new SailorMenu(playerObject, ports)); //"Manage crewmembers"
-		shoreMenu.put(3, () -> ShipStatusSubmenu(playerObject, ports)); // Jumps to Checking ship Status.  Will eventually revamp this.
-		shoreMenu.put(4, () -> shipFuel(playerObject, ports));//"Refuel Ship" // Jumps to refueling the ship.  Will eventually revamp this.
+		shoreMenu.put(2, () -> new SailorMenu(playerObject, allPorts)); //"Manage crewmembers"
+		shoreMenu.put(3, () -> ShipStatusSubmenu(playerObject, currentPort)); // Jumps to Checking ship Status.  Will eventually revamp this.
+		shoreMenu.put(4, () -> shipFuel(playerObject, currentPort));//"Refuel Ship" // Jumps to refueling the ship.  Will eventually revamp this.
 		shoreMenu.put(5, () -> PriceDisplay(playerObject)); //"Check Port Prices"
 		//shoreMenu.put(6, () ->); // new SaveLoad(playerObject, ports)); //"Hotel Visit"
 		//shoreMenu.put(4, () -> new GlobalContainerPrices()); // Jumps to Global Ports and prices.
@@ -62,7 +66,7 @@ public class ShoreSide{
 		System.out.println("\n");
 	}*/
 	
-	public void ShipStatusSubmenu(Ship playerObject, AvailablePorts ports){
+	public void ShipStatusSubmenu(Ship playerObject, Port currentPort){
 		int subMenuChoice = 0;
 		do{
 			Abstract.RotateOptions(MenuDisplays.GetShoreSubMenu()); //"Check for Damage", "Refit Storage", "Upgrade Ship", "Go Back"
@@ -71,11 +75,11 @@ public class ShoreSide{
 		}while(subMenuChoice >= MenuDisplays.GetShoreSubMenu().length);
 	}
 	
-	private int parseSubShoreMenu(Ship playerObject, AvailablePorts ports, int userDecision){
+	private int parseSubShoreMenu(Ship playerObject, Port currentPort, int userDecision){
 		Map<Integer, Runnable> shoreMenu = new HashMap<>();
 		shoreMenu.put(1, () -> new Weather().FormattedWeatherAndTemperature());//Weather
 		shoreMenu.put(2, () -> new ShipModifications(playerObject));// Jumps to Checking ship Status.  Will eventually revamp this.
-		shoreMenu.put(3, () -> shipFuel(playerObject, ports)); // Refuels the ship.
+		shoreMenu.put(3, () -> shipFuel(playerObject, currentPort)); // Refuels the ship.
 		shoreMenu.put(4, () -> PriceDisplay(playerObject));
 	//	shoreMenu.put(5, () -> new SaveLoad(playerObject, ports));
 		//shoreMenu.put(4, () -> new GlobalContainerPrices()); // Jumps to Global Ports and prices.
@@ -103,7 +107,7 @@ public class ShoreSide{
 		
 	}
 	
-	public void installCrane(Ship playerObject, AvailablePorts ports){
+	public void installCrane(Ship playerObject, Port currentPort){
 		System.out.println("Your ship currently has " + playerObject.GetCraneCount() + " cranes installed.");
 		System.out.println("Crane installation will cost $");
 		System.out.println("It will take two weeks to install the crane.");
@@ -116,8 +120,8 @@ public class ShoreSide{
 		}
 	}
 	
-	public void shipFuel(Ship playerObject, AvailablePorts ports){
-		double fuelPrice = ports.GetFuelPrice(playerObject.GetLocation());
+	public void shipFuel(Ship playerObject, Port currentPort){
+		double fuelPrice = currentPort.GetFuelPrice();
 		System.out.println("You pull your ship up to the fuel port.");
 		double fuelToFill = (playerObject.GetMaxFuel() - playerObject.GetCurrentFuel());
 		double fuelToFillPrice = fuelToFill * fuelPrice;

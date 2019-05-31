@@ -8,17 +8,22 @@ import main.java.Ship.Ship;
 
 public class Movement{
 	private DistanceCalculation MovementDistanceCalculation;
+	AvailablePorts portChoices;
 	private int PortDistance;
+
+	public Movement(AvailablePorts allPorts){
+		this.portChoices = allPorts;
+	}
 
 	//*****************************************************
 	public void currentLocationAndDestination(Ship playerObject){
 		int portChoice = 0;
 		do{
 		//	playerObject.DisplayCurrentTitle();
-			Abstract.RotateArrayList(AvailablePortNames.getPorts());
+			Abstract.RotateArrayList(portChoices.GetPort(0, 5));
 			System.out.print(": ");
 			portChoice = Abstract.ScannerInt();
-		}while((portChoice-1) >= AvailablePortNames.getPortSize());
+		}while((portChoice-1) >= portChoices.GetSize() - 1);
 		//	SetDestinationAndCurrentPort(portChoice);
 		changeCurrentAndDestination(playerObject, portChoice - 1);
 		

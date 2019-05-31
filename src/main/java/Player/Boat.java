@@ -7,12 +7,12 @@ enum HullMaterial{SingleSteel, DoubleSteel, fiberglas}
 
 public class Boat extends UserMoney {
 	private String userName;
-	private DateDisplay userDate; //I don't completely like that the date is in the player object, I may move it to the port objects.
+	//private DateDisplay userDate; //I don't completely like that the date is in the player object, I may move it to the port objects.
 	private ShipState sc;
 	private HullMaterial hullmaterial;
 	
 	public Boat(String userDefinedName){ // Creates the player's ship.
-		this.userDate = new DateDisplay();
+		//this.userDate = new DateDisplay();
 		this.sc = new ShipState("Boat");
 		SetShipName(userDefinedName);
 		SetMaximumContainers(UpgradePath.getDefaultUserShip(0));
@@ -35,13 +35,13 @@ public class Boat extends UserMoney {
 		this.userName = userDefinedName;
 	}
 	
-	public void increaseDay(){ // A passthrough to increase the date.  
+	/*public void increaseDay(){ // A passthrough to increase the date.
 		this.userDate.increaseDay();
 	}
-	
+
 	public String GetDate(){ // A passthrough that returns the date.
 		return this.userDate.getDate();
-	}
+	}*/
 	
 /*	public LocalDate returnDate(){
 		return this.userDate.returnDate();
@@ -49,7 +49,7 @@ public class Boat extends UserMoney {
 	
 	public void setStartDate(int passedValue){ 
 		this.PlayerSailors.get(passedValue).setStartDate(GetDate());
-	}*/
+	}
 	
 	public void DisplayDate(){ //Still a passthrough, but displays the date.
 		System.out.print(this.userDate.getDate());
@@ -62,7 +62,7 @@ public class Boat extends UserMoney {
 	public String GetAndIncreaseDate(){ // A passthrough that increases the date and returns the date.
 		this.userDate.increaseDay();
 		return this.userDate.getDate();
-	}
+	}*/
 
 	public String getShipName(){ // Returns the ship name
 		return this.userName;
@@ -78,12 +78,12 @@ public class Boat extends UserMoney {
 	}
 	
 	public void GetShortUserReadout(){ // Returns formatted date and current location.
-		DisplayFormattedDate();
+		//DisplayFormattedDate();
 		DisplayCurrentTitle();
 	}
 
 	public void GetUserReadout(){ // Returns a myriad of ship statistics.
-		DisplayFormattedDate();
+		//DisplayFormattedDate();
 		displayShipName();
 		displayAverageKnots();
 		displayMaximumContainers();

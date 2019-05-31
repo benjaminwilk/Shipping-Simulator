@@ -14,18 +14,22 @@ public class PrimaryLoop{
 	Movement move;
 	//AvailablePorts ports;
 	GameMap gameBoard;
+	AvailablePorts allPorts;
 	
 	public PrimaryLoop(){
 		InitializePlayer();
 		this.gameBoard = new GameMap();
+		this.allPorts = gameBoard.portLocations;
+		this.playerObject.SetLocation(allPorts.GetPort(0).GetCity());
 		//InitializePorts();
 		IterativeFunction();
 
 	}
 
 	public void IterativeFunction(){
-		this.shoreContainers = new LoadUnloadContainers();
-		this.move = new Movement();
+		//System.out.print(this.playerObject.GetLocation());
+		this.shoreContainers = new LoadUnloadContainers(playerObject, allPorts);
+		this.move = new Movement(this.allPorts);
 		
 		while(true){
 			this.shoreContainers.Iteration(this.playerObject);
@@ -37,7 +41,7 @@ public class PrimaryLoop{
 		
 	public void InitializePlayer(){
 		//this.playerObject = new Boat("USS Enterprise");
-		this.playerObject = new Ship.Builder("USS Enterprise").Containers().IMO().Sailors().build();
+		this.playerObject = new Ship.Builder("USS Enterprise").Containers().IMO().Engine().Sailors().build();
 	}
 	
 /*	public void InitializePorts(){

@@ -30,7 +30,7 @@ public class UserSailors extends UserDamage{ // This extension controls the sail
 
 	private void collectSalaryValue(){ //Gathers every sailor's salary requirements.  
 		for(int i = 0; i <= this.PlayerSailors.size() - 1; i++){
-			this.totalSalary = this.PlayerSailors.get(i).getSalary();
+			this.totalSalary = this.PlayerSailors.get(i).GetSalary();
 		}
 	}
 	
@@ -38,7 +38,7 @@ public class UserSailors extends UserDamage{ // This extension controls the sail
 		for(int i = 0; i < Skillset.getSkillSize(); i++){
 			int cumulativeValue = 0;
 			for(int x = 0; x < this.PlayerSailors.size(); x++){
-				cumulativeValue += this.PlayerSailors.get(x).getSkill(i);
+				cumulativeValue += this.PlayerSailors.get(x).GetSkill(i);
 			}
 			this.Skillset.setSkill(i, cumulativeValue);
 		}

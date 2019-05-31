@@ -1,5 +1,9 @@
 package main.java.Abstract;
 
+import main.java.AvailablePorts;
+import main.java.Port.Port;
+import main.java.Ship.Ship;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -185,5 +189,49 @@ public class Abstract extends valueInput{
 		}
 		return "-1";
 	}
-	
+
+	public static String GetItemFromList(String passedFilePath, String matchValue){
+		try {
+			Path pathToMyTextFile = Paths.get(passedFilePath);
+			List<String> linesInFile = Files.readAllLines(pathToMyTextFile, StandardCharsets.ISO_8859_1);
+			for(int p = 0; p < linesInFile.size(); p++) {
+				if (linesInFile.get(p).contains(matchValue)) {
+					return linesInFile.get(p);
+				}
+			}
+			return "Not found";
+			//Random randomUtil = new Random();
+
+			//int max = linesInFile.size() - 1;
+			//int min = 0;
+
+			//int randomIndexForWord = randomUtil.nextInt((max - min + 1)) + min;
+
+			//String finalString = linesInFile.get(randomIndexForWord).replace("\"", "");
+
+			//return finalString;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException ioe){
+			ioe.printStackTrace();
+		}
+		return "-1";
+	}
+
+	public static Port ReturnCurrentPort(Ship playerObject, AvailablePorts allPorts){
+		if(allPorts.GetSize() == 0){
+			System.err.println("Error: ReturnCurrentPort\nThe ports were not defined, allPorts has " + allPorts.GetSize() + " elements.");
+			allPorts.GetPort(0);
+		}
+		String playerLocation = playerObject.GetLocation();
+		for(int i = 0; i < allPorts.GetSize(); i++){
+			if(allPorts.GetPort(i).GetCity().contains(playerLocation)){
+				return allPorts.GetPort(i);
+			}
+
+		}
+		return allPorts.GetPort(0);
+	}
+
 }

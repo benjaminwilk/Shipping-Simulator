@@ -188,7 +188,7 @@ public class UserEngine extends UserContainers{
 		if(IsOutOfFuel() == false){
 			decreaseFuel(getVariedFuelConsumption());
 		} else{
-			new RandomEvent().noFuel(playerObject);
+		//	new RandomEvent().noFuel(playerObject);
 		}
 	}
 

@@ -2,104 +2,36 @@ package main.java.Containers;
 
 import main.java.Abstract.*;
 
-class Quantity{ // Quantity class; nested inside Container attributes.
-	private int quantity; // Quantity of containers available.
-	private final static int defaultQuantity = 0; 
-	
-	public Quantity(){ //Default Quantity set to 0, if nothing is passed to it.
-		this.quantity = defaultQuantity;
-	}
-	
-	public void SetQuantity(int passedQuantity){ // Sets the quantity available to the passed value.
-		this.quantity = passedQuantity;
-	}
-	
-	public void IncreaseQuantity(int passedQuantity){ // Increases the quantity of available containers by the passed value.
-		Abstract.IncreaseValue(this.quantity, passedQuantity);
-	}
-	
-	public void DecreaseQuantity(int passedQuantity){ // Decreases the quantity of available containers by the passed value.
-		Abstract.DecreaseValue(this.quantity, passedQuantity);
-	}
+interface ContainerCalls{
+	String GetContainerName();
 
-	public int GetQuantity(){ // Returns the available quantity of containers.
-		return this.quantity;
-	}
-	
-}
+	double GetContainerPrice();
 
-class Weight{ // Weight class; This hasn't been implemented yet, but will eventually!  This will affect the amount of containers a ship can carry.
-	private int weight; //Weight is using int, rather than double, since we are talking about thousands of pounds.
-		
-	
-	public Weight(){ // When weight is initialized, weight is randomly set anywhere between 9K and 70K.
-		this.weight = Abstract.GetRandomValue(70000, 9000);
-	}
-	
-	public void SetWeight(int passedWeight){ // Manually set the weight of the container type.
-		this.weight = passedWeight;
-	}
-	
-	public int GetWeight(){ // Returns the weight value.
-		return this.weight;
-	}
-	
-}
+	double GetContainerCount();
 
-class Refrigeration{ // Refrigeration status; this also hasn't been implemented yet, but will eventually.  This is a boolean check value.
-	private boolean refrigerationStatus;
-	
-	public Refrigeration(){ //When initialized without arguments, refrigeration status is set to false.
-		this.refrigerationStatus = false;
-	}
-	
-	public Refrigeration(boolean passedStatus){ // Constructor where if you pass true, refrigeration status is true!
-		setRefrigerationStatus(passedStatus);
-	}
-	
-	public boolean getRefrigerationStatus(){ // Returns the state of refrigeration.
-		return this.refrigerationStatus;
-	}
-	
-	public void setRefrigerationStatus(boolean passedStatus){  // Similar to the constructor above, allows you to set the status.
-		this.refrigerationStatus = passedStatus;
-	}
-	
-}
+	void IncreaseContainerCount(double passedCount);
 
-class Price{ // Price class; this is what controls the price of container type.
-	private double price; // Self-explanitory, price is stored in a double.
-	private final static double defaultPrice = 0.0; 
+	void IncreaseContainerPrice(double passedPrice);
 
-	public Price(){ // Constructor that sets the price of goods to $0.0
-		this.price = defaultPrice;
-	}
-	
-	public double GetPrice(){ // Provides the set price.
-		return this.price;
-	}
+	void DecreaseContainerCount(double passedCount);
 
-	public void IncreasePrice(double passedPrice){ // Increases the quantity of available containers by the passed value.
-		Abstract.IncreaseValue(this.price, passedPrice);
-	}
-	
-	public void SetPrice(double passedPrice){ // Sets the price to a provided value.
-		this.price = passedPrice;
-	}
-	
-	public void DecreasePrice(double passedPrice){ // Increases the quantity of available containers by the passed value.
-		Abstract.DecreaseValue(this.price, passedPrice);
-	}
-	
+	void DecreaseContainerPrice(double passedPrice);
+
+	void SetContainerPrice(double passedPrice);
+
+	void SetContainerCount(double passedCount);
+
+
+
 }
 
 enum ContainersOrBulk{Container, Bulk} // Enum that sets goods to either containers or bulk setting.  This can be expanded on.  
 
-public class Container{ // Primary class that contains all the classes above.  
+public class Container implements ContainerCalls{ // Primary class that contains all the classes above.
 	private String title; // Holds the name of the good you're working with.
 	
-	private Price price;
-	private Quantity quantity;
+	private double price;
+	private double quantity;
 	private Weight weight;
 	private Refrigeration refrigeration;
 	private ContainersOrBulk GoodStatus;
@@ -107,24 +39,24 @@ public class Container{ // Primary class that contains all the classes above.
 	public static class Builder{ // Builder class that allows quick construction of container types.
 		private String title;
 
-		private Price price = new Price();
-		private Quantity quantity = new Quantity();
+		private double price;
+		private double quantity;
 		private Weight weight = new Weight();
 		private Refrigeration refrigeration = new Refrigeration();
 		private ContainersOrBulk GoodStatus = ContainersOrBulk.Container;
 	
-		public Builder title(String passedTitle){
+		public Builder Title(String passedTitle){
 			this.title = passedTitle;
 			return this;
 		}
 	
-		public Builder price(double passedPrice){
-			this.price.SetPrice(passedPrice);
+		public Builder Price(double passedPrice){
+			this.price = passedPrice;
 			return this;
 		}
 		
-		public Builder quantity(int passedQuantity){
-			this.quantity.SetQuantity(passedQuantity);
+		public Builder Quantity(double passedQuantity){
+			this.quantity = passedQuantity;
 			return this;
 		}
 		
@@ -147,12 +79,12 @@ public class Container{ // Primary class that contains all the classes above.
 			return this;
 		}
 		
-		public Builder weight(int passedWeight){
+		public Builder Weight(int passedWeight){
 			this.weight.SetWeight(passedWeight);
 			return this;
 		}
 		
-		public Builder refrigeration(boolean refrigerationStatus){
+		public Builder Refrigeration(boolean refrigerationStatus){
 			this.refrigeration.setRefrigerationStatus(refrigerationStatus);
 			return this;
 		}
@@ -171,52 +103,60 @@ public class Container{ // Primary class that contains all the classes above.
 		refrigeration = builder.refrigeration;
 		GoodStatus	  = builder.GoodStatus;
 	}
-	
-	public void IncreaseQuantity(int passedQuantity){
-		this.quantity.IncreaseQuantity(passedQuantity);
+
+	@Override
+	public void IncreaseContainerCount(double passedQuantity){
+		this.quantity += passedQuantity;
 	}
-	
-	public void IncreasePrice(double passedPrice){
-		this.price.IncreasePrice(passedPrice);
+
+	@Override
+	public void IncreaseContainerPrice(double passedPrice){
+		this.price += passedPrice;
 	}
-	
-	public int GetQuantity(){
-		return this.quantity.GetQuantity();
+
+	@Override
+	public double GetContainerCount(){
+		return this.quantity;
 	}
-	
-	public String getName(){
+
+	@Override
+	public String GetContainerName(){
 		return this.title;
 	}
 	
 	public void setRefrigerationStatus(boolean setRefrigerationStatus){
 		this.refrigeration.setRefrigerationStatus(setRefrigerationStatus);
 	}
-	
+
 	public boolean getRefrigerationStatus(){
 		return this.refrigeration.getRefrigerationStatus();
 	}
-	
-	public double GetPrice(){
-		return this.price.GetPrice();
-	}
-	
-	public void SetPrice(double passedPrice){
-		this.price.SetPrice(passedPrice);
-	}
-	
-	public void SetQuantity(int passedQuantity){
-		this.quantity.SetQuantity(passedQuantity);
-	}
-	
-	public void DecreaseQuantity(int passedQuantity){
-		this.quantity.DecreaseQuantity(passedQuantity);
-		//IncreaseQuantity((-1)*passedQuantity);
+
+	@Override
+	public double GetContainerPrice(){
+		return this.price;
 	}
 
-	public void DecreasePrice(double passedPrice){
+	@Override
+	public void SetContainerPrice(double passedPrice){
+		this.price = passedPrice;
+	}
+
+	@Override
+	public void SetContainerCount(double passedQuantity){
+		this.quantity = passedQuantity;
+	}
+
+	@Override
+	public void DecreaseContainerCount(double passedQuantity){
+		IncreaseContainerCount(-1 * passedQuantity);
+	}
+
+	@Override
+	public void DecreaseContainerPrice(double passedPrice){
 	//	Abstract.DecreaseValue(this.Value.GetPrice(), passedPrice);
 		//IncreasePrice((-1)*passedPrice);
-		this.price.DecreasePrice(passedPrice);
+		IncreaseContainerPrice(-1 * passedPrice);
 	}
 	
 }
@@ -231,3 +171,42 @@ public class Container{ // Primary class that contains all the classes above.
 		return ContainersOrBulk.Container;
 	}	
 }*/
+
+class Refrigeration{ // Refrigeration status; this also hasn't been implemented yet, but will eventually.  This is a boolean check value.
+	private boolean refrigerationStatus;
+
+	public Refrigeration(){ //When initialized without arguments, refrigeration status is set to false.
+		this.refrigerationStatus = false;
+	}
+
+	public Refrigeration(boolean passedStatus){ // Constructor where if you pass true, refrigeration status is true!
+		setRefrigerationStatus(passedStatus);
+	}
+
+	public boolean getRefrigerationStatus(){ // Returns the state of refrigeration.
+		return this.refrigerationStatus;
+	}
+
+	public void setRefrigerationStatus(boolean passedStatus){  // Similar to the constructor above, allows you to set the status.
+		this.refrigerationStatus = passedStatus;
+	}
+
+}
+
+class Weight{ // Weight class; This hasn't been implemented yet, but will eventually!  This will affect the amount of containers a ship can carry.
+	private int weight; //Weight is using int, rather than double, since we are talking about thousands of pounds.
+
+
+	public Weight(){ // When weight is initialized, weight is randomly set anywhere between 9K and 70K.
+		this.weight = Abstract.GetRandomValue(70000, 9000);
+	}
+
+	public void SetWeight(int passedWeight){ // Manually set the weight of the container type.
+		this.weight = passedWeight;
+	}
+
+	public int GetWeight(){ // Returns the weight value.
+		return this.weight;
+	}
+
+}
