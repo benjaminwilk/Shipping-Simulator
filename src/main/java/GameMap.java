@@ -6,6 +6,8 @@ import main.java.Port.Port;
 import main.java.Properties.PropertiesReader;
 import main.java.*;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -25,6 +27,7 @@ public class GameMap implements GameCalls{
 
     public GameMap(){
         this.worldTime = new DateDisplay();
+        InitializeMap();
         InitializePorts();
     }
 
@@ -59,11 +62,13 @@ public class GameMap implements GameCalls{
         double[] randomLatitude = new double[intialPortsAvailable];
         String[] randomCity = new String[intialPortsAvailable];
         String[] countryNames = new String[intialPortsAvailable];
+        Path citiesProp = Paths.get("/src/main/java/Properties/Cities.properties");
+        Path countryProp = Paths.get("/src/main/java/Properties/CountryNames.properties");
         for(int u = 0; u < intialPortsAvailable; u++){
             randomLongitude[u] = new Random().nextDouble();//ArrayList<String> portLongitudes.add(Abstract.GetItemFromList("src/main/java/Properties/PortLongitude.properties"));
             randomLatitude[u] = new Random().nextDouble();//ArrayList<String> portLatitudes.add(Abstract.GetItemFromList("src/main/java/Properties/PortLatitude.properties"));
-            randomCity[u] = Abstract.GetItemFromList("src/main/java/Properties/Cities.properties");
-            countryNames[u] = Abstract.GetItemFromList("src/main/java/Properties/CountryNames.properties");
+            randomCity[u] = Abstract.GetItemFromList(System.getProperty("user.dir") + citiesProp);
+            countryNames[u] = Abstract.GetItemFromList(System.getProperty("user.dir") + countryProp);
         }
         this.portLocations = new AvailablePorts(randomCity, countryNames, randomLongitude, randomLatitude);
     }
@@ -83,11 +88,20 @@ public class GameMap implements GameCalls{
         return noise;
     }
 
+    public void DisplayMap(){
+        for(int i = 0; i < width; i++){
+            for(int p = 0; p < height; p++){
+                System.out.print(gameboard[i][p]);
+            }
+               System.out.println();
+        }
+    }
+
     public void InitializeMap(){
         for(int i = 0; i < width; i++){
             for(int p = 0; p < height; p++){
-                //OpenSimplexNoise osn = new OpenSimplexNoise(new Random().nextLong());
-                //outputMap[i][p] = OutputChar(Math.abs(osn.eval(width, height)));
+                OpenSimplexNoise osn = new OpenSimplexNoise(new Random().nextLong());
+                gameboard[i][p] = OutputChar(Math.abs(osn.eval(width, height)));
             }
         }
 
@@ -108,7 +122,7 @@ public class GameMap implements GameCalls{
             else if (passedDouble < 0.25) return "\u001B[33mS";//'S';// SAVANNAH;
                 //else if (passedDouble < 0.3) return "\u001B[33mD";//'D'; //DESERT;
             else if (passedDouble < 0.3) return "\u001B[40m" + "\u001B[37mP"; //'P'; //SNOW;
-            else return "\u001B[34mW";//'O'; // Ocean
+            else return "\u001B[34m~";//'O'; // Ocean
 
         }
 

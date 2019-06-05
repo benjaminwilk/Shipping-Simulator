@@ -4,6 +4,8 @@ import main.java.Abstract.Abstract;
 import main.java.Containers.Container;
 import main.java.LongitudeLatitude;
 import main.java.Sailor.Sailor;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -96,7 +98,8 @@ public class Port extends City implements PortCalls {
         }
 
         public Builder City(){
-            this.cityName = Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\Cities.properties");
+            Path cityProp = Paths.get("/src/main/java/Properties/Cities.properties");
+            this.cityName = Abstract.GetItemFromList(System.getProperty("user.dir") + cityProp.toString());//"C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\Cities.properties");
             return this;
         }
 
@@ -114,7 +117,8 @@ public class Port extends City implements PortCalls {
         }
 
         public Builder Country(){
-            this.countryName = Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\NationList.properties");
+            Path nationProp = Paths.get("/src/main/java/Properties/NationList.properties");
+            this.countryName = Abstract.GetItemFromList( System.getProperty("user.dir") + nationProp.toString()); //"C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\NationList.properties");
             return this;
         }
 
@@ -144,13 +148,14 @@ public class Port extends City implements PortCalls {
         }
 
         public Builder Containers(){
-            int containerCount = Abstract.GetListCount("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\CargoTypes.properties");
+            Path containerProp = Paths.get("/src/main/java/Properties/CargoTypes.properties");
+            int containerCount = Abstract.GetListCount(containerProp.toString());
             DecimalFormat decimalPointTwo = new DecimalFormat("#.##");
             for(int i = 0; i < containerCount; i++){
-                this.outgoing.add(new Container.Builder().Title(Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\CargoTypes.properties", i)).Price((Math.random()* (400 - 1)+1) + 1).Quantity((double)new Random().nextInt(400 - 1)+1).build());
+                this.outgoing.add(new Container.Builder().Title(Abstract.GetItemFromList( System.getProperty("user.dir") + containerProp.toString(), i)).Price((Math.random()* (400 - 1)+1) + 1).Quantity((double)new Random().nextInt(400 - 1)+1).build());
             }
             for(int p = 0; p < containerCount; p++){
-                this.incoming.add(new Container.Builder().Title(Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\CargoTypes.properties", p)).Price((Math.random()* (400 - 1)+1) + 1).Quantity((double)new Random().nextInt(400 - 1)+1).build());
+                this.incoming.add(new Container.Builder().Title(Abstract.GetItemFromList( System.getProperty("user.dir") + containerProp.toString(), p)).Price((Math.random()* (400 - 1)+1) + 1).Quantity((double)new Random().nextInt(400 - 1)+1).build());
             }
             return this;
         }

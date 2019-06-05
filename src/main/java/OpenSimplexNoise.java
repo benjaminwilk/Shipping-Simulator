@@ -1,3 +1,5 @@
+package main.java;
+
 /*
  * OpenSimplex Noise in Java.
  * by Kurt Spencer

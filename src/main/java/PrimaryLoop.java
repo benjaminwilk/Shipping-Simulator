@@ -32,6 +32,7 @@ public class PrimaryLoop{
 		this.move = new Movement(this.allPorts);
 		
 		while(true){
+			this.gameBoard.DisplayMap();
 			this.shoreContainers.Iteration(this.playerObject);
 			this.move.currentLocationAndDestination(this.playerObject);
 			//this.portDecision.iteration(this.playerObject);
