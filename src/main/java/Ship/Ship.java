@@ -9,10 +9,7 @@ import main.java.Sailor.Sailor;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 interface BoatCalls{
 
@@ -115,6 +112,8 @@ interface BoatCalls{
     public LongitudeLatitude GetDestinationCoordinates();
 
     public double GetKnots();
+
+  //  public void DisplayContainerSlipQuantity();
 
 }
 
@@ -266,6 +265,7 @@ public class Ship extends Waterfaring implements BoatCalls {
 
         public Builder Containers() {
          //   this.cargoType = Abstract.GetItemFromList("C:\\Users\\MHP-14M-D5\\IdeaProjects\\Person\\src\\CargoTypes.properties");
+            this.shipCargo = new Cargo();
             Random random = new Random();
             this.maxCount = random.nextDouble();
             this.currentCount = random.nextDouble();
@@ -599,6 +599,13 @@ public class Ship extends Waterfaring implements BoatCalls {
         return this.engine.knots;
     }
 
+    /*@Override
+    public void DisplayContainerSlipQuantity(){
+        for(){
+
+        }
+    }*/
+
 }
 
 class Money{
@@ -749,11 +756,12 @@ class Cargo{
     Map<String, Double> TypeAndCount = new HashMap<>();
 
     public Cargo(){
-
+        InitializeAllowedTypes();
+        InitializeTypeAndCount();
     }
 
-    public Cargo(int passedValue){
-
+    public Cargo(String passedType){
+        InitializeAllowedTypes(passedType);
     }
 
     public void SetCargo(String passedType){
@@ -768,23 +776,40 @@ class Cargo{
         return false;
     }
 
-    private void initializeAllowedTypes(String passedType){
+    private void InitializeTypeAndCount(){
+        for(int p = 0; p < this.allowedTypes.size(); p++){
+            this.TypeAndCount.put(this.allowedTypes.get(p), 0.0);
+        }
+    }
 
- /*       if(passedType.toLowerCase().contains("cargo")){
-            this.cargoType = "cargo";
+    private void VoidAllowedTypes(){
+        allowedTypes.clear();
+    }
+
+    private void InitializeAllowedTypes(){
+        allowedTypes.add("general");
+        allowedTypes.add("container");
+    }
+
+    private void InitializeAllowedTypes(String passedType){
+
+        if(passedType.toLowerCase().contains("cargo")){
+            allowedTypes.add("general");
+            allowedTypes.add("container");
+            allowedTypes.add("refrigerated");
         }
         if(passedType.toLowerCase().contains("tank")){
-            this.cargoType = "cargo";
+            allowedTypes.add("tanker");
         }
         if(passedType.toLowerCase().contains("live")){
-            this.cargoType = "cargo";
+            allowedTypes.add("livestock");
         }
         if(passedType.toLowerCase().contains("refrig")){
-            this.cargoType = "cargo";
+            allowedTypes.add("refrigerated");
         }
         if(passedType.toLowerCase().contains("bulk")){
-            this.cargoType = "cargo";
-        }*/
+            allowedTypes.add("drybulk");
+        }
     }
 
 }

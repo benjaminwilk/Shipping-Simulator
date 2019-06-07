@@ -93,8 +93,9 @@ public class GameMap implements GameCalls{
             for(int p = 0; p < height; p++){
                 System.out.print(gameboard[i][p]);
             }
-               System.out.println();
+               System.out.println("\u001B[37m");
         }
+        System.out.print("\u001B[0m");
     }
 
     public void InitializeMap(){
@@ -116,13 +117,13 @@ public class GameMap implements GameCalls{
     }
 
         public static String OutputChar(double passedDouble){
-            if (passedDouble < 0.1) return "\u001B[33mB"; //'B'; // BEACH;
-            else if (passedDouble < 0.15) return "\u001B[32mF"; //'F'; //FOREST;
-            else if (passedDouble < 0.2) return "\u001B[32mJ"; //'J'; //JUNGLE;
-            else if (passedDouble < 0.25) return "\u001B[33mS";//'S';// SAVANNAH;
+            if (passedDouble < 0.1) return "\u001B[40m" + "\u001B[33mB"; //'B'; // BEACH;
+            else if (passedDouble < 0.15) return "\u001B[40m" + "\u001B[32mF"; //'F'; //FOREST;
+            else if (passedDouble < 0.2) return "\u001B[40m" + "\u001B[32mJ"; //'J'; //JUNGLE;
+            else if (passedDouble < 0.25) return "\u001B[40m" + "\u001B[33mS";//'S';// SAVANNAH;
                 //else if (passedDouble < 0.3) return "\u001B[33mD";//'D'; //DESERT;
             else if (passedDouble < 0.3) return "\u001B[40m" + "\u001B[37mP"; //'P'; //SNOW;
-            else return "\u001B[34m~";//'O'; // Ocean
+            else return "\u001B[40m" + "\u001B[34m~";//'O'; // Ocean
 
         }
 

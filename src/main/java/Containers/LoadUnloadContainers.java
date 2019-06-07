@@ -78,7 +78,7 @@ public class LoadUnloadContainers{
 	private int ContainerParser(Ship playerObject,/* AvailablePorts ports,*/ int userDecision){
 		Map<Integer, Runnable> loadUnloadMenu = new HashMap<>();
 		loadUnloadMenu.put(1, () -> new ContainerReports().DisplayGlobalContainerPrices(allPorts/*, ports*/)); //"Check Container Prices"
-	//	loadUnloadMenu.put(2, () -> playerObject.DisplayContainerSlipQuantity());//Display Loaded Containers
+		loadUnloadMenu.put(2, () -> playerObject.DisplayContainerSlipQuantity());//Display Loaded Containers
 		loadUnloadMenu.put(3, () -> LoadContainers(playerObject/*, ports*/)); //"Load Containers"
 		loadUnloadMenu.put(4, () -> UnloadContainers(playerObject/*, ports*/)); //"Unload Containers"
 		loadUnloadMenu.put(5, () -> new ContainerReports().ExamineContainers(playerObject, allPorts)); //"Examine Containers"

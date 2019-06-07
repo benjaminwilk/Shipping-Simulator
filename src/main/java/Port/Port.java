@@ -148,6 +148,8 @@ public class Port extends City implements PortCalls {
         }
 
         public Builder Containers(){
+            this.outgoing = new ArrayList<Container>();
+            this.incoming = new ArrayList<Container>();
             Path containerProp = Paths.get("/src/main/java/Properties/CargoTypes.properties");
             int containerCount = Abstract.GetListCount(containerProp.toString());
             DecimalFormat decimalPointTwo = new DecimalFormat("#.##");
