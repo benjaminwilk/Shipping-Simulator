@@ -113,7 +113,11 @@ interface BoatCalls{
 
     public double GetKnots();
 
-  //  public void DisplayContainerSlipQuantity();
+    public void DisplayContainerSlipQuantity();
+
+    String GetShipStatistics();
+
+    String DisplayKnots();
 
 }
 
@@ -525,22 +529,22 @@ public class Ship extends Waterfaring implements BoatCalls {
 
     @Override
     public double GetCurrentFuel() {
-        return 0;
+        return this.engine.fuelCurrent;
     }
 
     @Override
     public String DisplayCurrentFuel() {
-        return null;
+        return "Current Fuel: " + GetCurrentFuel();
     }
 
     @Override
     public double GetMaxFuel() {
-        return 0;
+        return this.engine.fuelMax;
     }
 
     @Override
     public String DisplayMaxFuel() {
-        return null;
+        return "Maximum Fuel: " + GetMaxFuel() + " tons";
     }
 
     @Override
@@ -595,16 +599,32 @@ public class Ship extends Waterfaring implements BoatCalls {
 
     @Override
     public double GetKnots(){
-        System.out.println("Knots:" + this.engine.knots);
         return this.engine.knots;
     }
 
-    /*@Override
-    public void DisplayContainerSlipQuantity(){
-        for(){
+    @Override
+    public String DisplayKnots(){
+        return "Knots:" + this.engine.knots;
+    }
 
-        }
-    }*/
+    @Override
+    public void DisplayContainerSlipQuantity(){
+
+        System.out.println("DisplayContainerSlipQuantity()");
+       /* for(int i = 0; i < ){
+
+        }*/
+    }
+
+    @Override
+    public String GetShipStatistics(){
+        return this.DisplayName() + "\n" +
+               this.DisplayKnots() + "\n" +
+               this.DisplayCurrentFuel() + "\n" +
+               this.DisplayMaxFuel() + "\n" +
+               this.DisplaySailorCount() + "\n" +
+               this.DisplayShipType();
+    }
 
 }
 

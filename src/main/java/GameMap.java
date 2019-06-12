@@ -19,8 +19,8 @@ interface GameCalls{
 }
 
 public class GameMap implements GameCalls{
-    int height = 100;
-    int width = 100;
+    private int height = 30;
+    private int width = 60;
     String[][] gameboard = new String[width][height];
     AvailablePorts portLocations;
     DateDisplay worldTime;

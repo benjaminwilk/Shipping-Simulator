@@ -15,6 +15,7 @@ public class LoadUnloadContainers{
 
     Port currentPort;
     AvailablePorts allPorts;
+    WindowManager display;
 
     public LoadUnloadContainers(Ship playerObject, AvailablePorts passedAllPorts){
         currentPort = Abstract.ReturnCurrentPort(playerObject, passedAllPorts);
@@ -24,12 +25,13 @@ public class LoadUnloadContainers{
 	private int containerPaymentPercentage = 10;
 	private boolean loadContainerPort; 
 	
-	public void Iteration(Ship playerObject){
+	public void Iteration(Ship playerObject, WindowManager displayWindow){
+		this.display = displayWindow;
 		this.loadContainerPort = false;
 		int goodsChoice = 0;
 		do{
-			playerObject.GetShortUserReadout();
-			GoodsMenu();
+			//playerObject.GetShortUserReadout();
+			this.display.AppendUpdateTab(GoodsMenu());
 			goodsChoice = ParseGoodsMenu(Abstract.ScannerInt(), playerObject);
 			//playerObject.IncreaseDay();
 			CrewMemberCount(playerObject);
@@ -37,9 +39,14 @@ public class LoadUnloadContainers{
 		goodsChoice = 1;
 	}
 
-	private void GoodsMenu(){
-		Abstract.RotateOptions(MenuDisplays.GetGoodsMenu()); //"Load / Unload Containers", "Step Ashore" ,"Depart Port"
-		System.out.print(": ");
+	private String GoodsMenu(){
+		StringBuilder goodsMenuDisplay = new StringBuilder();
+		for(int iterativeCount = 0; iterativeCount < MenuDisplays.GetGoodsMenu().length; iterativeCount++){
+			goodsMenuDisplay.append((iterativeCount + 1) +  ". " + MenuDisplays.GetGoodsMenuItem(iterativeCount) + System.lineSeparator());
+		}
+		return goodsMenuDisplay.toString();
+		//display.AppendUpdateTab(Abstract.RotateOptions(MenuDisplays.GetGoodsMenu())); //"Load / Unload Containers", "Step Ashore" ,"Depart Port"
+		//System.out.print(": ");
 	}
 
 	private int ParseGoodsMenu(int userInputGoodsMenuDecision, Ship playerObject){

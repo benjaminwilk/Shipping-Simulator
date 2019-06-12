@@ -51,6 +51,10 @@ interface PortCalls {
 
     void DecreaseOutgoingContainerCount(int passedContainerType, double passedCount);
 
+    Container GetOutgoingContainer(int passedPosition);
+
+    Container GetIncomingContainer(int passedPosition);
+
 }
 
 abstract class City{
@@ -151,14 +155,14 @@ public class Port extends City implements PortCalls {
             this.outgoing = new ArrayList<Container>();
             this.incoming = new ArrayList<Container>();
             Path containerProp = Paths.get("/src/main/java/Properties/CargoTypes.properties");
-            int containerCount = Abstract.GetListCount(containerProp.toString());
+            int containerCount = Abstract.GetListCount(System.getProperty("user.dir")+ containerProp.toString());
             DecimalFormat decimalPointTwo = new DecimalFormat("#.##");
             for(int i = 0; i < containerCount; i++){
+             //   System.out.println("ITem: " + Abstract.GetItemFromList( System.getProperty("user.dir") + containerProp.toString(), i));
                 this.outgoing.add(new Container.Builder().Title(Abstract.GetItemFromList( System.getProperty("user.dir") + containerProp.toString(), i)).Price((Math.random()* (400 - 1)+1) + 1).Quantity((double)new Random().nextInt(400 - 1)+1).build());
+                this.incoming.add(new Container.Builder().Title(Abstract.GetItemFromList( System.getProperty("user.dir") + containerProp.toString(), i)).Price((Math.random()* (400 - 1)+1) + 1).Quantity((double)new Random().nextInt(400 - 1)+1).build());
             }
-            for(int p = 0; p < containerCount; p++){
-                this.incoming.add(new Container.Builder().Title(Abstract.GetItemFromList( System.getProperty("user.dir") + containerProp.toString(), p)).Price((Math.random()* (400 - 1)+1) + 1).Quantity((double)new Random().nextInt(400 - 1)+1).build());
-            }
+
             return this;
         }
 
@@ -211,6 +215,17 @@ public class Port extends City implements PortCalls {
     @Override
     public String DisplayOutputContainerName(int passedPosition) {
         return "Container Name: " + GetOutputContainerName(passedPosition);
+    }
+
+    @Override
+    public Container GetOutgoingContainer(int passedPosition){
+        System.out.println(this.outgoing.get(passedPosition).GetContainerName());
+        return this.outgoing.get(passedPosition);
+    }
+
+    @Override
+    public Container GetIncomingContainer(int passedPosition){
+        return this.incoming.get(passedPosition);
     }
 
     @Override

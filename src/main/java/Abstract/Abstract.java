@@ -34,7 +34,7 @@ public class Abstract extends valueInput{
 			System.out.println( (iterativeCount + 1) +  ". " + displayOptionList[iterativeCount]);
 		}
 	}
-	
+
 	public static <E> void RotateOptionsWithEscapement(E[] displayOptionList){ // Same things as "rotateOptions", but gives you the opportunity to go back.  Doesn't work at the moment.
 		RotateOptions(displayOptionList);
 		System.out.println(("0") + ". " + "Go back");

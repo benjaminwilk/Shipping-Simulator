@@ -5,6 +5,7 @@ import main.java.Player.*;
 import main.java.Properties.PropertiesReader;
 import main.java.Ship.Ship;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class PrimaryLoop{
@@ -15,8 +16,10 @@ public class PrimaryLoop{
 	//AvailablePorts ports;
 	GameMap gameBoard;
 	AvailablePorts allPorts;
+	WindowManager displayWindow;
 	
-	public PrimaryLoop(){
+	public PrimaryLoop(WindowManager mainWindow){
+		this.displayWindow = mainWindow;
 		InitializePlayer();
 		this.gameBoard = new GameMap();
 		this.allPorts = gameBoard.portLocations;
@@ -28,21 +31,23 @@ public class PrimaryLoop{
 
 	public void IterativeFunction(){
 		//System.out.print(this.playerObject.GetLocation());
-		this.shoreContainers = new LoadUnloadContainers(playerObject, allPorts);
-		this.move = new Movement(this.allPorts);
-		
+		displayWindow.AppendUpdateTab(this.shoreContainers = new LoadUnloadContainers(playerObject, allPorts));
+		displayWindow.AppendUpdateTab(this.move = new Movement(this.allPorts));
+		displayWindow.OverwriteStatPanelText(this.playerObject.GetShipStatistics());
 		while(true){
-			this.gameBoard.DisplayMap();
-			this.shoreContainers.Iteration(this.playerObject);
-			this.move.currentLocationAndDestination(this.playerObject);
+			displayWindow.UpdateDateText(this.gameBoard.GetDate());
+			displayWindow.AppendArrayToMap(this.gameBoard.gameboard);
+			this.shoreContainers.Iteration(this.playerObject, displayWindow);
+			this.move.currentLocationAndDestination(this.playerObject, displayWindow);
 			//this.portDecision.iteration(this.playerObject);
-			this.move.iteration(this.playerObject/*, portDecision*/);
+			this.move.iteration(this.playerObject); // , portDecision*/);
 		}	
 	}
 		
 	public void InitializePlayer(){
 		//this.playerObject = new Boat("USS Enterprise");
 		this.playerObject = new Ship.Builder("USS Enterprise").Containers().IMO().Engine().Sailors().build();
+		displayWindow.AppendUpdateTab("Player ship created!");
 	}
 	
 /*	public void InitializePorts(){

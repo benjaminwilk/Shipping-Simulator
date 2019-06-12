@@ -278,7 +278,7 @@ public class AvailablePorts{
 	}
 	
 	private void CreatePort(String portName, String countryName, double longitude, double latitude){
-		this.PortLocations.add(new Port.Builder().City(portName).Country(countryName).Coordinates(longitude, latitude).build());
+		this.PortLocations.add(new Port.Builder().City(portName).Country(countryName).Coordinates(longitude, latitude).Containers().build());
 		//new AvailablePortNames().setPorts(portName);
 	}
 

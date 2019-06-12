@@ -10,18 +10,25 @@ public class Movement{
 	private DistanceCalculation MovementDistanceCalculation;
 	AvailablePorts portChoices;
 	private int PortDistance;
+	WindowManager window;
 
 	public Movement(AvailablePorts allPorts){
 		this.portChoices = allPorts;
 	}
 
 	//*****************************************************
-	public void currentLocationAndDestination(Ship playerObject){
+	public void currentLocationAndDestination(Ship playerObject, WindowManager wm){
+		this.window = wm;
 		int portChoice = 0;
 		do{
 		//	playerObject.DisplayCurrentTitle();
-			Abstract.RotateArrayList(portChoices.GetPort(0, 5));
-			System.out.print(": ");
+			//Abstract.RotateArrayList(portChoices.GetPort(0, 5));
+			StringBuilder locationList = new StringBuilder();
+			for(int iterativeCount = 0; iterativeCount < portChoices.GetPort(0, 5).size(); iterativeCount++){
+				locationList.append((iterativeCount + 1) +  ". " + portChoices.GetPort(iterativeCount) + System.lineSeparator());
+			}
+			wm.AppendUpdateTab(locationList + ":");
+			//System.out.print(": ");
 			portChoice = Abstract.ScannerInt();
 		}while((portChoice-1) >= portChoices.GetSize() - 1);
 		//	SetDestinationAndCurrentPort(portChoice);
@@ -78,13 +85,14 @@ public class Movement{
 		playerObject.SetDestination(null);
 	}
 
-	private static void DisplayDayAtSeaAndDate(Ship playerObject, int dayCount, int DistanceTraveled){
-		System.out.print("\nDay " + (dayCount + 1) + ". ");// +  playerObject.GetAndIncreaseDate() + ". ");
-		DisplayDistanceTraveled(DistanceTraveled);
+	private static String DisplayDayAtSeaAndDate(Ship playerObject, int dayCount, int DistanceTraveled){
+		return System.lineSeparator() + "Day " + (dayCount + 1) + ". " + DisplayDistanceTraveled(DistanceTraveled);
+		// +  playerObject.GetAndIncreaseDate() + ". ");
+
 	}
 
-	private static void DisplayDistanceTraveled(int DistanceTraveled){
-		System.out.print("You have traveled " + DistanceTraveled + " miles.\n");
+	private static String DisplayDistanceTraveled(int DistanceTraveled){
+		return "You have traveled " + DistanceTraveled + " miles." + System.lineSeparator();
 	}
 
 	private void seaTravel(Ship playerObject){ //This is the core of the class, this controls movement.
@@ -100,6 +108,8 @@ public class Movement{
 			MovementGraphics.displayFuelGauge(playerObject);
 			dayCount++;
 		}
-		System.out.println("\n\n\n");
+		System.lineSeparator();
+		System.lineSeparator();
+		System.lineSeparator();
 	}
 }

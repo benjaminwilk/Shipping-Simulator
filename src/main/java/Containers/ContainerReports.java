@@ -19,11 +19,10 @@ public class ContainerReports {
     public static void ContainerTypeReadout(Port passedPort){
         System.out.println("\t\t  -- " + passedPort.DisplayLocation() + " -- ");
         System.out.println("Container Type -- Container Count -- Price Per Container");
-        for(int x = 0; x < ContainerTypes.getContainerSize(); x++){
-            System.out.print(passedPort.GetOutputContainerCount(x));
-           // System.out.print(" " + Abstract.ModifyContainerLength(passedPort.GetOutputContainerName(x), 13));
-           // System.out.print(" --    " + Abstract.ModifyContainerLength("" + passedPort.GetOutputContainerCount(x), 9));
-           // System.out.print("    --    $" + passedPort.GetOutputContainerPrice(x) + "\n");
+        for(int x = 0; x < ContainerTypes.getContainerSize() - 1 ; x++){
+            System.out.print(" " + Abstract.ModifyContainerLength(passedPort.GetOutputContainerName(x), 13));
+            System.out.print(" --    " + Abstract.ModifyContainerLength("" + passedPort.GetOutputContainerCount(x), 9));
+            System.out.print("    --    $" + passedPort.GetOutputContainerPrice(x) + "\n");
         }
         System.out.println("\n");
     }
