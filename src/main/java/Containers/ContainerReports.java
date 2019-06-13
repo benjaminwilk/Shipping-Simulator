@@ -4,10 +4,14 @@ import main.java.Abstract.Abstract;
 import main.java.AvailablePorts;
 import main.java.Port.Port;
 import main.java.Ship.Ship;
+import main.java.WindowManager;
 
 public class ContainerReports {
 
-    public static void DisplayGlobalContainerPrices(AvailablePorts allPorts){ // Displays container prices for all available ports.
+    WindowManager windowManager;
+
+    public void DisplayGlobalContainerPrices(AvailablePorts allPorts, WindowManager wm){ // Displays container prices for all available ports.
+        windowManager = wm;
         System.out.println(allPorts.GetSize());
         for(int q = 0; q < allPorts.GetSize(); q++){
             //if(currentPort.GetPortName(q).contains(passedCurrentPort)){
@@ -16,7 +20,7 @@ public class ContainerReports {
         }
     }
 
-    public static void ContainerTypeReadout(Port passedPort){
+    public void ContainerTypeReadout(Port passedPort){
         System.out.println("\t\t  -- " + passedPort.DisplayLocation() + " -- ");
         System.out.println("Container Type -- Container Count -- Price Per Container");
         for(int x = 0; x < ContainerTypes.getContainerSize() - 1 ; x++){

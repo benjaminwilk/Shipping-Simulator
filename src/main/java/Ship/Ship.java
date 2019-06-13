@@ -406,42 +406,42 @@ public class Ship extends Waterfaring implements BoatCalls {
     }
 
     @Override
-    public double GetCurrentLoad() {
+    public double GetCurrentLoad() { // Not implemented yet.
         return 0;
     }
 
     @Override
-    public String DisplayCurrentLoad() {
+    public String DisplayCurrentLoad() { // Not implemented yet.
         return null;
     }
 
     @Override
-    public void SetCurrentLoad(double passedCurrent) {
+    public void SetCurrentLoad(double passedCurrent) { // Not implemented yet.
 
     }
 
     @Override
-    public double GetMaxLoad() {
-        return 0;
+    public double GetMaxLoad() { // Not implemented yet.
+    return 0.0;
     }
 
     @Override
-    public String DisplayMaxLoad(){
+    public String DisplayMaxLoad(){ // Not implemented yet.
        return "Maximum Load: " + GetMaxLoad() + " tons";
     }
 
     @Override
-    public void SetMaxLoad(double passedMax) {
+    public void SetMaxLoad(double passedMax) { // Not implemented yet.
 
     }
 
     @Override
-    public String GetSize() {
+    public String GetSize() { // Not implemented yet.
         return null;
     }
 
     @Override
-    public String DisplaySize() {
+    public String DisplaySize() { // Not implemented yet.
         return null;
     }
 
@@ -485,7 +485,7 @@ public class Ship extends Waterfaring implements BoatCalls {
     }
 
     @Override
-    public String GetShortUserReadout() {
+    public String GetShortUserReadout() { // Not implemented yet.
         return null;
     }
 

@@ -8,6 +8,8 @@ import main.java.AvailablePorts;
 import main.java.Port.Port;
 import main.java.Ship.Ship;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.*;
 
@@ -29,13 +31,27 @@ public class LoadUnloadContainers{
 		this.display = displayWindow;
 		this.loadContainerPort = false;
 		int goodsChoice = 0;
+		boolean buttonPressed = false;
 		do{
 			//playerObject.GetShortUserReadout();
 			this.display.AppendUpdateTab(GoodsMenu());
-			goodsChoice = ParseGoodsMenu(Abstract.ScannerInt(), playerObject);
+			this.display.GetReturnButton().addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(!display.GetUserInputBox().toString().equals("words")){
+						System.out.print("Yeet");
+					} else {
+						System.out.print("Bool bool bool");
+					}
+				}
+			});
+		//	goodsChoice = Integer.parseInt(displayWindow.StringReturnUserInput());
+
+
+		//	ParseGoodsMenu(goodsChoice, playerObject);
 			//playerObject.IncreaseDay();
 			CrewMemberCount(playerObject);
-		}while(goodsChoice != 3);
+		}while(goodsChoice != 3 && buttonPressed == true);
 		goodsChoice = 1;
 	}
 
@@ -64,7 +80,7 @@ public class LoadUnloadContainers{
 	// 200 meter -- 20 crew
 	private boolean CrewMemberCount(Ship playerObject){
 		if(playerObject.GetSailorCount() < 2){
-			System.out.println("Notice: You have less than 2 sailors aboard.");
+			display.AppendUpdateTab("Notice: You have less than 2 sailors aboard.");
 			return false;
 		} else{
 			return true;
@@ -75,16 +91,16 @@ public class LoadUnloadContainers{
 		int containerChoice = 0;
 		MovementGraphics.ContainerGraphics();
 		do{
-			System.out.println("Load or Unload");
+			display.AppendUpdateTab("Load or Unload");
 			Abstract.RotateOptions(MenuDisplays.GetContainerMenu()); //"Check Container Prices", "Display Loaded Containers", "Load Containers", "Unload Containers", "Go Back"
-			System.out.print(": ");
+			display.AppendUpdateTab(": ");
 			containerChoice = ContainerParser(playerObject, /* ports,*/ Abstract.ScannerInt());
 		}while(containerChoice != MenuDisplays.GetContainerMenu().length);
 	}
 	
 	private int ContainerParser(Ship playerObject,/* AvailablePorts ports,*/ int userDecision){
 		Map<Integer, Runnable> loadUnloadMenu = new HashMap<>();
-		loadUnloadMenu.put(1, () -> new ContainerReports().DisplayGlobalContainerPrices(allPorts/*, ports*/)); //"Check Container Prices"
+		loadUnloadMenu.put(1, () -> new ContainerReports().DisplayGlobalContainerPrices(allPorts, display/*, ports*/)); //"Check Container Prices"
 		loadUnloadMenu.put(2, () -> playerObject.DisplayContainerSlipQuantity());//Display Loaded Containers
 		loadUnloadMenu.put(3, () -> LoadContainers(playerObject/*, ports*/)); //"Load Containers"
 		loadUnloadMenu.put(4, () -> UnloadContainers(playerObject/*, ports*/)); //"Unload Containers"
@@ -100,16 +116,16 @@ public class LoadUnloadContainers{
 	private void LoadContainers(Ship playerObject/*, AvailablePorts ports*/){ // Load containers from the port onto the ship.
 		MovementGraphics.LoadUnloadGraphics();
 		if(playerObject.IsShipFull() == true){
-			System.out.println("Your ship already has a full load!");
+			display.AppendUpdateTab("Your ship already has a full load!");
 		} else {
 			new ContainerReports().ContainerTypeReadout(currentPort);
 	//		playerObject.DisplayContainerSlipQuantity();
 		//	port.DisplayContainerReadout();
 		//	ContainersInPort(playerObject);
-			System.out.print("What type of containers would you like to load: (1,2,3... | 0 for back): ");
+			display.AppendUpdateTab("What type of containers would you like to load: (1,2,3... | 0 for back): ");
 			int loadContainerType = Abstract.ScannerInt();
 			if(loadContainerType != 0){
-				System.out.print("What quantity of containers would you like to load: ");
+				display.AppendUpdateTab("What quantity of containers would you like to load: ");
 				int containerCount = Abstract.ScannerInt();
 				if((currentPort.GetOutputContainerCount((loadContainerType - 1) - containerCount) >= 0)){
 					String containerType = ContainerTypes.getContainerTypes(loadContainerType - 1);
@@ -129,21 +145,21 @@ public class LoadUnloadContainers{
 		MovementGraphics.LoadUnloadGraphics();
 	//	System.out.println(this.loadContainerPort);
 		if(playerObject.IsShipEmpty()){
-			System.out.println("Your ship is empty. ");	
+			display.AppendUpdateTab("Your ship is empty. ");
 		} 
 		else if(this.loadContainerPort == true){
-			System.out.println("You loaded your ship in this port.  You can't unload the containers.");
+			display.AppendUpdateTab("You loaded your ship in this port.  You can't unload the containers.");
 		} else{
 	//		playerObject.DisplayContainerSlipQuantity();
 	//		ContainersInPort(playerObject);
-			System.out.print("What container set would you like to unload: ");
+			display.AppendUpdateTab("What container set would you like to unload: ");
 			int containerSet = Abstract.ScannerInt();
-			System.out.print("How many containers would you like to unload: ");
+			display.AppendUpdateTab("How many containers would you like to unload: ");
 			int unloadRequest = Abstract.ScannerInt();
 			if(unloadRequest > 0 && unloadRequest <= playerObject.GetMaxLoad()){
 	//			playerObject.DecreaseContainerSlips((containerSet - 1), unloadRequest);
 			//	playerObject.displayMoneyIncrease(containerSet, playerObject.getContainerPrice(containerSet));
-				System.out.println("\nSuccess. " + unloadRequest + " containers have been unloaded on your ship.\n");
+				display.AppendUpdateTab("\nSuccess. " + unloadRequest + " containers have been unloaded on your ship.\n");
 	//			playerObject.RemoveEmptySlip();
 			}
 

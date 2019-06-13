@@ -31,8 +31,8 @@ public class PrimaryLoop{
 
 	public void IterativeFunction(){
 		//System.out.print(this.playerObject.GetLocation());
-		displayWindow.AppendUpdateTab(this.shoreContainers = new LoadUnloadContainers(playerObject, allPorts));
-		displayWindow.AppendUpdateTab(this.move = new Movement(this.allPorts));
+		this.shoreContainers = new LoadUnloadContainers(playerObject, allPorts);
+		this.move = new Movement(this.allPorts);
 		displayWindow.OverwriteStatPanelText(this.playerObject.GetShipStatistics());
 		while(true){
 			displayWindow.UpdateDateText(this.gameBoard.GetDate());
@@ -47,7 +47,7 @@ public class PrimaryLoop{
 	public void InitializePlayer(){
 		//this.playerObject = new Boat("USS Enterprise");
 		this.playerObject = new Ship.Builder("USS Enterprise").Containers().IMO().Engine().Sailors().build();
-		displayWindow.AppendUpdateTab("Player ship created!");
+		displayWindow.AppendUpdateTab("Player ship created!" + System.lineSeparator());
 	}
 	
 /*	public void InitializePorts(){
