@@ -97,50 +97,53 @@ public class MovementGraphics{
 	}
 	
 	
-	public static void portDepartureGraphics(){
-		System.out.println("_________          |_|_|/__ /__/  /  / ");
-		System.out.println("_____   /| ~     ~ | | | | | | | /  /  ");
-		System.out.println("----/  //|    ~   /|_|_|_|_|_|_|/  /   ");
-		System.out.println(" ~ /  //||  ~   ~ \\              _/    ");
-		System.out.println("~ /  // ||   ~    \\0M0     0M0_/       ");
-		System.out.println("_/  //| || ~    ~ |\\    ____/o      `~ ");
-		System.out.println(" _ //~| ||___      \\\\__/  o        `~ ");
-		System.out.println("| |/  | ||   /|  ~   \\|     /   / ~`~   ");
-		System.out.println("| ||  |_|/  /|        |  __/    /`~   ~  ");
-		System.out.println("| ||       /|     ~   |        /~`  ~    ");
-		System.out.println("| ||      /|  ~     `~/      ~`~`      ~ ");
-		System.out.println("| ||     /| ~      `~/  / ~`~`     ~     ");
-		System.out.println("|_|/    /|     ~ `~`|~`/`~`~     ~      ~");
-		System.out.println("       /| ~        `~`~`~`     ~    ~    ");
-		System.out.println("_____ /|     ~  ~   `~`~`   ~         ~  ");
+	public static String portDepartureGraphics(){
+		return "_________          |_|_|/__ /__/  /  / " + System.lineSeparator()
+				+ "_____   /| ~     ~ | | | | | | | /  /  " + System.lineSeparator()
+				+ "----/  //|    ~   /|_|_|_|_|_|_|/  /   " + System.lineSeparator()
+				+ " ~ /  //||  ~   ~ \\              _/    " + System.lineSeparator()
+				+ "~ /  // ||   ~    \\0M0     0M0_/       " + System.lineSeparator()
+				+ "_/  //| || ~    ~ |\\    ____/o      `~ " + System.lineSeparator()
+				+ " _ //~| ||___      \\\\__/  o        `~ " + System.lineSeparator()
+				+ "| |/  | ||   /|  ~   \\|     /   / ~`~   " + System.lineSeparator()
+				+ "| ||  |_|/  /|        |  __/    /`~   ~  " + System.lineSeparator()
+				+ "| ||       /|     ~   |        /~`  ~    " + System.lineSeparator()
+				+ "| ||      /|  ~     `~/      ~`~`      ~ " + System.lineSeparator()
+				+ "| ||     /| ~      `~/  / ~`~`     ~     " + System.lineSeparator()
+				+ "|_|/    /|     ~ `~`|~`/`~`~     ~      ~" + System.lineSeparator()
+				+ "       /| ~        `~`~`~`     ~    ~    " + System.lineSeparator()
+				+ "_____ /|     ~  ~   `~`~`   ~         ~  " + System.lineSeparator()
+				+ System.lineSeparator();
 	}
 	
-	public static void ContainerGraphics(){
-		System.out.println("     ______ ");
-		System.out.println("    /     /|");
-		System.out.println("   /     /#|");
-		System.out.println("  /     /##|_____");
-		System.out.println(" /     /###/####/|");
-		System.out.println("/_____/ ##/####/#|");
-		System.out.println("|  |  | #/### /##|");
-		System.out.println("|  |  |#/##  / ##/");
-		System.out.println("|__|__|/____/ ##/");
-		System.out.println("|  |  |  |  | #/");
-		System.out.println("|  |  |  |  | /");
-		System.out.println("|__|__|__|__|/\n");
+	public static String ContainerGraphics(){
+		return "     ______ " + System.lineSeparator()
+				+ "    /     /|" + System.lineSeparator()
+				+ "   /     /#|" + System.lineSeparator()
+				+ "  /     /##|_____" + System.lineSeparator()
+				+ " /     /###/####/|" + System.lineSeparator()
+				+ "/_____/ ##/####/#|" + System.lineSeparator()
+				+ "|  |  | #/### /##|" + System.lineSeparator()
+				+ "|  |  |#/##  / ##/" + System.lineSeparator()
+				+ "|__|__|/____/ ##/" + System.lineSeparator()
+				+ "|  |  |  |  | #/" + System.lineSeparator()
+				+ "|  |  |  |  | /"+ System.lineSeparator()
+				+ "|__|__|__|__|/"+ System.lineSeparator()
+				+ System.lineSeparator();
 	}
 	
-	public static void MoneyGraphics(){
-		System.out.println("      _________ ");
-		System.out.println("     /        /|");
-		System.out.println("    /        / |");
-		System.out.println("  _|--------|  |");
-		System.out.println(" //8 ------ |  |");
-		System.out.println("// ||&&&&&&||  |");
-		System.out.println("|| ||&&&&&&||  |");
-		System.out.println("|| 8|______|| /");
-		System.out.println("|| /|_______|/");
-		System.out.println("||/ ");
+	public static String MoneyGraphics(){
+		return "      _________ " + System.lineSeparator()
+				+ "     /        /|" + System.lineSeparator()
+				+ "    /        / |" + System.lineSeparator()
+				+ "  _|--------|  |" + System.lineSeparator()
+				+ " //8 ------ |  |" + System.lineSeparator()
+				+ "// ||&&&&&&||  |" + System.lineSeparator()
+				+ "|| ||&&&&&&||  |" + System.lineSeparator()
+				+ "|| 8|______|| /" + System.lineSeparator()
+				+ "|| /|_______|/" + System.lineSeparator()
+				+ "||/ " + System.lineSeparator()
+				+ System.lineSeparator();
 	}
 	
 	public static void LoadUnloadGraphics(){

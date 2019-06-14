@@ -1,5 +1,6 @@
 package main.java.Containers;
 
+import javafx.beans.WeakInvalidationListener;
 import main.java.Abstract.Abstract;
 import main.java.AvailablePorts;
 import main.java.Port.Port;
@@ -21,25 +22,25 @@ public class ContainerReports {
     }
 
     public void ContainerTypeReadout(Port passedPort){
-        System.out.println("\t\t  -- " + passedPort.DisplayLocation() + " -- ");
-        System.out.println("Container Type -- Container Count -- Price Per Container");
+        windowManager.AppendUpdateTab("\t\t  -- " + passedPort.DisplayLocation() + " -- ");
+        windowManager.AppendUpdateTab("Container Type -- Container Count -- Price Per Container");
         for(int x = 0; x < ContainerTypes.getContainerSize() - 1 ; x++){
-            System.out.print(" " + Abstract.ModifyContainerLength(passedPort.GetOutputContainerName(x), 13));
-            System.out.print(" --    " + Abstract.ModifyContainerLength("" + passedPort.GetOutputContainerCount(x), 9));
-            System.out.print("    --    $" + passedPort.GetOutputContainerPrice(x) + "\n");
+            windowManager.AppendUpdateTab(" " + Abstract.ModifyContainerLength(passedPort.GetOutputContainerName(x), 13));
+            windowManager.AppendUpdateTab(" --    " + Abstract.ModifyContainerLength("" + passedPort.GetOutputContainerCount(x), 9));
+            windowManager.AppendUpdateTab("    --    $" + passedPort.GetOutputContainerPrice(x) + "\n");
         }
-        System.out.println("\n");
+        windowManager.AppendUpdateTab(System.lineSeparator());
     }
 
     public void ExamineContainers(Ship playerObject, AvailablePorts allPorts){ // Displays a simple description of each type of container.
         Port currentPort = Abstract.ReturnCurrentPort(playerObject, allPorts);
         String[] examineContainerDescription = {"Standard containers are the most known 40' containers.  In a variety of colors, and condition, these containers are easily moved on ships, trains and trucks.  These are carry a wide variety of items; tee shirts, to pots and pans, and everything in between.", "Volatile containers have similar dimensions as standard containers, but these containers are usually used to move chemicals and compounds that require a bit more care than standard containers.  ", "Vehicle containers are relatively self explanitory; this is a method of loading vehicles into containers and moving them across the ocean via cargo ship.", "Refrigeration containers are slightly larger than standard containers, but these require special equipment to keep the contents chilled.", "Oil bulk is moved", "grain bulk", "gravel bulk", "chemical bulk" };
-        System.out.println("What containers would you like to examine: ");
+        windowManager.AppendUpdateTab("What containers would you like to examine: ");
         Abstract.RotateOptions(ContainerTypes.getAllContainerTypes());
         int examineChoice = Abstract.ScannerInt();
         System.out.println(examineContainerDescription[examineChoice - 1]);
         Abstract.PressAnyKey();
-        System.out.println("\nPrice of the container in your available ports: ");
+        windowManager.AppendUpdateTab("\nPrice of the container in your available ports: ");
       // for(int i = 0; i < .GetPortCount(); i++){
             System.out.println(currentPort.DisplayLocation()/*.GetPortName(i) */+ " -- " + currentPort.GetOutputContainerName(examineChoice) + currentPort.GetOutputContainerPrice(examineChoice));
         //}

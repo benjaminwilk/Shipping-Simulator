@@ -8,6 +8,7 @@ import main.java.AvailablePorts;
 import main.java.Port.Port;
 import main.java.Ship.Ship;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -18,6 +19,10 @@ public class LoadUnloadContainers{
     Port currentPort;
     AvailablePorts allPorts;
     WindowManager display;
+
+	int goodsChoice = 0;
+	boolean buttonPressed = false;
+
 
     public LoadUnloadContainers(Ship playerObject, AvailablePorts passedAllPorts){
         currentPort = Abstract.ReturnCurrentPort(playerObject, passedAllPorts);
@@ -30,29 +35,40 @@ public class LoadUnloadContainers{
 	public void Iteration(Ship playerObject, WindowManager displayWindow){
 		this.display = displayWindow;
 		this.loadContainerPort = false;
-		int goodsChoice = 0;
-		boolean buttonPressed = false;
-		do{
-			//playerObject.GetShortUserReadout();
+		do {
 			this.display.AppendUpdateTab(GoodsMenu());
-			this.display.GetReturnButton().addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(!display.GetUserInputBox().toString().equals("words")){
-						System.out.print("Yeet");
-					} else {
-						System.out.print("Bool bool bool");
+			this.display.AppendUpdateTab("Your choice: ");
+			do {
+				JButton buttonReader = this.display.GetReturnButton();
+				buttonReader.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						SubmitAction();
+						ButtonPress();
+						display.GetUserInputBox().setText("");
 					}
-				}
-			});
-		//	goodsChoice = Integer.parseInt(displayWindow.StringReturnUserInput());
+				});
+			} while (goodsChoice != 1 || goodsChoice != 2 || goodsChoice != 3 && buttonPressed != true);
+		}while(buttonPressed != true);
+		System.out.println("Button Pressed: " + buttonPressed);
+		System.out.println("Goods Choice: " + goodsChoice);
+		ParseGoodsMenu(goodsChoice, playerObject);
+		System.out.println("Correct Choice");
+	}
 
+	private void ButtonDepress(){
+		buttonPressed = false;
+	}
 
-		//	ParseGoodsMenu(goodsChoice, playerObject);
-			//playerObject.IncreaseDay();
-			CrewMemberCount(playerObject);
-		}while(goodsChoice != 3 && buttonPressed == true);
-		goodsChoice = 1;
+	private void ButtonPress(){
+		buttonPressed = true;
+	}
+
+	private void SubmitAction() {
+		display.AppendUpdateTab(this.display.GetUserInput());
+		goodsChoice = Integer.parseInt(this.display.GetUserInput());
+	//	display.GetUserInputBox().setText("");
+		//System.out.println(userWord);//do whatever you want with the variable, I just printed it to the console
 	}
 
 	private String GoodsMenu(){
@@ -66,6 +82,7 @@ public class LoadUnloadContainers{
 	}
 
 	private int ParseGoodsMenu(int userInputGoodsMenuDecision, Ship playerObject){
+		System.out.println("yeet test");
 		Map<Integer, Runnable> goodsMenu = new HashMap<>();
 		goodsMenu.put(1, () -> ContainerMenu(playerObject));//"Load / Unload Containers"
 		goodsMenu.put(2, () -> new ShoreSide(playerObject, allPorts));//"Step Ashore"
@@ -88,16 +105,25 @@ public class LoadUnloadContainers{
 	}
 	
 	private void ContainerMenu(Ship playerObject){//, AvailablePorts ports){
+		System.out.println("yeet test");
 		int containerChoice = 0;
-		MovementGraphics.ContainerGraphics();
+		display.AppendUpdateTab(MovementGraphics.ContainerGraphics());
 		do{
-			display.AppendUpdateTab("Load or Unload");
-			Abstract.RotateOptions(MenuDisplays.GetContainerMenu()); //"Check Container Prices", "Display Loaded Containers", "Load Containers", "Unload Containers", "Go Back"
+			display.AppendUpdateTab("Load or Unload" + System.lineSeparator());
+			display.AppendUpdateTab(DisplayContainerMenu());		//Abstract.RotateOptions(MenuDisplays.GetContainerMenu()); //"Check Container Prices", "Display Loaded Containers", "Load Containers", "Unload Containers", "Go Back"
 			display.AppendUpdateTab(": ");
 			containerChoice = ContainerParser(playerObject, /* ports,*/ Abstract.ScannerInt());
 		}while(containerChoice != MenuDisplays.GetContainerMenu().length);
 	}
-	
+
+	private String DisplayContainerMenu(){
+		StringBuilder dcm = new StringBuilder();
+		for(int iterativeCount = 0; iterativeCount < MenuDisplays.GetContainerMenu().length; iterativeCount++) {
+			dcm.append((iterativeCount + 1) + ". " + MenuDisplays.GetContainerMenu()[iterativeCount] + System.lineSeparator());
+		}
+		return dcm.toString();
+	}
+
 	private int ContainerParser(Ship playerObject,/* AvailablePorts ports,*/ int userDecision){
 		Map<Integer, Runnable> loadUnloadMenu = new HashMap<>();
 		loadUnloadMenu.put(1, () -> new ContainerReports().DisplayGlobalContainerPrices(allPorts, display/*, ports*/)); //"Check Container Prices"

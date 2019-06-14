@@ -34,14 +34,14 @@ public class PrimaryLoop{
 		this.shoreContainers = new LoadUnloadContainers(playerObject, allPorts);
 		this.move = new Movement(this.allPorts);
 		displayWindow.OverwriteStatPanelText(this.playerObject.GetShipStatistics());
-		while(true){
+	//	while(true){
 			displayWindow.UpdateDateText(this.gameBoard.GetDate());
 			displayWindow.AppendArrayToMap(this.gameBoard.gameboard);
 			this.shoreContainers.Iteration(this.playerObject, displayWindow);
-			this.move.currentLocationAndDestination(this.playerObject, displayWindow);
+		//	this.move.currentLocationAndDestination(this.playerObject, displayWindow);
 			//this.portDecision.iteration(this.playerObject);
-			this.move.iteration(this.playerObject); // , portDecision*/);
-		}	
+		//	this.move.iteration(this.playerObject); // , portDecision*/);
+	//	}
 	}
 		
 	public void InitializePlayer(){

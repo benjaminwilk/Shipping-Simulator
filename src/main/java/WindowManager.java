@@ -15,6 +15,7 @@ public class WindowManager{
     JPanel mapPanel;
 
     JTextField userInputBox;
+    JScrollPane scrollUpdate;
 
     JTextArea dateLocation;
     JTextArea statPanel;
@@ -69,13 +70,14 @@ public class WindowManager{
         JTabbedPane rightTabbedPane = new JTabbedPane();
         updatePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         mapPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        updateTextArea = new JTextArea("Update text area");
+        updateTextArea = new JTextArea("Update text area", 23, 44);
         mapTextArea = new JTextArea("Map text area");
-        updateTextArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        mapTextArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        //updateTextArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        //mapTextArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        scrollUpdate = new JScrollPane(updateTextArea);
         updateTextArea.setEditable(false);
         mapTextArea.setEditable(false);
-        updatePanel.add(updateTextArea);
+        updatePanel.add(scrollUpdate);
         mapPanel.add(mapTextArea);
         //mapPanel.add(mapArea);
 
@@ -205,5 +207,14 @@ public class WindowManager{
     public JTextField GetUserInputBox(){
         return this.userInputBox;
     }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == sendCommand) {
+            System.out.println("message....");
+//          System.exit(0);
+         //   frame.dispose(); // better than exit
+        }
+    }
+
 
 }
