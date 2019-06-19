@@ -1,22 +1,53 @@
 package main.java.Sailor;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import main.java.AvailablePorts;
+import main.java.MenuDisplays;
 import main.java.Player.*;
 import main.java.Abstract.*;
 import main.java.Port.Port;
 import main.java.Ship.Ship;
+import main.java.WindowManager;
+
+import javax.swing.*;
 
 public class SailorMenu{
 	ArrayList<Sailor> SailorsAboard = new ArrayList<Sailor>();
 	boolean generatorStatus = false;
 	Port currentPort;
+	WindowManager windowManager;
 
-	public SailorMenu(Ship playerObject, AvailablePorts allPorts){
+	String hireChoice = "";
+	boolean textReceived = false;
+
+	public SailorMenu(Ship playerObject, AvailablePorts allPorts, WindowManager display){
+		this.windowManager = display;
 		this.currentPort = Abstract.ReturnCurrentPort(playerObject, allPorts);
-		copyMembersFromPlayer(playerObject);
-		hireOrFire(playerObject);
+
+
+		JTextField jtf = display.GetUserInputBox();
+		jtf.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				textReceived = true;
+				synchronized (jtf) {
+					// notify game loop thread which is waiting on this event
+					jtf.notifyAll();
+				}
+			}
+		});
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				copyMembersFromPlayer(playerObject);
+				hireOrFire(playerObject);
+			}
+
+		}).start();
+
 	}
 	
 	private void copyMembersFromPlayer(Ship playerObject){
@@ -30,18 +61,18 @@ public class SailorMenu{
 	}
 	
 	private void displayPlayerSailors(Ship playerObject){
-		System.out.println("----- Your Hired Sailors -----");
+		windowManager.AppendUpdateTab("----- Your Hired Sailors -----");
 		if(playerObject.AnySailors()){
 			for(int x = 0; x < getSailorCount(); x++){
 				playerObject.GetSailor(x).DisplaySailorVitals();// .DisplaySailorVitals(this.SailorsAboard.get(x));
-				System.out.println("Time in Contract: ");
+				windowManager.AppendUpdateTab("Time in Contract: ");
 				for(int i = 0; i < new Skillset().getSkillSize(); i++){
-					System.out.println(this.SailorsAboard.get(x).GetSkillTitle(i) + ": " + this.SailorsAboard.get(x).GetSkill(i) );
+					windowManager.AppendUpdateTab(this.SailorsAboard.get(x).GetSkillTitle(i) + ": " + this.SailorsAboard.get(x).GetSkill(i) );
 				}
 			}
 			System.out.println();
 		} else {
-			System.out.println("\nYou don't have any crewmembers!\n");
+			windowManager.AppendUpdateTab("\nYou don't have any crewmembers!\n");
 		}
 	}
 	
@@ -49,9 +80,22 @@ public class SailorMenu{
 		return this.SailorsAboard.size();
 	}
 
+
+	private void SubmitAction() {
+		windowManager.AppendUpdateTab(this.windowManager.GetUserInput());
+		hireChoice = this.windowManager.GetUserInput();
+		//	display.GetUserInputBox().setText("");
+		//System.out.println(userWord);//do whatever you want with the variable, I just printed it to the console
+	}
+
+
 	private void hireOrFire(Ship playerObject) {
-		System.out.print("Are you looking to add sailors, or make changes to your current roster(Hire/fire/examine/totals/Back): ");
-		String hireChoice = Abstract.ScannerString();
+		String userInput = "";
+		do {
+			windowManager.AppendUpdateTab(System.lineSeparator() + "Are you looking to add sailors, or make " + System.lineSeparator() + "changes to your current roster(Hire/fire/examine/totals/Back): ");
+				userInput = requestInput();
+				windowManager.AppendUpdateTab(userInput);
+		} while (hireChoice.equalsIgnoreCase("Hire") || hireChoice.equalsIgnoreCase("h") || hireChoice.equalsIgnoreCase("1") || hireChoice.equalsIgnoreCase("examine") || hireChoice.equalsIgnoreCase("e") || hireChoice.equalsIgnoreCase("3") );
 		if (hireChoice.equalsIgnoreCase("Hire") || hireChoice.equalsIgnoreCase("h") || hireChoice.equalsIgnoreCase("1")) {
 			hireSailor(playerObject);
 		}
@@ -59,17 +103,30 @@ public class SailorMenu{
 			examineSailor(playerObject);
 		}
 	}
-	/*	if(hireChoice.equalsIgnoreCase("total") || hireChoice.equalsIgnoreCase("t") || hireChoice.equalsIgnoreCase("4")){
-			playerObject.recalculateLevels();
-			playerObject.DisplayTotals();
+
+
+	private String requestInput() {
+		JTextField textField = windowManager.GetUserInputBox();
+		textField.setEnabled(true);
+		textField.requestFocus();
+		// wait on text field till UI thread signals a user input event
+		synchronized (textField) {
+			while (!textReceived) {
+				try {
+					textField.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		if(hireChoice.equalsIgnoreCase("fire") || hireChoice.equalsIgnoreCase("f") || hireChoice.equalsIgnoreCase("2")){
-			fireSailor(playerObject);
-		}
-		playerObject.recalculateLevels();
-		playerObject.increaseDay();
-	}*/
-	
+		String input = textField.getText();
+		textField.setText("");
+		textField.setEnabled(false);
+		textReceived = false;
+		return input;
+	}
+
+
 	private void fireSailor(Ship playerObject){
 		displayPlayerSailors(playerObject);
 		fireDecision(playerObject);
@@ -77,21 +134,21 @@ public class SailorMenu{
 	
 	private void examineSailor(Ship playerObject){
 		if(playerObject.GetSailorCount() != 0){
-			System.out.println("\n----- Your Hired Sailors -----");
+			windowManager.AppendUpdateTab("\n----- Your Hired Sailors -----");
 			for(int i = 0; i < playerObject.GetSailorCount(); i++){
-				System.out.println( (i+1) + ". " + playerObject.GetSailor(i).DisplayName());
+				windowManager.AppendUpdateTab( (i+1) + ". " + playerObject.GetSailor(i).DisplayName());
 			}
-			System.out.print("Which sailors would you like to examine?(1,2,3 | 0 to go back): ");
+			windowManager.AppendUpdateTab("Which sailors would you like to examine?(1,2,3 | 0 to go back): ");
 			int sailorExaminer = Abstract.ScannerInt();
-			System.out.println();
+			windowManager.AppendUpdateTab(System.lineSeparator());
 			for(int i = 0; i < playerObject.GetSailorCount(); i++){
-				System.out.println((i + 1) + ". " + playerObject.GetSailor(i));
+				windowManager.AppendUpdateTab((i + 1) + ". " + playerObject.GetSailor(i));
 			}
 			//playerObject.DisplaySailorVitals();//playerObject.GetSailor(sailorExaminer - 1));
 			playerObject.GetSailor(sailorExaminer - 1).DisplaySkills();
-			Abstract.PressAnyKey();
+			//Abstract.PressAnyKey();
 		} else {
-			System.out.println("Failure.  You don't have any sailors.");
+			windowManager.AppendUpdateTab("Failure.  You don't have any sailors.");
 		}
 	}
 	
@@ -103,7 +160,7 @@ public class SailorMenu{
 	
 	private void fireDecision(Ship playerObject){ // Function that goes through to fire a sailor you have hired.
 		if(playerObject.GetSailorCount() > 0){
-			System.out.print("Choose which employee to let go (1,2,3... | 0 to quit): ");
+			windowManager.AppendUpdateTab("Choose which employee to let go (1,2,3... | 0 to quit): ");
 			int fireChoice = Abstract.ScannerInt(); // User input for which employee to fire.
 			if(fireChoice != 0) { 
 				displayFiredSailor(playerObject);
@@ -112,20 +169,20 @@ public class SailorMenu{
 				;
 			}
 		} else {
-			System.out.println("\nFailure.  You don't have any sailors to fire.\n");
+			windowManager.AppendUpdateTab("\nFailure.  You don't have any sailors to fire.\n");
 		}
 	}
 	
 	public void displayFiredSailor(Ship playerObject){ // A simple message that a sailor has been fired.
-		System.out.println("\nYou have let go " + playerObject.GetSailor(playerObject.GetSailorCount() - 1).GetName() + ". \n");
+		windowManager.AppendUpdateTab("\nYou have let go " + playerObject.GetSailor(playerObject.GetSailorCount() - 1).GetName() + ". \n");
 	}
 	
 	public void displayNewSailor(Ship playerObject){ // A simple message that states that a sailor has been hired.
-		System.out.println("\nYou have hired " + playerObject.GetSailor(playerObject.GetSailorCount() - 1).GetName() + ". \n");
+		windowManager.AppendUpdateTab("\nYou have hired " + playerObject.GetSailor(playerObject.GetSailorCount() - 1).GetName() + ". \n");
 	}
 	
 	private void hireCrewDecision(Ship playerObject){
-		System.out.print("Which sailors would you like to hire?(1,2,3 | 0 to go back): ");
+		windowManager.AppendUpdateTab("Which sailors would you like to hire?(1,2,3 | 0 to go back): ");
 		int sailorChoice = Abstract.ScannerInt();
 		if(sailorChoice != 0){
 			playerObject.AddSailor(currentPort.GetSailor(sailorChoice - 1)); // This line adds the sailor to the player sailor array.

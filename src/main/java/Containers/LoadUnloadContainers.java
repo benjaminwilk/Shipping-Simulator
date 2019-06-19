@@ -1,5 +1,6 @@
 package main.java.Containers;
 
+import com.sun.javaws.WinOperaSupport;
 import main.java.*;
 import main.java.Graphics.MovementGraphics;
 import main.java.Player.*;
@@ -9,84 +10,106 @@ import main.java.Port.Port;
 import main.java.Ship.Ship;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.*;
 
-public class LoadUnloadContainers{
+public class LoadUnloadContainers {
 
-    Port currentPort;
-    AvailablePorts allPorts;
-    WindowManager display;
+	WindowManager display;
+	GameMap userMap;
 
-	int goodsChoice = 0;
-	boolean buttonPressed = false;
+	boolean textReceived = false;
+	boolean ExitCode = false;
+//	String value = "";
+	AvailablePorts allPorts;
 
+	boolean loadedContainersHere = false;
 
-    public LoadUnloadContainers(Ship playerObject, AvailablePorts passedAllPorts){
-        currentPort = Abstract.ReturnCurrentPort(playerObject, passedAllPorts);
-        this.allPorts = passedAllPorts;
-    }
+	public LoadUnloadContainers(Ship playerObject, AvailablePorts passedAllPorts, GameMap gameMap, WindowManager wm) {
+		InitializeWindowManager(wm);
+		userMap = gameMap;
+		allPorts = passedAllPorts;
+		JTextField jtf = display.GetUserInputBox();
+		jtf.addActionListener(new ActionListener() {
+			@Override
+			// user pressed 'enter' key,
+			public void actionPerformed(ActionEvent e) {
+				textReceived = true;
+				synchronized (jtf) {
+					// notify game loop thread which is waiting on this event
+					jtf.notifyAll();
+				}
+			}
+		});
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				do {
+					DisplayMainMenu(playerObject);
+					System.out.println("Yeet");
+				}while(ExitCode == false);
+			}
 
-	private int containerPaymentPercentage = 10;
-	private boolean loadContainerPort; 
-	
-	public void Iteration(Ship playerObject, WindowManager displayWindow){
-		this.display = displayWindow;
-		this.loadContainerPort = false;
+		}).start();
+	}
+
+	public void DisplayMainMenu(Ship playerObject) {
+		int userInput = 0;
 		do {
-			this.display.AppendUpdateTab(GoodsMenu());
+			this.display.AppendUpdateTab(System.lineSeparator() + GoodsMenu(MenuDisplays.GetGoodsMenu()));
 			this.display.AppendUpdateTab("Your choice: ");
-			do {
-				JButton buttonReader = this.display.GetReturnButton();
-				buttonReader.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						SubmitAction();
-						ButtonPress();
-						display.GetUserInputBox().setText("");
-					}
-				});
-			} while (goodsChoice != 1 || goodsChoice != 2 || goodsChoice != 3 && buttonPressed != true);
-		}while(buttonPressed != true);
-		System.out.println("Button Pressed: " + buttonPressed);
-		System.out.println("Goods Choice: " + goodsChoice);
-		ParseGoodsMenu(goodsChoice, playerObject);
-		System.out.println("Correct Choice");
+			userInput = Integer.parseInt(requestInput());
+			this.display.AppendUpdateTab(userInput);
+		} while (userInput != 1 && userInput != 2 && userInput != 3);
+		ParseGoodsMenu(userInput, playerObject);
 	}
 
-	private void ButtonDepress(){
-		buttonPressed = false;
+	private void InitializeWindowManager(WindowManager wm) {
+		this.display = wm;
 	}
 
-	private void ButtonPress(){
-		buttonPressed = true;
-	}
-
-	private void SubmitAction() {
-		display.AppendUpdateTab(this.display.GetUserInput());
-		goodsChoice = Integer.parseInt(this.display.GetUserInput());
-	//	display.GetUserInputBox().setText("");
-		//System.out.println(userWord);//do whatever you want with the variable, I just printed it to the console
-	}
-
-	private String GoodsMenu(){
+	private String GoodsMenu(String[] menuDisplay) {
 		StringBuilder goodsMenuDisplay = new StringBuilder();
-		for(int iterativeCount = 0; iterativeCount < MenuDisplays.GetGoodsMenu().length; iterativeCount++){
-			goodsMenuDisplay.append((iterativeCount + 1) +  ". " + MenuDisplays.GetGoodsMenuItem(iterativeCount) + System.lineSeparator());
+		for (int iterativeCount = 0; iterativeCount < menuDisplay.length; iterativeCount++) {
+			goodsMenuDisplay.append((iterativeCount + 1) + ". " + menuDisplay[iterativeCount] + System.lineSeparator());
 		}
 		return goodsMenuDisplay.toString();
-		//display.AppendUpdateTab(Abstract.RotateOptions(MenuDisplays.GetGoodsMenu())); //"Load / Unload Containers", "Step Ashore" ,"Depart Port"
-		//System.out.print(": ");
+	}
+
+	private String requestInput() {
+		JTextField textField = display.GetUserInputBox();
+		textField.setEnabled(true);
+		textField.requestFocus();
+		// wait on text field till UI thread signals a user input event
+		synchronized (textField) {
+			while (!textReceived) {
+				try {
+					textField.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		String input = textField.getText();
+		textField.setText("");
+		textField.setEnabled(false);
+		textReceived = false;
+		return input;
 	}
 
 	private int ParseGoodsMenu(int userInputGoodsMenuDecision, Ship playerObject){
-		System.out.println("yeet test");
 		Map<Integer, Runnable> goodsMenu = new HashMap<>();
 		goodsMenu.put(1, () -> ContainerMenu(playerObject));//"Load / Unload Containers"
-		goodsMenu.put(2, () -> new ShoreSide(playerObject, allPorts));//"Step Ashore"
+		goodsMenu.put(2, () -> new ShoreSide(playerObject, allPorts, display));//"Step Ashore"
 		//goodsMenu.put(3, () -> return 3); //,"Depart Port"
+		if(userInputGoodsMenuDecision == 3){
+			ExitCode = true;
+		}
 		if(userInputGoodsMenuDecision == 2 || userInputGoodsMenuDecision == 1){
 			goodsMenu.get(userInputGoodsMenuDecision).run();
 		}
@@ -95,7 +118,7 @@ public class LoadUnloadContainers{
 
 	// 130 - 150 meter -- 12 crew 
 	// 200 meter -- 20 crew
-	private boolean CrewMemberCount(Ship playerObject){
+/*	private boolean CrewMemberCount(Ship playerObject){
 		if(playerObject.GetSailorCount() < 2){
 			display.AppendUpdateTab("Notice: You have less than 2 sailors aboard.");
 			return false;
@@ -103,45 +126,50 @@ public class LoadUnloadContainers{
 			return true;
 		}
 	}
+
+	private void SubmitContainerAction() {
+		display.AppendUpdateTab(this.display.GetUserInput());
+		containerAction = this.display.GetUserInput();
+		//	display.GetUserInputBox().setText("");
+		//System.out.println(userWord);//do whatever you want with the variable, I just printed it to the console
+	}*/
 	
-	private void ContainerMenu(Ship playerObject){//, AvailablePorts ports){
-		System.out.println("yeet test");
-		int containerChoice = 0;
-		display.AppendUpdateTab(MovementGraphics.ContainerGraphics());
-		do{
-			display.AppendUpdateTab("Load or Unload" + System.lineSeparator());
-			display.AppendUpdateTab(DisplayContainerMenu());		//Abstract.RotateOptions(MenuDisplays.GetContainerMenu()); //"Check Container Prices", "Display Loaded Containers", "Load Containers", "Unload Containers", "Go Back"
+	private void ContainerMenu(Ship playerObject) {//, AvailablePorts ports){
+
+		int userInput = 0;
+		do {
+			display.AppendUpdateTab(System.lineSeparator() + "Load or Unload" + System.lineSeparator());
+			display.AppendUpdateTab(GoodsMenu(MenuDisplays.GetContainerMenu()));
 			display.AppendUpdateTab(": ");
-			containerChoice = ContainerParser(playerObject, /* ports,*/ Abstract.ScannerInt());
-		}while(containerChoice != MenuDisplays.GetContainerMenu().length);
+			userInput = Integer.parseInt(requestInput());
+			this.display.AppendUpdateTab(userInput);
+		} while (userInput != 1 && userInput != 2 && userInput != 3 && userInput != 4 && userInput != 5 && userInput != 6);
+		ContainerParser(userInput, playerObject, allPorts);
 	}
 
-	private String DisplayContainerMenu(){
-		StringBuilder dcm = new StringBuilder();
-		for(int iterativeCount = 0; iterativeCount < MenuDisplays.GetContainerMenu().length; iterativeCount++) {
-			dcm.append((iterativeCount + 1) + ". " + MenuDisplays.GetContainerMenu()[iterativeCount] + System.lineSeparator());
-		}
-		return dcm.toString();
-	}
-
-	private int ContainerParser(Ship playerObject,/* AvailablePorts ports,*/ int userDecision){
+	private int ContainerParser(int userDecision, Ship playerObject, AvailablePorts ports){
+		System.out.println("Container Parser");
 		Map<Integer, Runnable> loadUnloadMenu = new HashMap<>();
-		loadUnloadMenu.put(1, () -> new ContainerReports().DisplayGlobalContainerPrices(allPorts, display/*, ports*/)); //"Check Container Prices"
-		loadUnloadMenu.put(2, () -> playerObject.DisplayContainerSlipQuantity());//Display Loaded Containers
-		loadUnloadMenu.put(3, () -> LoadContainers(playerObject/*, ports*/)); //"Load Containers"
-		loadUnloadMenu.put(4, () -> UnloadContainers(playerObject/*, ports*/)); //"Unload Containers"
+		System.out.println("user Decision:" + userDecision);
+		loadUnloadMenu.put(1, () -> new ContainerReports().DisplayGlobalContainerPrices(allPorts, display));  //"Check Container Prices"
+		loadUnloadMenu.put(2, () -> display.AppendUpdateTab(playerObject.DisplayContainerSlipQuantity()));//Display Loaded Containers
+		loadUnloadMenu.put(3, () -> LoadContainers(playerObject, ports)); //"Load Containers"
+		loadUnloadMenu.put(4, () -> UnloadContainers(playerObject, ports)); //"Unload Containers"
 		loadUnloadMenu.put(5, () -> new ContainerReports().ExamineContainers(playerObject, allPorts)); //"Examine Containers"
-		
-		if(userDecision >= 1 && userDecision <= 5){
+		loadUnloadMenu.put(6, () -> DisplayMainMenu(playerObject)); //"Examine Containers"
+		if(userDecision >= 1 && userDecision <= 6){
+			System.out.println("Inside the Container Parser");
+
 			loadUnloadMenu.get(userDecision).run();
 		}
 		return userDecision;
 	}
 	
 
-	private void LoadContainers(Ship playerObject/*, AvailablePorts ports*/){ // Load containers from the port onto the ship.
+	private void LoadContainers(Ship playerObject, AvailablePorts ports){ // Load containers from the port onto the ship.
 		MovementGraphics.LoadUnloadGraphics();
-		if(playerObject.IsShipFull() == true){
+		Port currentPort = ports.GetPort(playerObject.GetLocation());
+		if(playerObject.IsShipFull()){
 			display.AppendUpdateTab("Your ship already has a full load!");
 		} else {
 			new ContainerReports().ContainerTypeReadout(currentPort);
@@ -161,36 +189,41 @@ public class LoadUnloadContainers{
 		//			playerObject.CheckContainerSlips(playerObject.GetLocation(), containerType, containerCount, ports.getContainerPrice(playerObject.GetLocation(), containerType));
 					System.out.println("\nSuccess. " + containerCount + " containers have been loaded on your ship.\n");
 				}
-				this.loadContainerPort = true;
+				this.loadedContainersHere = true;
 			}
 		}
 	//	playerObject.IncreaseDay(playerObject);
 	}
-	
-	private void UnloadContainers(Ship playerObject/*, AvailablePorts ports*/){ // Unload containers that are currently onboard the ship.
+
+	private boolean AreContainersLoadedHere(){
+		return this.loadedContainersHere;
+	}
+
+	private void UnloadContainers(Ship playerObject, AvailablePorts ports){ // Unload containers that are currently onboard the ship.
 		MovementGraphics.LoadUnloadGraphics();
-	//	System.out.println(this.loadContainerPort);
+		display.AppendUpdateTab(playerObject.GetLocation());// );println(this.loadContainerPort);
 		if(playerObject.IsShipEmpty()){
 			display.AppendUpdateTab("Your ship is empty. ");
-		} 
-		else if(this.loadContainerPort == true){
+		}
+		else if(AreContainersLoadedHere()){
 			display.AppendUpdateTab("You loaded your ship in this port.  You can't unload the containers.");
 		} else{
-	//		playerObject.DisplayContainerSlipQuantity();
-	//		ContainersInPort(playerObject);
+			playerObject.DisplayContainerSlipQuantity();
+			//ContainersInPort(playerObject);
 			display.AppendUpdateTab("What container set would you like to unload: ");
 			int containerSet = Abstract.ScannerInt();
 			display.AppendUpdateTab("How many containers would you like to unload: ");
 			int unloadRequest = Abstract.ScannerInt();
 			if(unloadRequest > 0 && unloadRequest <= playerObject.GetMaxLoad()){
-	//			playerObject.DecreaseContainerSlips((containerSet - 1), unloadRequest);
+			//	playerObject.DecreaseContainerSlips((containerSet - 1), unloadRequest);
 			//	playerObject.displayMoneyIncrease(containerSet, playerObject.getContainerPrice(containerSet));
 				display.AppendUpdateTab("\nSuccess. " + unloadRequest + " containers have been unloaded on your ship.\n");
-	//			playerObject.RemoveEmptySlip();
+			//	playerObject.RemoveEmptySlip();
 			}
 
 		}
-	//	playerObject.increaseDay();
+		userMap.IncreaseDay();
+		display.UpdateDateText(userMap.GetDate());
 	}
 
 }

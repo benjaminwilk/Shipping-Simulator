@@ -36,9 +36,9 @@ public class MenuDisplays{
 		return goodsDisplayMenu;
 	}
 
-	public static String GetGoodsMenuItem(int iteration){
+	/*public static String GetGoodsMenuItem(int iteration){
 		return goodsDisplayMenu[iteration];
-	}
+	}*/
 	
 	public static String[] GetContainerMenu(){
 		return containerMenu;

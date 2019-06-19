@@ -6,21 +6,102 @@ import main.java.Port.Port;
 import main.java.Sailor.SailorMenu;
 import main.java.Ship.Ship;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.*;
 
 public class ShoreSide{
 
 	Port currentPort;
+	WindowManager display;
+	String shoreChoice = "";
+	boolean textReceived = false;
 
-	public ShoreSide(Ship playerObject, AvailablePorts allPorts){
-		currentPort = Abstract.ReturnCurrentPort(playerObject, allPorts);
+	public ShoreSide(Ship playerObject, AvailablePorts allPorts, WindowManager windowManager) {
+		this.display = windowManager;
+
+		JTextField jtf = display.GetUserInputBox();
+		jtf.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				textReceived = true;
+				synchronized (jtf) {
+					// notify game loop thread which is waiting on this event
+					jtf.notifyAll();
+				}
+			}
+		});
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				ShoreOpener(playerObject, allPorts);
+				System.out.println("Yeet");
+			}
+
+		}).start();
+
+	}
+
+
+	public void ShoreOpener(Ship playerObject, AvailablePorts allPorts){
+		int userInput = 0;
+		display.AppendUpdateTab(System.lineSeparator() + System.lineSeparator() + "You and your crew step ashore." + System.lineSeparator());
+		do {
+			display.AppendUpdateTab(ShoreMenu());
+			display.AppendUpdateTab(": ");
+			userInput = Integer.parseInt(requestInput());
+			this.display.AppendUpdateTab(userInput);
+		} while (userInput != 1 && userInput != 2 && userInput != 3 && userInput != 4 && userInput != 5);
+		ParseShoreMenu(playerObject, userInput, allPorts);
+	}
+
+
+
+	private String requestInput() {
+		JTextField textField = display.GetUserInputBox();
+		textField.setEnabled(true);
+		textField.requestFocus();
+		// wait on text field till UI thread signals a user input event
+		synchronized (textField) {
+			while (!textReceived) {
+				try {
+					textField.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		String input = textField.getText();
+		textField.setText("");
+		textField.setEnabled(false);
+		textReceived = false;
+		return input;
+	}
+
+
+
+	/*	currentPort = Abstract.ReturnCurrentPort(playerObject, allPorts);
 		int shoreSideChoice = 0;
-		System.out.println("\nYou and your crew step ashore.");
-		do{
-			Abstract.RotateOptions(MenuDisplays.GetShoreOptionMenu()); //"Check Weather Report", "Manage crewmembers", "Check Ship Status", "Refuel Ship", "Check Port Prices", "Hotel Visit" ,"Go Back"
-			System.out.print(": ");
-			shoreSideChoice = parseShoreMenu(playerObject, Abstract.ScannerInt(), allPorts);
+		display.AppendUpdateTab("\nYou and your crew step ashore.");
+	//	do{
+			//Abstract.RotateOptions(MenuDisplays.GetShoreOptionMenu()); //"Check Weather Report", "Manage crewmembers", "Check Ship Status", "Refuel Ship", "Check Port Prices", "Hotel Visit" ,"Go Back"
+			display.AppendUpdateTab(ShoreMenu());
+			display.AppendUpdateTab(": ");
+
+			JButton buttonReader = this.display.GetReturnButton();
+			buttonReader.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					SubmitAction();
+					//	ButtonPress();
+					//	ParseGoodsMenu(goodsChoice, playerObject);
+					//	display.GetUserInputBox().setText("");
+				}
+			});
+
+			shoreSideChoice = parseShoreMenu(playerObject, shoreChoice, allPorts);*/
 
 /***************************************/
 	
@@ -28,7 +109,25 @@ public class ShoreSide{
 		//	Abstract.rotateOptions(MenuDisplays.getShoreOptionMenu());
 		//	System.out.print("blerp: ");
 		//	shoreSideChoice = parseShoreMenu(playerObject, Abstract.scannerInt());
-		}while(shoreSideChoice >= MenuDisplays.GetShoreOptionMenu().length);
+	//	}while(shoreSideChoice >= MenuDisplays.GetShoreOptionMenu().length);
+	//}
+
+
+	private void SubmitAction() {
+		display.AppendUpdateTab(this.display.GetUserInput());
+		shoreChoice = this.display.GetUserInput();
+		//	display.GetUserInputBox().setText("");
+		//System.out.println(userWord);//do whatever you want with the variable, I just printed it to the console
+	}
+
+	private String ShoreMenu(){
+		StringBuilder shoreMenuDisplay = new StringBuilder();
+		for(int iterativeCount = 0; iterativeCount < MenuDisplays.GetShoreOptionMenu().length; iterativeCount++){
+			shoreMenuDisplay.append((iterativeCount + 1) +  ". " + MenuDisplays.GetShoreOptionMenu()[iterativeCount] + System.lineSeparator());
+		}
+		return shoreMenuDisplay.toString();
+		//display.AppendUpdateTab(Abstract.RotateOptions(MenuDisplays.GetGoodsMenu())); //"Load / Unload Containers", "Step Ashore" ,"Depart Port"
+		//System.out.print(": ");
 	}
 
 	public void PriceDisplay(Ship playerObject){
@@ -37,10 +136,12 @@ public class ShoreSide{
 //		System.out.println(playerObject.DisplayCurrentContainers() + "\n"); // This is currently broken
 	}
 	
-	private int parseShoreMenu(Ship playerObject, int userDecision, AvailablePorts allPorts){
+	private int ParseShoreMenu(Ship playerObject, int userDecision, AvailablePorts allPorts){
+		System.out.println("Shore Parser");
+		System.out.println(userDecision);
 		Map<Integer, Runnable> shoreMenu = new HashMap<>();
 		shoreMenu.put(1, () -> new Weather().FormattedWeatherAndTemperature(5)); //"Check Weather Report"
-		shoreMenu.put(2, () -> new SailorMenu(playerObject, allPorts)); //"Manage crewmembers"
+		shoreMenu.put(2, () -> new SailorMenu(playerObject, allPorts, display)); //"Manage crewmembers"
 		shoreMenu.put(3, () -> ShipStatusSubmenu(playerObject, currentPort)); // Jumps to Checking ship Status.  Will eventually revamp this.
 		shoreMenu.put(4, () -> shipFuel(playerObject, currentPort));//"Refuel Ship" // Jumps to refueling the ship.  Will eventually revamp this.
 		shoreMenu.put(5, () -> PriceDisplay(playerObject)); //"Check Port Prices"

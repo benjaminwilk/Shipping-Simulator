@@ -8,6 +8,7 @@ import main.java.Sailor.Person;
 import main.java.Sailor.Sailor;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.util.*;
 
@@ -113,7 +114,7 @@ interface BoatCalls{
 
     public double GetKnots();
 
-    public void DisplayContainerSlipQuantity();
+    public String DisplayContainerSlipQuantity();
 
     String GetShipStatistics();
 
@@ -608,12 +609,9 @@ public class Ship extends Waterfaring implements BoatCalls {
     }
 
     @Override
-    public void DisplayContainerSlipQuantity(){
+    public String DisplayContainerSlipQuantity(){
 
-        System.out.println("DisplayContainerSlipQuantity()");
-       /* for(int i = 0; i < ){
-
-        }*/
+        return this.shipCargo.DisplayCargoAboard();
     }
 
     @Override
@@ -788,12 +786,46 @@ class Cargo{
 
     }
 
+    public String DisplayCargoAboard(){
+        StringBuilder cargoList = new StringBuilder();
+        Collection<String> containerNames = TypeAndCount.keySet();
+        Collection<Double> containerCount = TypeAndCount.values();
+        String[] properContainerNames = containerNames.toArray(new String[containerNames.size()]);
+        Double[] properContainerCounts = containerCount.toArray(new Double[containerCount.size()]);
+
+        cargoList.append("Containers aboard" + System.lineSeparator());
+        for(int i = 0; i < properContainerCounts.length; i++){
+            cargoList.append(properContainerNames[i] + " -- " + properContainerCounts[i] + System.lineSeparator());
+        }
+        return cargoList.toString();
+    }
+
     public boolean IsShipFull(){
-        return false;
+        Collection<Double> containerCount = TypeAndCount.values();
+        Double[] values = containerCount.toArray(new Double[containerCount.size()]);
+        double containerCombination = 0.0;
+        for(int i = 0; i < values.length; i++){
+            containerCombination += values[i];
+        }
+        if(containerCombination > maxLoad){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean IsShipEmpty(){
-        return false;
+        Collection<Double> containerCount = TypeAndCount.values();
+        Double[] values = containerCount.toArray(new Double[containerCount.size()]);
+        double containerCombination = 0.0;
+        for(int i = 0; i < values.length; i++){
+            containerCombination += values[i];
+        }
+        if(containerCombination == 0){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void InitializeTypeAndCount(){

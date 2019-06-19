@@ -31,17 +31,20 @@ public class PrimaryLoop{
 
 	public void IterativeFunction(){
 		//System.out.print(this.playerObject.GetLocation());
-		this.shoreContainers = new LoadUnloadContainers(playerObject, allPorts);
-		this.move = new Movement(this.allPorts);
-		displayWindow.OverwriteStatPanelText(this.playerObject.GetShipStatistics());
-	//	while(true){
+
+		//.while(true){
+			this.shoreContainers = new LoadUnloadContainers(playerObject, allPorts, gameBoard, displayWindow);
+			this.move = new Movement(this.allPorts);
+			displayWindow.OverwriteStatPanelText(this.playerObject.GetShipStatistics());
+
 			displayWindow.UpdateDateText(this.gameBoard.GetDate());
 			displayWindow.AppendArrayToMap(this.gameBoard.gameboard);
-			this.shoreContainers.Iteration(this.playerObject, displayWindow);
+		//	this.shoreContainers.Iteration(this.playerObject, displayWindow);
 		//	this.move.currentLocationAndDestination(this.playerObject, displayWindow);
 			//this.portDecision.iteration(this.playerObject);
 		//	this.move.iteration(this.playerObject); // , portDecision*/);
-	//	}
+		System.out.println("Fell out");
+		//}
 	}
 		
 	public void InitializePlayer(){

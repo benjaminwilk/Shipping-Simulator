@@ -21,9 +21,11 @@ public class ContainerReports {
         }
     }
 
+
+
     public void ContainerTypeReadout(Port passedPort){
-        windowManager.AppendUpdateTab("\t\t  -- " + passedPort.DisplayLocation() + " -- ");
-        windowManager.AppendUpdateTab("Container Type -- Container Count -- Price Per Container");
+        windowManager.AppendUpdateTab(System.lineSeparator() + "\t  -- " + passedPort.DisplayLocation() + " -- " + System.lineSeparator());
+        windowManager.AppendUpdateTab("Container Type -- Container Count -- Price Per Container" + System.lineSeparator());
         for(int x = 0; x < ContainerTypes.getContainerSize() - 1 ; x++){
             windowManager.AppendUpdateTab(" " + Abstract.ModifyContainerLength(passedPort.GetOutputContainerName(x), 13));
             windowManager.AppendUpdateTab(" --    " + Abstract.ModifyContainerLength("" + passedPort.GetOutputContainerCount(x), 9));

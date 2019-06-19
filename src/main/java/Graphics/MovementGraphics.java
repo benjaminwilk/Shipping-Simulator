@@ -98,7 +98,8 @@ public class MovementGraphics{
 	
 	
 	public static String portDepartureGraphics(){
-		return "_________          |_|_|/__ /__/  /  / " + System.lineSeparator()
+		return System.lineSeparator() +
+				"_________          |_|_|/__ /__/  /  / " + System.lineSeparator()
 				+ "_____   /| ~     ~ | | | | | | | /  /  " + System.lineSeparator()
 				+ "----/  //|    ~   /|_|_|_|_|_|_|/  /   " + System.lineSeparator()
 				+ " ~ /  //||  ~   ~ \\              _/    " + System.lineSeparator()
@@ -117,7 +118,8 @@ public class MovementGraphics{
 	}
 	
 	public static String ContainerGraphics(){
-		return "     ______ " + System.lineSeparator()
+		return System.lineSeparator() +
+				"     ______ " + System.lineSeparator()
 				+ "    /     /|" + System.lineSeparator()
 				+ "   /     /#|" + System.lineSeparator()
 				+ "  /     /##|_____" + System.lineSeparator()
@@ -133,7 +135,8 @@ public class MovementGraphics{
 	}
 	
 	public static String MoneyGraphics(){
-		return "      _________ " + System.lineSeparator()
+		return System.lineSeparator() +
+				"      _________ " + System.lineSeparator()
 				+ "     /        /|" + System.lineSeparator()
 				+ "    /        / |" + System.lineSeparator()
 				+ "  _|--------|  |" + System.lineSeparator()
